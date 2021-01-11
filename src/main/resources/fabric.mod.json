@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "music_control",
+  "version": "${version}",
+  "name": "Music_control",
+  "description": "Control the way the minecraft music is played",
+  "authors": [
+    "Pardys"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/music_control/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.github.charlyb01.music_control.client.MusicControlClient"
+    ],
+    "main": [
+      "com.github.charlyb01.music_control.MusicControl"
+    ]
+  },
+  "mixins": [
+    "music_control.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.0",
+    "fabric": "*",
+    "minecraft": "1.16.3"
+  }
+}
