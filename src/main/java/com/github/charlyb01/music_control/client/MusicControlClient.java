@@ -15,7 +15,14 @@ import org.lwjgl.glfw.GLFW;
 @Environment(EnvType.CLIENT)
 public class MusicControlClient implements ClientModInitializer {
     public static boolean skip = false;
+    public static boolean replay = false;
+    public static boolean category = false;
+    public static boolean random = false;
+
     private static KeyBinding skipMusic;
+    private static KeyBinding replayPrev;
+    private static KeyBinding changeCat;
+    private static KeyBinding randomMusic;
 
     @Override
     public void onInitializeClient() {
@@ -31,6 +38,49 @@ public class MusicControlClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (skipMusic.wasPressed()) {
                 skip = true;
+            }
+        });
+
+        replayPrev = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.replay",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_LEFT,
+                "category.music_control.title"
+        ));
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (replayPrev.wasPressed()) {
+                replay = true;
+            }
+        });
+
+        changeCat = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.category",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_UP,
+                "category.music_control.title"
+        ));
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (changeCat.wasPressed()) {
+                if (client.player != null && client.player.isCreative()) {
+                    category = true;
+                }
+            }
+        });
+
+        randomMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.random",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_DOWN,
+                "category.music_control.title"
+        ));
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (randomMusic.wasPressed()) {
+                if (client.player != null && client.player.isCreative()) {
+                    random = true;
+                }
             }
         });
     }
