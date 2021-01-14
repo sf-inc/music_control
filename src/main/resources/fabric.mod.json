@@ -15,9 +15,6 @@
     "client": [
       "com.github.charlyb01.music_control.client.MusicControlClient"
     ],
-    "main": [
-      "com.github.charlyb01.music_control.MusicControl"
-    ],
     "modmenu": [
       "com.github.charlyb01.music_control.config.ModMenuIntegration"
     ]
