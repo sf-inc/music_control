@@ -28,23 +28,27 @@ public abstract class MusicTrackerMixin {
     @Shadow public abstract void play(MusicSound type);
 
     @Inject(at = @At("HEAD"), method = "tick")
-    private void tryToSkip(CallbackInfo ci) {
+    private void changeMusic(CallbackInfo ci) {
         if (MusicControlClient.skip) {
             MusicControlClient.skip = false;
-            this.client.getSoundManager().stop(this.current);
-            this.timeUntilNextSong = 0;
+
+            playMusic();
         }
         if (MusicControlClient.category) {
             MusicControlClient.category = false;
+
             MusicCategories.changeCategory(this.random);
-
-            Identifier identifier = MusicCategories.chooseIdentifier(this.random);
-            MusicSound musicSound = new MusicSound(Registry.SOUND_EVENT.get(identifier),
-                    ModConfig.get().timer, ModConfig.get().timer, true);
-
-            this.client.getSoundManager().stop(this.current);
-            this.timeUntilNextSong = 0;
-            play(musicSound);
+            playMusic();
         }
+    }
+
+    private void playMusic() {
+        Identifier identifier = MusicCategories.chooseIdentifier(this.random);
+        MusicSound musicSound = new MusicSound(Registry.SOUND_EVENT.get(identifier),
+                ModConfig.get().timer, ModConfig.get().timer, true);
+
+        this.client.getSoundManager().stop(this.current);
+        play(musicSound);
+        this.timeUntilNextSong = ModConfig.get().timer;
     }
 }
