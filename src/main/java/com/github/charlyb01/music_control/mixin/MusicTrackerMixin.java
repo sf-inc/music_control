@@ -1,6 +1,7 @@
 package com.github.charlyb01.music_control.mixin;
 
 import com.github.charlyb01.music_control.categories.MusicCategories;
+import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
@@ -38,6 +39,12 @@ public abstract class MusicTrackerMixin {
             MusicControlClient.category = false;
 
             MusicCategories.changeCategory(this.random);
+            playMusic();
+        }
+        if (MusicControlClient.random) {
+            MusicControlClient.random = false;
+
+            MusicControlClient.currentCategory = MusicCategory.ALL;
             playMusic();
         }
     }
