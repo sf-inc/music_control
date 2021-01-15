@@ -58,7 +58,7 @@ public class MusicCategories {
         }
     }
 
-    public static void changeCategory(final Random random) {
+    public static void changeCategory (final Random random) {
         MusicCategory musicCategory;
         int i;
         do {
@@ -71,7 +71,7 @@ public class MusicCategories {
         MusicControlClient.currentCategory = musicCategory;
     }
 
-    public static Identifier chooseIdentifier(final Random random) {
+    public static Identifier chooseIdentifier (final Random random) {
         Identifier identifier = null;
         int acc = 0;
         int i = MathHelper.nextInt(random, 0, getCategoryWeight(MusicControlClient.currentCategory) - 1);

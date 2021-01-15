@@ -31,7 +31,7 @@ public abstract class MusicTrackerMixin {
     @Shadow public abstract void play(MusicSound type);
 
     @Inject(at = @At("HEAD"), method = "play", cancellable = true)
-    private void playMusic(MusicSound type, CallbackInfo ci) {
+    private void playMusic (MusicSound type, CallbackInfo ci) {
         if (MusicControlClient.init) {
             this.client.getSoundManager().stop(this.current);
 
@@ -50,8 +50,7 @@ public abstract class MusicTrackerMixin {
     }
 
     @Inject(at = @At("HEAD"), method = "tick")
-    private void changeMusic(CallbackInfo ci) {
-        System.out.println(timeUntilNextSong);
+    private void changeMusic (CallbackInfo ci) {
         if (MusicControlClient.skip) {
             MusicControlClient.skip = false;
 
