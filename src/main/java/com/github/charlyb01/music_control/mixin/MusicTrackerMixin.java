@@ -6,7 +6,9 @@ import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.MusicTracker;
+import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -28,34 +30,43 @@ public abstract class MusicTrackerMixin {
 
     @Shadow public abstract void play(MusicSound type);
 
+    @Inject(at = @At("HEAD"), method = "play", cancellable = true)
+    private void playMusic(MusicSound type, CallbackInfo ci) {
+        if (MusicControlClient.init) {
+            this.client.getSoundManager().stop(this.current);
+
+            Identifier identifier = MusicCategories.chooseIdentifier(this.random);
+            MusicSound musicSound = new MusicSound(Registry.SOUND_EVENT.get(identifier),
+                    ModConfig.get().timer, ModConfig.get().timer, true);
+
+            this.current = PositionedSoundInstance.music(musicSound.getSound());
+            if (this.current.getSound() != SoundManager.MISSING_SOUND) {
+                this.client.getSoundManager().play(this.current);
+            }
+
+            this.timeUntilNextSong = ModConfig.get().timer;
+            ci.cancel();
+        }
+    }
+
     @Inject(at = @At("HEAD"), method = "tick")
     private void changeMusic(CallbackInfo ci) {
         if (MusicControlClient.skip) {
             MusicControlClient.skip = false;
 
-            playMusic();
+            this.play(null);
         }
         if (MusicControlClient.category) {
             MusicControlClient.category = false;
 
             MusicCategories.changeCategory(this.random);
-            playMusic();
+            this.play(null);
         }
         if (MusicControlClient.random) {
             MusicControlClient.random = false;
 
             MusicControlClient.currentCategory = MusicCategory.ALL;
-            playMusic();
+            this.play(null);
         }
-    }
-
-    private void playMusic() {
-        Identifier identifier = MusicCategories.chooseIdentifier(this.random);
-        MusicSound musicSound = new MusicSound(Registry.SOUND_EVENT.get(identifier),
-                ModConfig.get().timer, ModConfig.get().timer, true);
-
-        this.client.getSoundManager().stop(this.current);
-        play(musicSound);
-        this.timeUntilNextSong = ModConfig.get().timer;
     }
 }

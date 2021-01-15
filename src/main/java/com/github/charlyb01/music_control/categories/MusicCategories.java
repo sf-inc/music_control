@@ -21,6 +21,8 @@ public class MusicCategories {
     private MusicCategories() {}
 
     public static void init (final MinecraftClient client) {
+        MusicControlClient.init = true;
+
         for (Identifier id : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(id) != null) {
                 if (id.toString().startsWith("minecraft:music.game")
