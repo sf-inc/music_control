@@ -1,0 +1,9 @@
+{
+    "category.music_control.title": "Music Control",
+    "key.music_control.skip":  "Next music (same category)",
+    "key.music_control.category": "Change music category",
+    "key.music_control.random": "Active random music player",
+
+    "text.autoconfig.music_control.title": "Music Control Configuration",
+    "text.autoconfig.music_control.option.timer": "Time between two musics (in seconds)"
+}

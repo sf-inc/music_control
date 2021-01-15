@@ -1,0 +1,9 @@
+{
+    "category.music_control.title": "Music Control",
+    "key.music_control.skip":  "Prochaine musique (même catégorie)",
+    "key.music_control.category": "Changer de catégorie de musique",
+    "key.music_control.random": "Activer le lecteur de musique aléatoire",
+
+    "text.autoconfig.music_control.title": "Configuration de Music Control",
+    "text.autoconfig.music_control.option.timer": "Temps entre deux musiques (en secondes)"
+}
