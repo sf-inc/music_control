@@ -37,20 +37,21 @@ public abstract class MusicTrackerMixin {
 
             Identifier identifier = MusicCategories.chooseIdentifier(this.random);
             MusicSound musicSound = new MusicSound(Registry.SOUND_EVENT.get(identifier),
-                    ModConfig.get().timer, ModConfig.get().timer, true);
+                    ModConfig.get().timer * 20, ModConfig.get().timer * 20, true);
 
             this.current = PositionedSoundInstance.music(musicSound.getSound());
             if (this.current.getSound() != SoundManager.MISSING_SOUND) {
                 this.client.getSoundManager().play(this.current);
             }
 
-            this.timeUntilNextSong = ModConfig.get().timer;
+            this.timeUntilNextSong = ModConfig.get().timer * 20;
             ci.cancel();
         }
     }
 
     @Inject(at = @At("HEAD"), method = "tick")
     private void changeMusic(CallbackInfo ci) {
+        System.out.println(timeUntilNextSong);
         if (MusicControlClient.skip) {
             MusicControlClient.skip = false;
 

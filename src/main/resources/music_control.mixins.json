@@ -4,7 +4,6 @@
   "package": "com.github.charlyb01.music_control.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MusicSoundMixin",
     "MusicTrackerMixin",
     "SoundSetMixin"
   ],
