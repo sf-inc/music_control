@@ -72,7 +72,7 @@ public class MusicCategories {
     public static Identifier chooseIdentifier(final Random random) {
         Identifier identifier = null;
         int acc = 0;
-        int i = MathHelper.nextInt(random, 0, MusicControlClient.currentCategory.weight - 1);
+        int i = MathHelper.nextInt(random, 0, getCategoryWeight(MusicControlClient.currentCategory) - 1);
 
         for (Map.Entry<Identifier, Integer> entry : MusicControlClient.currentCategory.musics.entrySet()) {
             acc += entry.getValue();
@@ -83,5 +83,13 @@ public class MusicCategories {
         }
 
         return identifier;
+    }
+
+    public static int getCategoryWeight (final MusicCategory musicCategory) {
+        int weight = 0;
+        for (Map.Entry<Identifier, Integer> entry : musicCategory.musics.entrySet()) {
+            weight += entry.getValue();
+        }
+        return weight;
     }
 }
