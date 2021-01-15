@@ -6,5 +6,6 @@
     "key.music_control.random": "Active random music player",
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
-    "text.autoconfig.music_control.option.timer": "Time between two musics (in seconds)"
+    "text.autoconfig.music_control.option.timer": "Time between two musics (in seconds)",
+    "text.autoconfig.music_control.option.print": "Print the text when a music is played"
 }

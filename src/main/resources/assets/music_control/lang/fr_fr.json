@@ -6,5 +6,6 @@
     "key.music_control.random": "Activer le lecteur de musique aléatoire",
 
     "text.autoconfig.music_control.title": "Configuration de Music Control",
-    "text.autoconfig.music_control.option.timer": "Temps entre deux musiques (en secondes)"
+    "text.autoconfig.music_control.option.timer": "Temps entre deux musiques (en secondes)",
+    "text.autoconfig.music_control.option.print": "Afficher le texte quand une musique se joue"
 }

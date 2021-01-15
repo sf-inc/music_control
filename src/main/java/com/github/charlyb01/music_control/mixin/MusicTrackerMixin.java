@@ -45,7 +45,8 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().play(this.current);
             }
 
-            if (this.client.player != null) {
+            if (this.client.player != null
+                    && ModConfig.get().print == 1) {
                 this.client.player.sendMessage(Text.of(MusicControlClient.currentCategory.toString() +
                         ": " + this.current.getSound().getIdentifier()), true);
             }
