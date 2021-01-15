@@ -10,6 +10,7 @@ import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.sound.MusicSound;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Final;
@@ -42,6 +43,11 @@ public abstract class MusicTrackerMixin {
             this.current = PositionedSoundInstance.music(musicSound.getSound());
             if (this.current.getSound() != SoundManager.MISSING_SOUND) {
                 this.client.getSoundManager().play(this.current);
+            }
+
+            if (this.client.player != null) {
+                this.client.player.sendMessage(Text.of(MusicControlClient.currentCategory.toString() +
+                        ": " + this.current.getSound().getIdentifier()), true);
             }
 
             this.timeUntilNextSong = ModConfig.get().timer * 20;
