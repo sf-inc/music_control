@@ -26,5 +26,11 @@
     "fabricloader": ">=0.11.0",
     "fabric": "*",
     "minecraft": "1.16.3"
+  },
+  "custom": {
+    "modupdater": {
+      "strategy": "curseforge",
+      "projectID": 436740
+    }
   }
 }
