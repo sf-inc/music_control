@@ -21,13 +21,11 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean init = false;
 
     public static boolean skip = false;
-    public static boolean replay = false;
     public static boolean category = false;
     public static boolean random = false;
     public static MusicCategory currentCategory = MusicCategory.GAME;
 
     private static KeyBinding skipMusic;
-    private static KeyBinding replayPrev;
     private static KeyBinding changeCat;
     private static KeyBinding randomMusic;
 
@@ -46,19 +44,6 @@ public class MusicControlClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (skipMusic.wasPressed()) {
                 skip = true;
-            }
-        });
-
-        replayPrev = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.replay",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_LEFT,
-                "category.music_control.title"
-        ));
-
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (replayPrev.wasPressed()) {
-                replay = true;
             }
         });
 
