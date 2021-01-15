@@ -1,6 +1,7 @@
 {
     "category.music_control.title": "Music Control",
     "key.music_control.skip":  "Next music (same category)",
+    "key.music_control.pause":  "Pause/Resume music",
     "key.music_control.category": "Change music category",
     "key.music_control.random": "Active random music player",
 

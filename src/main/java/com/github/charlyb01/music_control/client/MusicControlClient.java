@@ -21,11 +21,14 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean init = false;
 
     public static boolean skip = false;
+    public static boolean pause = false;
+    public static boolean isPaused = false;
     public static boolean category = false;
     public static boolean random = false;
     public static MusicCategory currentCategory = MusicCategory.GAME;
 
     private static KeyBinding skipMusic;
+    private static KeyBinding pauseResume;
     private static KeyBinding changeCat;
     private static KeyBinding randomMusic;
 
@@ -44,6 +47,19 @@ public class MusicControlClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (skipMusic.wasPressed()) {
                 skip = true;
+            }
+        });
+
+        pauseResume = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.pause",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_LEFT,
+                "category.music_control.title"
+        ));
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (pauseResume.wasPressed()) {
+                pause = true;
             }
         });
 
