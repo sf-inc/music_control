@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "music_control",
   "version": "${version}",
-  "name": "Music_control",
+  "name": "Music Control",
   "description": "Control the way the minecraft music is played",
   "authors": [
     "Pardys"
