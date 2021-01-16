@@ -10,8 +10,7 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 0, max = 300)
     public int timer = 15;
 
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 1)
-    public int print = 1;
+    public boolean print = true;
 
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();
