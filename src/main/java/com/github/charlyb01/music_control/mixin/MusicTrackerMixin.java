@@ -5,14 +5,12 @@ import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.MusicTracker;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.client.sound.SoundManager;
+import net.minecraft.client.sound.*;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -56,6 +54,10 @@ public abstract class MusicTrackerMixin {
 
     @Inject(at = @At("HEAD"), method = "tick")
     private void changeMusic (CallbackInfo ci) {
+        if (!ModConfig.get().cheat) {
+            updateCategory();
+        }
+
         if (MusicControlClient.skip) {
             MusicControlClient.skip = false;
 
@@ -87,6 +89,20 @@ public abstract class MusicTrackerMixin {
             MusicControlClient.print = false;
 
             printMusic();
+        }
+    }
+
+    private void updateCategory () {
+        if (MusicControlClient.init && this.client.world != null) {
+            if (this.client.world.getRegistryKey().equals(World.OVERWORLD)) {
+                MusicControlClient.currentCategory = MusicCategory.GAME;
+
+            } else if (this.client.world.getRegistryKey().equals(World.NETHER)) {
+                MusicControlClient.currentCategory = MusicCategory.NETHER;
+
+            } else if (this.client.world.getRegistryKey().equals(World.END)) {
+                MusicControlClient.currentCategory = MusicCategory.END;
+            }
         }
     }
 
