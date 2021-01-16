@@ -25,12 +25,14 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean isPaused = false;
     public static boolean category = false;
     public static boolean random = false;
+    public static boolean print = false;
     public static MusicCategory currentCategory = MusicCategory.GAME;
 
     private static KeyBinding skipMusic;
     private static KeyBinding pauseResume;
     private static KeyBinding changeCat;
     private static KeyBinding randomMusic;
+    private static KeyBinding printMusic;
 
     @Override
     public void onInitializeClient() {
@@ -90,6 +92,19 @@ public class MusicControlClient implements ClientModInitializer {
                 if ((client.player != null && client.player.isCreative()) || ModConfig.get().cheat) {
                     random = true;
                 }
+            }
+        });
+
+        printMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.print",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_RIGHT_CONTROL,
+                "category.music_control.title"
+        ));
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (printMusic.wasPressed()) {
+                print = true;
             }
         });
     }

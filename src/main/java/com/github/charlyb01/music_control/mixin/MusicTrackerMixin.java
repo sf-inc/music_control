@@ -45,10 +45,8 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().play(this.current);
             }
 
-            if (this.client.player != null
-                    && ModConfig.get().print) {
-                this.client.player.sendMessage(Text.of(MusicControlClient.currentCategory.toString() +
-                        ": " + this.current.getSound().getIdentifier()), true);
+            if (ModConfig.get().print) {
+                printMusic();
             }
 
             this.timeUntilNextSong = ModConfig.get().timer * 20;
@@ -84,6 +82,18 @@ public abstract class MusicTrackerMixin {
 
             MusicControlClient.currentCategory = MusicCategory.ALL;
             this.play(null);
+        }
+        if (MusicControlClient.print) {
+            MusicControlClient.print = false;
+
+            printMusic();
+        }
+    }
+
+    private void printMusic() {
+        if (this.client.player != null && this.current != null) {
+            this.client.player.sendMessage(Text.of(MusicControlClient.currentCategory.toString() +
+                    ": " + this.current.getSound().getIdentifier()), true);
         }
     }
 }
