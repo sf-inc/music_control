@@ -3,11 +3,15 @@
   "id": "music_control",
   "version": "${version}",
   "name": "Music Control",
-  "description": "Control the way the minecraft music is played",
+  "description": "More control over Minecraft musics!",
   "authors": [
     "Pardys"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/music-control",
+    "issues": "https://github.com/charlyb01/music_control/issues",
+    "sources": "https://github.com/charlyb01/music_control"
+  },
   "license": "MIT",
   "icon": "assets/music_control/icon.png",
   "environment": "client",
