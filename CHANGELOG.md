@@ -19,3 +19,4 @@ Currently, every **stable** mod versions are available on **1.16.3** Minecraft v
 * Print the category and the music with a keybind
 * Better config for boolean values
 * Change music category even if not in creative! (this is a config)
+* Automatically change category when changing dimension (if cheat not enabled or not creative)
