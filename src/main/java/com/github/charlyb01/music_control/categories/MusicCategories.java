@@ -58,17 +58,19 @@ public class MusicCategories {
         }
     }
 
-    public static void changeCategory (final Random random) {
-        MusicCategory musicCategory;
-        int i;
-        do {
-            i = MathHelper.nextInt(random, 0, MusicCategory.values().length - 1);
-            musicCategory = MusicCategory.values()[i];
-
-        } while (musicCategory.equals(MusicControlClient.currentCategory)
-                || musicCategory.equals(MusicCategory.ALL));
-
-        MusicControlClient.currentCategory = musicCategory;
+    public static void changeCategory () {
+        int i = 0;
+        for (MusicCategory category: MusicCategory.values()) {
+            i++;
+            if (MusicControlClient.currentCategory.equals(category)) {
+                break;
+            }
+        }
+        i = i % MusicCategory.values().length;
+        if (MusicCategory.values()[i].equals(MusicCategory.ALL)) {
+            i = (i + 1) % MusicCategory.values().length;
+        }
+        MusicControlClient.currentCategory = MusicCategory.values()[i];
     }
 
     public static Identifier chooseIdentifier (final Random random) {

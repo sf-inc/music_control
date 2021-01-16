@@ -78,7 +78,7 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.category) {
             MusicControlClient.category = false;
 
-            MusicCategories.changeCategory(this.random);
+            MusicCategories.changeCategory();
             this.play(null);
         }
         if (MusicControlClient.random) {
