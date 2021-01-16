@@ -55,7 +55,9 @@ public abstract class MusicTrackerMixin {
     @Inject(at = @At("HEAD"), method = "tick")
     private void changeMusic (CallbackInfo ci) {
         if (!ModConfig.get().cheat) {
-            updateCategory();
+            if ( this.client.player != null && !this.client.player.isCreative()) {
+                updateCategory();
+            }
         }
 
         if (MusicControlClient.skip) {
