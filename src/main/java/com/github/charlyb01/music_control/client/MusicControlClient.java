@@ -72,7 +72,7 @@ public class MusicControlClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (changeCat.wasPressed()) {
-                if (client.player != null && client.player.isCreative()) {
+                if ((client.player != null && client.player.isCreative()) || ModConfig.get().cheat) {
                     category = true;
                 }
             }
@@ -87,7 +87,7 @@ public class MusicControlClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (randomMusic.wasPressed()) {
-                if (client.player != null && client.player.isCreative()) {
+                if ((client.player != null && client.player.isCreative()) || ModConfig.get().cheat) {
                     random = true;
                 }
             }

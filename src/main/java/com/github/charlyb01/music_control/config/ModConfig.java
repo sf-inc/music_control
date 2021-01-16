@@ -12,6 +12,8 @@ public class ModConfig implements ConfigData {
 
     public boolean print = true;
 
+    public boolean cheat = false;
+
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     }
