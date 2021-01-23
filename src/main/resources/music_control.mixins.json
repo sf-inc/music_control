@@ -4,11 +4,11 @@
     "package": "com.github.charlyb01.music_control.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
+    ],
+    "client": [
         "SoundManagerMixin",
         "MusicTrackerMixin",
         "SoundSetMixin"
-    ],
-    "client": [
     ],
     "injectors": {
         "defaultRequire": 1
