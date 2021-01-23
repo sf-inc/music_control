@@ -3,6 +3,7 @@ package com.github.charlyb01.music_control.client;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.config.ModConfig;
+import com.github.charlyb01.music_control.event.SoundEvents;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
@@ -10,7 +11,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -37,7 +37,7 @@ public class MusicControlClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
-        ServerWorldEvents.LOAD.register(((server, world) -> MusicCategories.init(MinecraftClient.getInstance())));
+        SoundEvents.SOUNDS_LOADED.register(((soundManager) -> MusicCategories.init(MinecraftClient.getInstance())));
 
         skipMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.skip",
