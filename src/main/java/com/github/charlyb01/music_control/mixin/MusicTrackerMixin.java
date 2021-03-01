@@ -31,7 +31,7 @@ public abstract class MusicTrackerMixin {
 
     @Inject(at = @At("HEAD"), method = "play", cancellable = true)
     private void playMusic (MusicSound type, CallbackInfo ci) {
-        if (MusicControlClient.init) {
+        if (MusicControlClient.init && this.client.world != null) {
             this.client.getSoundManager().stop(this.current);
 
             Identifier identifier = MusicCategories.chooseIdentifier(this.random);
