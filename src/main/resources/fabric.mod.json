@@ -28,8 +28,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.11.0",
-    "fabric": "*",
-    "minecraft": "1.16.3"
+    "fabric": "*"
   },
   "custom": {
     "modupdater": {
