@@ -16,61 +16,103 @@ public class MusicCategories {
     public final static Map<Identifier, Integer> NETHER = new HashMap<>();
     public final static Map<Identifier, Integer> END = new HashMap<>();
     public final static Map<Identifier, Integer> DISC = new HashMap<>();
+    public final static Map<Identifier, Integer> CUSTOM = new HashMap<>();
+    public final static Map<Identifier, Integer> MODS = new HashMap<>();
     public final static Map<Identifier, Integer> ALL = new HashMap<>();
+
+    public final static Map<String, Integer> MODS_LIST = new HashMap<>();
 
     private MusicCategories() {}
 
     public static void init (final MinecraftClient client) {
-        MusicControlClient.init = true;
+        if (MusicControlClient.init) {
+            GAME.clear();
+            NETHER.clear();
+            END.clear();
+            DISC.clear();
+            CUSTOM.clear();
+            MODS.clear();
+            MODS_LIST.clear();
+            ALL.clear();
+        } else {
+            MusicControlClient.init = true;
+        }
 
-        for (Identifier id : client.getSoundManager().getKeys()) {
-            if (client.getSoundManager().get(id) != null) {
-                if (id.toString().startsWith("minecraft:music.game")
-                        || id.toString().startsWith("minecraft:music.creative")
-                        || id.toString().startsWith("minecraft:music.menu")
-                        || id.toString().startsWith("minecraft:music.under_water")) {
+        for (Identifier identifier : client.getSoundManager().getKeys()) {
+            if (client.getSoundManager().get(identifier) != null) {
 
-                    GAME.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
-                    ALL.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
+                String namespace = "";
+                String id = "";
+                if (identifier.toString().split(":").length > 1) {
+                    namespace = identifier.toString().split(":")[0];
+                    id = identifier.toString().split(":")[1];
+                }
 
-                } else if (id.toString().startsWith("minecraft:music.nether")) {
+                if (namespace.equals("minecraft")) {
+                    if (id.startsWith("music.game")
+                            || id.startsWith("music.creative")
+                            || id.startsWith("music.menu")
+                            || id.startsWith("music.under_water")) {
 
-                    int size = 1;
-                    if (NETHER.isEmpty()) {
-                        size = ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize();
+                        GAME.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+
+                    } else if (id.startsWith("music.nether")) {
+
+                        NETHER.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+
+                    } else if (id.startsWith("music.end")
+                            || id.startsWith("music.dragon")
+                            || id.startsWith("music.credits")) {
+
+                        END.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+
+                    } else if (id.startsWith("music_disc")) {
+
+                        DISC.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
                     }
-                    NETHER.put(id, size);
-                    ALL.put(id, size);
 
-                } else if (id.toString().startsWith("minecraft:music.end")
-                        || id.toString().startsWith("minecraft:music.dragon")
-                        || id.toString().startsWith("minecraft:music.credits")) {
+                } else if (namespace.contains("music")) {
 
-                    END.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
-                    ALL.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
+                    System.out.println("size "+((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                    CUSTOM.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                    ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
 
-                } else if (id.toString().startsWith("minecraft:music_disc")) {
+                } else {
+                    if (id.contains("music")) {
+                        MODS_LIST.put(namespace, MODS_LIST.get(namespace) + 1);
 
-                    DISC.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
-                    ALL.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
+                        MODS.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                    }
                 }
             }
         }
     }
 
     public static void changeCategory () {
-        int i = 0;
+        int current = 0;
+        int next;
         for (MusicCategory category: MusicCategory.values()) {
-            i++;
             if (MusicControlClient.currentCategory.equals(category)) {
                 break;
             }
+            current++;
         }
-        i = i % MusicCategory.values().length;
-        if (MusicCategory.values()[i].equals(MusicCategory.ALL)) {
-            i = (i + 1) % MusicCategory.values().length;
+        next = (current + 1) % MusicCategory.values().length;
+
+        if (MusicCategory.values()[next].equals(MusicCategory.CUSTOM)) {
+            if (CUSTOM.isEmpty()) {
+                next = 0;
+            }
+        } else if (MusicCategory.values()[next].equals(MusicCategory.ALL)) {
+            next = 0;
         }
-        MusicControlClient.currentCategory = MusicCategory.values()[i];
+
+        MusicControlClient.currentCategory = MusicCategory.values()[next];
     }
 
     public static Identifier chooseIdentifier (final Random random) {

@@ -7,9 +7,9 @@ import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.*;
 import net.minecraft.sound.MusicSound;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,7 +35,7 @@ public abstract class MusicTrackerMixin {
             this.client.getSoundManager().stop(this.current);
 
             Identifier identifier = MusicCategories.chooseIdentifier(this.random);
-            MusicSound musicSound = new MusicSound(Registry.SOUND_EVENT.get(identifier),
+            MusicSound musicSound = new MusicSound(new SoundEvent(identifier),
                     ModConfig.get().timer * 20, ModConfig.get().timer * 20, true);
 
             this.current = PositionedSoundInstance.music(musicSound.getSound());
