@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.mixin;
 
+import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.event.SoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,5 +16,12 @@ public class SoundManagerMixin {
     @Inject(at = @At("TAIL"), method = "apply")
     private void onStart(CallbackInfo ci) {
         SoundEvents.SOUNDS_LOADED.invoker().onSoundsLoaded((SoundManager) (Object) this);
+    }
+
+    @Inject(method = "resumeAll", at = @At("HEAD"), cancellable = true)
+    private void dontResumeIfPaused(CallbackInfo ci) {
+        if (MusicControlClient.isPaused) {
+            ci.cancel();
+        }
     }
 }
