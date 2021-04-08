@@ -41,6 +41,7 @@ public class MusicCategories {
         for (Identifier identifier : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(identifier) != null) {
 
+                Integer soundSize = ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize();
                 String namespace = "";
                 String id = "";
                 if (identifier.toString().split(":").length > 1) {
@@ -54,39 +55,38 @@ public class MusicCategories {
                             || id.startsWith("music.menu")
                             || id.startsWith("music.under_water")) {
 
-                        GAME.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
-                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        GAME.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
 
                     } else if (id.startsWith("music.nether")) {
 
-                        NETHER.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
-                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        NETHER.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
 
                     } else if (id.startsWith("music.end")
                             || id.startsWith("music.dragon")
                             || id.startsWith("music.credits")) {
 
-                        END.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
-                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        END.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
 
                     } else if (id.startsWith("music_disc")) {
 
-                        DISC.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
-                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        DISC.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
                     }
 
                 } else if (namespace.contains("music")) {
 
-                    System.out.println("size "+((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
-                    CUSTOM.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
-                    ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                    CUSTOM.put(identifier, soundSize);
+                    ALL.put(identifier, soundSize);
 
                 } else {
                     if (id.contains("music")) {
                         MODS_LIST.put(namespace, MODS_LIST.get(namespace) + 1);
 
-                        MODS.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
-                        ALL.put(identifier, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize());
+                        MODS.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
                     }
                 }
             }
