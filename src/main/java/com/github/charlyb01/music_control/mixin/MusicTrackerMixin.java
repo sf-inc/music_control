@@ -31,6 +31,13 @@ public abstract class MusicTrackerMixin {
 
     @Inject(at = @At("HEAD"), method = "play", cancellable = true)
     private void playMusic (MusicSound type, CallbackInfo ci) {
+        if (!MusicControlClient.shouldPlay) {
+            MusicControlClient.shouldPlay = true;
+            this.timeUntilNextSong = ModConfig.get().timer * 20;
+            ci.cancel();
+            return;
+        }
+
         if (MusicControlClient.init && this.client.world != null) {
             this.client.getSoundManager().stop(this.current);
 
