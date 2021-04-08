@@ -6,6 +6,13 @@ Currently, every **stable** mod versions are available on **1.16.3 or more recen
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.3
+
+* Multi-version support file: should work for ever version (1.16.x at least)
+* Fixed pause resuming after closing a screen (inventory, crafting table, ...)
+* Fixed a bug that makes minecraft try to play music even though volume is off
+* Added a custom category for people who want to add custom musics via datapacks
+
 ## v1.2
 * Fix crash when joining a server: this occurred if the player didn't load a singleplayer world before joining a server
 
