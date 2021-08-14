@@ -1,16 +1,18 @@
 {
-    "required": true,
-    "minVersion": "0.8",
-    "package": "com.github.charlyb01.music_control.mixin",
-    "compatibilityLevel": "JAVA_16",
-    "mixins": [
-    ],
-    "client": [
-        "SoundManagerMixin",
-        "MusicTrackerMixin",
-        "SoundSetMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.github.charlyb01.music_control.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "GameOptionAccessor",
+    "SoundSystemMixin"
+  ],
+  "client": [
+    "MusicTrackerMixin",
+    "SoundManagerMixin",
+    "SoundSetMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
   }
 }

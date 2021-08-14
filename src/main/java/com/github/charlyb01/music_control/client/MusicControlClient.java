@@ -19,10 +19,11 @@ import org.lwjgl.glfw.GLFW;
 @Environment(EnvType.CLIENT)
 public class MusicControlClient implements ClientModInitializer {
     public static boolean init = false;
+    public static boolean isPaused = false;
+    public static boolean shouldPlay = true;
 
     public static boolean skip = false;
     public static boolean pause = false;
-    public static boolean isPaused = false;
     public static boolean category = false;
     public static boolean random = false;
     public static boolean print = false;
