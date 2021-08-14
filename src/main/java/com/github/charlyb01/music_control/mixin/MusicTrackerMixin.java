@@ -78,9 +78,17 @@ public abstract class MusicTrackerMixin {
             if (MusicControlClient.isPaused) {
                 MusicControlClient.isPaused = false;
                 this.client.getSoundManager().resumeAll();
+
+                if (this.client.player != null) {
+                    this.client.player.sendMessage(Text.of("PLAY"), true);
+                }
             } else {
                 MusicControlClient.isPaused = true;
                 this.client.getSoundManager().pauseAll();
+
+                if (this.client.player != null) {
+                    this.client.player.sendMessage(Text.of("PAUSE"), true);
+                }
             }
         }
         if (MusicControlClient.category) {
@@ -118,8 +126,12 @@ public abstract class MusicTrackerMixin {
 
     private void printMusic() {
         if (this.client.player != null && this.current != null) {
-            this.client.player.sendMessage(Text.of(MusicControlClient.currentCategory.toString() +
-                    ": " + this.current.getSound().getIdentifier()), true);
+            String text = "";
+            if (MusicControlClient.isPaused) {
+                text += "[PAUSE] ";
+            }
+            text += MusicControlClient.currentCategory.toString() + ": " + this.current.getSound().getIdentifier();
+            this.client.player.sendMessage(Text.of(text), true);
         }
     }
 }
