@@ -25,34 +25,32 @@ public class MusicCategories {
 
         for (Identifier id : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(id) != null) {
+                Integer soundSize = ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize();
+
                 if (id.toString().startsWith("minecraft:music.game")
                         || id.toString().startsWith("minecraft:music.creative")
                         || id.toString().startsWith("minecraft:music.menu")
                         || id.toString().startsWith("minecraft:music.under_water")) {
 
-                    GAME.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
-                    ALL.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
+                    GAME.put(id, soundSize);
+                    ALL.put(id, soundSize);
 
                 } else if (id.toString().startsWith("minecraft:music.nether")) {
 
-                    int size = 1;
-                    if (NETHER.isEmpty()) {
-                        size = ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize();
-                    }
-                    NETHER.put(id, size);
-                    ALL.put(id, size);
+                    NETHER.put(id, soundSize);
+                    ALL.put(id, soundSize);
 
                 } else if (id.toString().startsWith("minecraft:music.end")
                         || id.toString().startsWith("minecraft:music.dragon")
                         || id.toString().startsWith("minecraft:music.credits")) {
 
-                    END.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
-                    ALL.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
+                    END.put(id, soundSize);
+                    ALL.put(id, soundSize);
 
                 } else if (id.toString().startsWith("minecraft:music_disc")) {
 
-                    DISC.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
-                    ALL.put(id, ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize());
+                    DISC.put(id, soundSize);
+                    ALL.put(id, soundSize);
                 }
             }
         }
