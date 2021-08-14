@@ -7,7 +7,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = "music_control")
 public class ModConfig implements ConfigData {
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 300)
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 300)
     public int timer = 15;
 
     public boolean print = true;
