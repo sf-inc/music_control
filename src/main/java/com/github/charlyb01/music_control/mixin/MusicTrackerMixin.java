@@ -76,11 +76,12 @@ public abstract class MusicTrackerMixin {
             MusicControlClient.pause = false;
 
             if (MusicControlClient.isPaused) {
+                MusicControlClient.isPaused = false;
                 this.client.getSoundManager().resumeAll();
             } else {
+                MusicControlClient.isPaused = true;
                 this.client.getSoundManager().pauseAll();
             }
-            MusicControlClient.isPaused = !MusicControlClient.isPaused;
         }
         if (MusicControlClient.category) {
             MusicControlClient.category = false;
