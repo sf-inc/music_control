@@ -16,42 +16,72 @@ public class MusicCategories {
     public final static Map<Identifier, Integer> NETHER = new HashMap<>();
     public final static Map<Identifier, Integer> END = new HashMap<>();
     public final static Map<Identifier, Integer> DISC = new HashMap<>();
+    public final static Map<Identifier, Integer> CUSTOM = new HashMap<>();
     public final static Map<Identifier, Integer> ALL = new HashMap<>();
+
+    public final static Map<String, Integer> CUSTOM_LIST = new HashMap<>();
 
     private MusicCategories() {}
 
     public static void init (final MinecraftClient client) {
-        MusicControlClient.init = true;
+        if (MusicControlClient.init) {
+            GAME.clear();
+            NETHER.clear();
+            END.clear();
+            DISC.clear();
+            CUSTOM.clear();
+            CUSTOM_LIST.clear();
+            ALL.clear();
+        } else {
+            MusicControlClient.init = true;
+        }
 
-        for (Identifier id : client.getSoundManager().getKeys()) {
-            if (client.getSoundManager().get(id) != null) {
-                Integer soundSize = ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(id)))).getSoundsSize();
+        for (Identifier identifier : client.getSoundManager().getKeys()) {
+            if (client.getSoundManager().get(identifier) != null) {
 
-                if (id.toString().startsWith("minecraft:music.game")
-                        || id.toString().startsWith("minecraft:music.creative")
-                        || id.toString().startsWith("minecraft:music.menu")
-                        || id.toString().startsWith("minecraft:music.under_water")) {
-
-                    GAME.put(id, soundSize);
-                    ALL.put(id, soundSize);
-
-                } else if (id.toString().startsWith("minecraft:music.nether")) {
-
-                    NETHER.put(id, soundSize);
-                    ALL.put(id, soundSize);
-
-                } else if (id.toString().startsWith("minecraft:music.end")
-                        || id.toString().startsWith("minecraft:music.dragon")
-                        || id.toString().startsWith("minecraft:music.credits")) {
-
-                    END.put(id, soundSize);
-                    ALL.put(id, soundSize);
-
-                } else if (id.toString().startsWith("minecraft:music_disc")) {
-
-                    DISC.put(id, soundSize);
-                    ALL.put(id, soundSize);
+                Integer soundSize = ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize();
+                String namespace = "";
+                String id = "";
+                if (identifier.toString().split(":").length > 1) {
+                    namespace = identifier.toString().split(":")[0];
+                    id = identifier.toString().split(":")[1];
                 }
+
+                if (namespace.equals("minecraft")) {
+                    if (id.startsWith("music.game")
+                            || id.startsWith("music.creative")
+                            || id.startsWith("music.menu")
+                            || id.startsWith("music.under_water")) {
+
+                        GAME.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
+
+                    } else if (id.startsWith("music.nether")) {
+
+                        NETHER.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
+
+                    } else if (id.startsWith("music.end")
+                            || id.startsWith("music.dragon")
+                            || id.startsWith("music.credits")) {
+
+                        END.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
+
+                    } else if (id.startsWith("music_disc")) {
+
+                        DISC.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
+                    }
+
+                } /*else {
+                    if (id.contains("music")) {
+                        CUSTOM_LIST.put(namespace, CUSTOM_LIST.get(namespace) + 1);
+
+                        CUSTOM.put(identifier, soundSize);
+                        ALL.put(identifier, soundSize);
+                    }
+                }*/
             }
         }
     }

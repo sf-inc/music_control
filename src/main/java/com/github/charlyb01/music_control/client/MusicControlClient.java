@@ -22,12 +22,14 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean isPaused = false;
     public static boolean shouldPlay = true;
 
+    public static MusicCategory currentCategory = MusicCategory.GAME;
+    public static String currentSubCategory;
+
     public static boolean skip = false;
     public static boolean pause = false;
     public static boolean category = false;
     public static boolean random = false;
     public static boolean print = false;
-    public static MusicCategory currentCategory = MusicCategory.GAME;
 
     private static KeyBinding skipMusic;
     private static KeyBinding pauseResume;
