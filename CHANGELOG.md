@@ -6,11 +6,26 @@ Currently, every **stable** mod versions are available on **1.16.3 or more recen
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.4
+
+* Mods musics support: if you installed mods that contains new musics, you will be able to find them in the CUSTOM
+  category. A new sub-category will be created for each mod containing musics so that you can switch mods musics in the
+  custom category, or resourcepacks.
+* The custom category is back and now shared with mods but you still can add musics via resourcepacks
+* Fixed huge bug making the game not load with some mods
+
 ## v1.2.5
 
 * Rollback some features of 1.3: no mods musics, or custom resourcepacks musics
-* Keep small fixes and features from 1.3: music don't resume when changing screen, add pause messages, fix music trying 
+* Keep small fixes and features from 1.3: music don't resume when changing screen, add pause messages, fix music trying
   to play when main volume off, added indonesian language support
+
+## v1.3
+
+* Multi-version support file: should work for every version (1.16.x at least)
+* Fixed pause resuming after closing a screen (inventory, crafting table, ...)
+* Fixed a bug that makes minecraft try to play music even though volume is off
+* Added a custom category for people who want to add custom musics via datapacks
 
 ## v1.2
 * Fix crash when joining a server: this occurred if the player didn't load a singleplayer world before joining a server
