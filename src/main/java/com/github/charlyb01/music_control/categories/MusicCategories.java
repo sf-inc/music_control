@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class MusicCategories {
-    public final static Map<Identifier, Integer> GAME = new HashMap<>();
+    public final static Map<Identifier, Integer> OVERWORLD = new HashMap<>();
     public final static Map<Identifier, Integer> NETHER = new HashMap<>();
     public final static Map<Identifier, Integer> END = new HashMap<>();
     public final static Map<Identifier, Integer> DISC = new HashMap<>();
@@ -24,7 +24,7 @@ public class MusicCategories {
 
     public static void init (final MinecraftClient client) {
         if (MusicControlClient.init) {
-            GAME.clear();
+            OVERWORLD.clear();
             NETHER.clear();
             END.clear();
             DISC.clear();
@@ -53,7 +53,7 @@ public class MusicCategories {
                             || id.startsWith("music.menu")
                             || id.startsWith("music.under_water")) {
 
-                        GAME.put(identifier, soundSize);
+                        OVERWORLD.put(identifier, soundSize);
                         ALL.put(identifier, soundSize);
 
                     } else if (id.startsWith("music.nether")) {

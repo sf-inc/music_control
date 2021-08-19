@@ -115,7 +115,7 @@ public abstract class MusicTrackerMixin {
     private void updateCategory () {
         if (MusicControlClient.init && this.client.world != null) {
             if (this.client.world.getRegistryKey().equals(World.OVERWORLD)) {
-                MusicControlClient.currentCategory = MusicCategory.GAME;
+                MusicControlClient.currentCategory = MusicCategory.OVERWORLD;
 
             } else if (this.client.world.getRegistryKey().equals(World.NETHER)) {
                 MusicControlClient.currentCategory = MusicCategory.NETHER;

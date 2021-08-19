@@ -22,7 +22,7 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean isPaused = false;
     public static boolean shouldPlay = true;
 
-    public static MusicCategory currentCategory = MusicCategory.GAME;
+    public static MusicCategory currentCategory = MusicCategory.OVERWORLD;
     public static String currentSubCategory;
 
     public static boolean skip = false;

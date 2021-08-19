@@ -5,7 +5,7 @@ import net.minecraft.util.Identifier;
 import java.util.Map;
 
 public enum MusicCategory {
-    GAME (MusicCategories.GAME),
+    OVERWORLD(MusicCategories.OVERWORLD),
     NETHER (MusicCategories.NETHER),
     END (MusicCategories.END),
     DISC (MusicCategories.DISC),
