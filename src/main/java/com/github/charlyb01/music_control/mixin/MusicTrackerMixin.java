@@ -7,6 +7,7 @@ import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.*;
 import net.minecraft.sound.MusicSound;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -42,8 +43,9 @@ public abstract class MusicTrackerMixin {
             this.client.getSoundManager().stop(this.current);
 
             Identifier identifier = MusicCategories.chooseIdentifier(this.random);
-            MusicSound musicSound = new MusicSound(Registry.SOUND_EVENT.get(identifier),
-                    ModConfig.get().timer * 20, ModConfig.get().timer * 20, true);
+            SoundEvent soundEvent = Registry.SOUND_EVENT.get(identifier) == null ? new SoundEvent(identifier)
+                    : Registry.SOUND_EVENT.get(identifier);
+            MusicSound musicSound = new MusicSound(soundEvent, ModConfig.get().timer * 20, ModConfig.get().timer * 20, true);
 
             this.current = PositionedSoundInstance.music(musicSound.getSound());
             if (this.current.getSound() != SoundManager.MISSING_SOUND) {
@@ -130,7 +132,11 @@ public abstract class MusicTrackerMixin {
             if (MusicControlClient.isPaused) {
                 text += "[PAUSE] ";
             }
-            text += MusicControlClient.currentCategory.toString() + ": " + this.current.getSound().getIdentifier();
+            text += MusicControlClient.currentCategory.toString();
+            if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
+                text += " " + MusicControlClient.currentSubCategory;
+            }
+            text += ": " + this.current.getSound().getIdentifier();
             this.client.player.sendMessage(Text.of(text), true);
         }
     }

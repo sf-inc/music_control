@@ -4,7 +4,6 @@ import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.imixin.ISoundSetMixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +39,7 @@ public class MusicCategories {
             if (client.getSoundManager().get(identifier) != null) {
 
                 Integer soundSize = ((ISoundSetMixin) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSoundsSize();
+                soundSize = Math.max(soundSize, 1);
                 String namespace = "";
                 String id = "";
                 if (identifier.toString().split(":").length > 1) {
@@ -74,53 +74,101 @@ public class MusicCategories {
                         ALL.put(identifier, soundSize);
                     }
 
-                } /*else {
+                } else {
                     if (id.contains("music")) {
-                        CUSTOM_LIST.put(namespace, CUSTOM_LIST.get(namespace) + 1);
+                        if (CUSTOM_LIST.get(namespace) == null) {
+                            CUSTOM_LIST.put(namespace, 1);
+                        } else {
+                            CUSTOM_LIST.put(namespace, CUSTOM_LIST.get(namespace) + 1);
+                        }
 
                         CUSTOM.put(identifier, soundSize);
                         ALL.put(identifier, soundSize);
                     }
-                }*/
+                }
             }
+        }
+
+        if (!CUSTOM_LIST.isEmpty()) {
+            MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
         }
     }
 
     public static void changeCategory () {
-        int i = 0;
+        int current = 0;
+        int next;
         for (MusicCategory category: MusicCategory.values()) {
-            i++;
             if (MusicControlClient.currentCategory.equals(category)) {
                 break;
             }
+            current++;
         }
-        i = i % MusicCategory.values().length;
-        if (MusicCategory.values()[i].equals(MusicCategory.ALL)) {
-            i = (i + 1) % MusicCategory.values().length;
+        next = (current + 1) % MusicCategory.values().length;
+
+        if (MusicCategory.values()[current].equals(MusicCategory.CUSTOM)) {
+            if (changeSubCategory()) {
+                next = 0;
+            } else {
+                next = current;
+            }
         }
-        MusicControlClient.currentCategory = MusicCategory.values()[i];
+
+        if (MusicCategory.values()[next].equals(MusicCategory.CUSTOM)) {
+            if (CUSTOM_LIST.isEmpty()) {
+                next = 0;
+            }
+        } else if (MusicCategory.values()[next].equals(MusicCategory.ALL)) {
+            next = 0;
+        }
+
+        MusicControlClient.currentCategory = MusicCategory.values()[next];
+    }
+
+    private static boolean changeSubCategory() {
+        int current = 0;
+        for (String subCategory: CUSTOM_LIST.keySet()) {
+            if (MusicControlClient.currentSubCategory.equals(subCategory)) {
+                break;
+            }
+            current++;
+        }
+
+        if (current < CUSTOM_LIST.keySet().size()-1) {
+            MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[current+1];
+            return false;
+        } else {
+            MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
+            return true;
+        }
     }
 
     public static Identifier chooseIdentifier (final Random random) {
         Identifier identifier = null;
         int acc = 0;
-        int i = MathHelper.nextInt(random, 0, getCategoryWeight(MusicControlClient.currentCategory) - 1);
+        int i = random.nextInt(getCategoryWeight(MusicControlClient.currentCategory));
 
         for (Map.Entry<Identifier, Integer> entry : MusicControlClient.currentCategory.musics.entrySet()) {
-            acc += entry.getValue();
-            if (i < acc) {
-                identifier = entry.getKey();
-                break;
+            if (!MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)
+                    || entry.getKey().toString().startsWith(MusicControlClient.currentSubCategory)) {
+
+                acc += entry.getValue();
+                if (i < acc) {
+                    identifier = entry.getKey();
+                    break;
+                }
             }
         }
 
         return identifier;
     }
 
-    public static int getCategoryWeight (final MusicCategory musicCategory) {
+    private static int getCategoryWeight (final MusicCategory musicCategory) {
         int weight = 0;
         for (Map.Entry<Identifier, Integer> entry : musicCategory.musics.entrySet()) {
-            weight += entry.getValue();
+            if (!musicCategory.equals(MusicCategory.CUSTOM)
+                    || entry.getKey().toString().startsWith(MusicControlClient.currentSubCategory)) {
+                weight += entry.getValue();
+            }
         }
         return weight;
     }
