@@ -132,11 +132,7 @@ public abstract class MusicTrackerMixin {
             if (MusicControlClient.isPaused) {
                 text += "[PAUSE] ";
             }
-            text += MusicControlClient.currentCategory.toString();
-            if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
-                text += " " + MusicControlClient.currentSubCategory;
-            }
-            text += ": " + this.current.getSound().getIdentifier();
+            text += MusicControlClient.currentCategory.toString() + ": " + this.current.getSound().getIdentifier();
             this.client.player.sendMessage(Text.of(text), true);
         }
     }
