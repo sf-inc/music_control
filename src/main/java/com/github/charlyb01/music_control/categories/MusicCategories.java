@@ -51,35 +51,33 @@ public class MusicCategories {
                     id = identifier.toString().split(":")[1];
                 }
 
-                if (namespace.equals("minecraft")) {
-                    if (id.startsWith("music.game")
-                            || id.startsWith("music.creative")
-                            || id.startsWith("music.menu")
-                            || id.startsWith("music.under_water")) {
+                if (id.contains("music")) {
+                    if (id.contains("game")
+                            || id.contains("creative")
+                            || id.contains("menu")
+                            || id.contains("under_water")) {
 
                         OVERWORLD.put(identifier, soundSize);
                         ALL.put(identifier, soundSize);
 
-                    } else if (id.startsWith("music.nether")) {
+                    } else if (id.contains("nether")) {
 
                         NETHER.put(identifier, soundSize);
                         ALL.put(identifier, soundSize);
 
-                    } else if (id.startsWith("music.end")
-                            || id.startsWith("music.dragon")
-                            || id.startsWith("music.credits")) {
+                    } else if (id.contains("end")
+                            || id.contains("dragon")
+                            || id.contains("credits")) {
 
                         END.put(identifier, soundSize);
                         ALL.put(identifier, soundSize);
 
-                    } else if (id.startsWith("music_disc")) {
+                    } else if (id.contains("disc")) {
 
                         DISC.put(identifier, soundSize);
                         ALL.put(identifier, soundSize);
-                    }
 
-                } else {
-                    if (id.contains("music")) {
+                    } else {
                         if (CUSTOM_LIST.get(namespace) == null) {
                             CUSTOM_LIST.put(namespace, 1);
                         } else {
