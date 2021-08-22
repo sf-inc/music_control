@@ -9,6 +9,7 @@ import net.minecraft.client.sound.*;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -52,7 +53,7 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().play(this.current);
             }
 
-            if (ModConfig.get().print) {
+            if (ModConfig.get().display.displayAtStart) {
                 printMusic();
             }
 
@@ -82,14 +83,14 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().resumeAll();
 
                 if (this.client.player != null) {
-                    this.client.player.sendMessage(Text.of("PLAY"), true);
+                    this.print(Text.of("PLAY"));
                 }
             } else {
                 MusicControlClient.isPaused = true;
                 this.client.getSoundManager().pauseAll();
 
                 if (this.client.player != null) {
-                    this.client.player.sendMessage(Text.of("PAUSE"), true);
+                    this.print(Text.of("PAUSE"));
                 }
             }
         }
@@ -126,14 +127,17 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    private void print(Text text) {
+        this.client.inGameHud.setOverlayMessage(text, ModConfig.get().display.colorfulDisplay);
+    }
+
     private void printMusic() {
-        if (this.client.player != null && this.current != null) {
-            String text = "";
+        if (this.current != null) {
+            String text = MusicControlClient.currentCategory.toString() + ": " + this.current.getSound().getIdentifier();
             if (MusicControlClient.isPaused) {
-                text += "[PAUSE] ";
+                text += " [PAUSED] ";
             }
-            text += MusicControlClient.currentCategory.toString() + ": " + this.current.getSound().getIdentifier();
-            this.client.player.sendMessage(Text.of(text), true);
+            this.print(new TranslatableText("record.nowPlaying", text));
         }
     }
 }

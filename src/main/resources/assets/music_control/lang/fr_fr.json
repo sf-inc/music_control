@@ -8,6 +8,8 @@
 
     "text.autoconfig.music_control.title": "Configuration de Music Control",
     "text.autoconfig.music_control.option.timer": "Temps entre deux musiques (en secondes)",
-    "text.autoconfig.music_control.option.print": "Afficher le texte quand une musique se joue",
+    "text.autoconfig.music_control.option.display": "Affichage",
+    "text.autoconfig.music_control.option.display.displayAtStart": "Afficher le texte quand une musique se joue",
+    "text.autoconfig.music_control.option.display.colorfulDisplay": "Affichage multicolore (comme les jukeboxes)",
     "text.autoconfig.music_control.option.cheat": "Changer de catégorie en survie"
 }

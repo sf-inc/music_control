@@ -10,7 +10,13 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 1, max = 300)
     public int timer = 15;
 
-    public boolean print = true;
+    @ConfigEntry.Gui.CollapsibleObject
+    public Display display = new Display();
+
+    public static class Display {
+        public boolean displayAtStart = true;
+        public boolean colorfulDisplay = true;
+    }
 
     public boolean cheat = false;
 
