@@ -42,6 +42,15 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.init && this.client.world != null) {
             this.client.getSoundManager().stop(this.current);
 
+            if (MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT)) {
+                if (this.timeUntilNextSong > 0 || this.current != null) {
+                    this.timeUntilNextSong = 0;
+                    this.current = null;
+                    ci.cancel();
+                }
+                return;
+            }
+
             Identifier identifier = MusicCategories.chooseIdentifier(this.random);
             SoundEvent soundEvent = Registry.SOUND_EVENT.get(identifier) == null ? new SoundEvent(identifier)
                     : Registry.SOUND_EVENT.get(identifier);
@@ -61,12 +70,21 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    @Inject(at = @At("TAIL"), method = "play")
+    private void playDefaultMusic (MusicSound type, CallbackInfo ci) {
+        this.timeUntilNextSong = ModConfig.get().timer * 20;
+        if (ModConfig.get().display.displayAtStart && this.client.world != null) {
+            printMusic();
+        }
+    }
+
     @Inject(at = @At("HEAD"), method = "tick")
     private void changeMusic (CallbackInfo ci) {
-        if (!ModConfig.get().cheat) {
-            if ( this.client.player != null && !this.client.player.isCreative()) {
+        if (!ModConfig.get().cheat
+                && !MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT)
+                && this.client.player != null
+                && !this.client.player.isCreative()) {
                 MusicCategories.updateCategory(this.client.world);
-            }
         }
 
         if (MusicControlClient.skip) {
@@ -96,9 +114,8 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.category) {
             MusicControlClient.category = false;
 
-            if (MusicCategories.changeCategory(this.client.player)) {
-                this.play(null);
-            }
+            MusicCategories.changeCategory(this.client.player);
+            this.play(null);
         }
         if (MusicControlClient.random) {
             MusicControlClient.random = false;

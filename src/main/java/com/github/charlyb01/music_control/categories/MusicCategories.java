@@ -96,7 +96,7 @@ public class MusicCategories {
         }
     }
 
-    public static boolean changeCategory (ClientPlayerEntity player) {
+    public static void changeCategory (ClientPlayerEntity player) {
         boolean canChangeCategory = (player != null && player.isCreative()) || ModConfig.get().cheat;
         int current = 0;
         for (MusicCategory category : MusicCategory.values()) {
@@ -111,9 +111,9 @@ public class MusicCategories {
 
             if (MusicCategory.values()[current].equals(MusicCategory.CUSTOM)) {
                 if (changeSubCategory()) {
-                    next = 0;
-                } else {
                     next = current;
+                } else {
+                    next = 0;
                 }
             }
 
@@ -127,16 +127,16 @@ public class MusicCategories {
 
             MusicControlClient.currentCategory = MusicCategory.values()[next];
         } else {
-            if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM) && player != null) {
+            if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
+                MusicControlClient.currentCategory = MusicCategory.DEFAULT;
+            } else if (MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT) && player != null) {
                 updateCategory(player.clientWorld);
             } else if (!CUSTOM.isEmpty()) {
                 MusicControlClient.currentCategory = MusicCategory.CUSTOM;
             } else {
-                return false;
+                MusicControlClient.currentCategory = MusicCategory.DEFAULT;
             }
         }
-
-        return true;
     }
 
     public static void updateCategory (ClientWorld world) {
@@ -164,10 +164,10 @@ public class MusicCategories {
 
         if (current < CUSTOM_LIST.keySet().size()-1) {
             MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[current+1];
-            return false;
+            return true;
         } else {
             MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
-            return true;
+            return false;
         }
     }
 
