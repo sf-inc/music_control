@@ -128,7 +128,15 @@ public abstract class MusicTrackerMixin {
     }
 
     private void print(Text text) {
-        this.client.inGameHud.setOverlayMessage(text, ModConfig.get().display.colorfulDisplay);
+        switch (ModConfig.get().display.displayType) {
+            case JUKEBOX -> this.client.inGameHud.setOverlayMessage(text, true);
+            case ACTION_BAR -> this.client.inGameHud.setOverlayMessage(text, false);
+            case CHAT -> {
+                if (this.client.player != null) {
+                    this.client.player.sendMessage(text, false);
+                }
+            }
+        }
     }
 
     private void printMusic() {

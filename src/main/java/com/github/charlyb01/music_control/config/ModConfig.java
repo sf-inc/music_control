@@ -15,7 +15,8 @@ public class ModConfig implements ConfigData {
 
     public static class Display {
         public boolean displayAtStart = true;
-        public boolean colorfulDisplay = true;
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public DisplayType displayType = DisplayType.JUKEBOX;
     }
 
     public boolean cheat = false;
