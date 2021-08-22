@@ -12,7 +12,6 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -66,7 +65,7 @@ public abstract class MusicTrackerMixin {
     private void changeMusic (CallbackInfo ci) {
         if (!ModConfig.get().cheat) {
             if ( this.client.player != null && !this.client.player.isCreative()) {
-                updateCategory();
+                MusicCategories.updateCategory(this.client.world);
             }
         }
 
@@ -97,8 +96,9 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.category) {
             MusicControlClient.category = false;
 
-            MusicCategories.changeCategory();
-            this.play(null);
+            if (MusicCategories.changeCategory(this.client.player)) {
+                this.play(null);
+            }
         }
         if (MusicControlClient.random) {
             MusicControlClient.random = false;
@@ -110,20 +110,6 @@ public abstract class MusicTrackerMixin {
             MusicControlClient.print = false;
 
             printMusic();
-        }
-    }
-
-    private void updateCategory () {
-        if (MusicControlClient.init && this.client.world != null) {
-            if (this.client.world.getRegistryKey().equals(World.OVERWORLD)) {
-                MusicControlClient.currentCategory = MusicCategory.OVERWORLD;
-
-            } else if (this.client.world.getRegistryKey().equals(World.NETHER)) {
-                MusicControlClient.currentCategory = MusicCategory.NETHER;
-
-            } else if (this.client.world.getRegistryKey().equals(World.END)) {
-                MusicControlClient.currentCategory = MusicCategory.END;
-            }
         }
     }
 

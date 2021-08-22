@@ -1,9 +1,13 @@
 package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.ISoundSetMixin;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,34 +98,61 @@ public class MusicCategories {
         }
     }
 
-    public static void changeCategory () {
+    public static boolean changeCategory (ClientPlayerEntity player) {
+        boolean canChangeCategory = (player != null && player.isCreative()) || ModConfig.get().cheat;
         int current = 0;
-        int next;
-        for (MusicCategory category: MusicCategory.values()) {
+        for (MusicCategory category : MusicCategory.values()) {
             if (MusicControlClient.currentCategory.equals(category)) {
                 break;
             }
             current++;
         }
-        next = (current + 1) % MusicCategory.values().length;
 
-        if (MusicCategory.values()[current].equals(MusicCategory.CUSTOM)) {
-            if (changeSubCategory()) {
+        if (canChangeCategory) {
+            int next = (current + 1) % MusicCategory.values().length;
+
+            if (MusicCategory.values()[current].equals(MusicCategory.CUSTOM)) {
+                if (changeSubCategory()) {
+                    next = 0;
+                } else {
+                    next = current;
+                }
+            }
+
+            if (MusicCategory.values()[next].equals(MusicCategory.CUSTOM)) {
+                if (CUSTOM_LIST.isEmpty()) {
+                    next = 0;
+                }
+            } else if (MusicCategory.values()[next].equals(MusicCategory.ALL)) {
                 next = 0;
+            }
+
+            MusicControlClient.currentCategory = MusicCategory.values()[next];
+        } else {
+            if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM) && player != null) {
+                updateCategory(player.clientWorld);
+            } else if (!CUSTOM.isEmpty()) {
+                MusicControlClient.currentCategory = MusicCategory.CUSTOM;
             } else {
-                next = current;
+                return false;
             }
         }
 
-        if (MusicCategory.values()[next].equals(MusicCategory.CUSTOM)) {
-            if (CUSTOM_LIST.isEmpty()) {
-                next = 0;
-            }
-        } else if (MusicCategory.values()[next].equals(MusicCategory.ALL)) {
-            next = 0;
-        }
+        return true;
+    }
 
-        MusicControlClient.currentCategory = MusicCategory.values()[next];
+    public static void updateCategory (ClientWorld world) {
+        if (MusicControlClient.init && world != null) {
+            if (world.getRegistryKey().equals(World.OVERWORLD)) {
+                MusicControlClient.currentCategory = MusicCategory.OVERWORLD;
+
+            } else if (world.getRegistryKey().equals(World.NETHER)) {
+                MusicControlClient.currentCategory = MusicCategory.NETHER;
+
+            } else if (world.getRegistryKey().equals(World.END)) {
+                MusicControlClient.currentCategory = MusicCategory.END;
+            }
+        }
     }
 
     private static boolean changeSubCategory() {
