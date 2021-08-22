@@ -22,7 +22,7 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean isPaused = false;
     public static boolean shouldPlay = true;
 
-    public static MusicCategory currentCategory = MusicCategory.OVERWORLD;
+    public static MusicCategory currentCategory;
     public static String currentSubCategory;
 
     public static boolean skip = false;
@@ -40,6 +40,7 @@ public class MusicControlClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+        currentCategory = ModConfig.get().musicCategoryStart;
         SoundEvents.SOUNDS_LOADED.register(((soundManager) -> MusicCategories.init(MinecraftClient.getInstance())));
 
         skipMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(

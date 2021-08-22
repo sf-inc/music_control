@@ -11,5 +11,6 @@
   "text.autoconfig.music_control.option.display": "Tampilan",
   "text.autoconfig.music_control.option.display.displayAtStart": "Tampilkan teks ketika musik dimainkan",
   "text.autoconfig.music_control.option.display.displayType": "Display type",
-  "text.autoconfig.music_control.option.cheat": "Ganti kategori di mode sintas/survival"
+  "text.autoconfig.music_control.option.cheat": "Ganti kategori di mode sintas/survival",
+  "text.autoconfig.music_control.option.musicCategoryStart": "Music category selected by default"
 }

@@ -91,9 +91,13 @@ public class MusicCategories {
             }
         }
 
+        System.out.println(MusicControlClient.currentCategory);
         if (!CUSTOM_LIST.isEmpty()) {
             MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
+        } else if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
+            MusicControlClient.currentCategory = MusicCategory.OVERWORLD;
         }
+        System.out.println(MusicControlClient.currentCategory);
     }
 
     public static void changeCategory (ClientPlayerEntity player) {

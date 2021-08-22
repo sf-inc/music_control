@@ -11,5 +11,6 @@
     "text.autoconfig.music_control.option.display": "Affichage",
     "text.autoconfig.music_control.option.display.displayAtStart": "Afficher le texte quand une musique se joue",
     "text.autoconfig.music_control.option.display.displayType": "Type d'affichage",
-    "text.autoconfig.music_control.option.cheat": "Changer de catégorie en survie"
+    "text.autoconfig.music_control.option.cheat": "Changer de catégorie en survie",
+    "text.autoconfig.music_control.option.musicCategoryStart": "Catégorie sélectionnée par défaut"
 }
