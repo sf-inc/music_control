@@ -95,7 +95,11 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.skip) {
             MusicControlClient.skip = false;
 
-            this.play(null);
+            if (MusicControlClient.isPaused) {
+                printMusic();
+            } else {
+                this.play(null);
+            }
         }
         if (MusicControlClient.pause) {
             MusicControlClient.pause = false;
