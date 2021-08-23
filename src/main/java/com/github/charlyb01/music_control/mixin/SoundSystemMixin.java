@@ -17,7 +17,8 @@ public class SoundSystemMixin {
 
     @Inject(method = "tick()V", at = @At("HEAD"))
     private void delayIfNoSound(CallbackInfo ci) {
-        if (this.settings.getSoundVolume(SoundCategory.MASTER) <= 0.0F) {
+        if (this.settings.getSoundVolume(SoundCategory.MASTER) <= 0.0F
+                || this.settings.getSoundVolume(SoundCategory.MUSIC) <= 0.0F) {
             MusicControlClient.shouldPlay = false;
         }
     }
