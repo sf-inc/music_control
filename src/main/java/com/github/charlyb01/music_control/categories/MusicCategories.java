@@ -26,7 +26,7 @@ public class MusicCategories {
 
     private MusicCategories() {}
 
-    public static void init (final MinecraftClient client) {
+    public static void init(final MinecraftClient client) {
         if (MusicControlClient.init) {
             OVERWORLD.clear();
             NETHER.clear();
@@ -91,16 +91,14 @@ public class MusicCategories {
             }
         }
 
-        System.out.println(MusicControlClient.currentCategory);
         if (!CUSTOM_LIST.isEmpty()) {
             MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
         } else if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
             MusicControlClient.currentCategory = MusicCategory.OVERWORLD;
         }
-        System.out.println(MusicControlClient.currentCategory);
     }
 
-    public static void changeCategory (ClientPlayerEntity player) {
+    public static void changeCategory(final ClientPlayerEntity player) {
         boolean canChangeCategory = (player != null && player.isCreative()) || ModConfig.get().cheat;
         int current = 0;
         for (MusicCategory category : MusicCategory.values()) {
@@ -143,7 +141,7 @@ public class MusicCategories {
         }
     }
 
-    public static void updateCategory (ClientWorld world) {
+    public static void updateCategory(final ClientWorld world) {
         if (MusicControlClient.init && world != null) {
             if (world.getRegistryKey().equals(World.OVERWORLD)) {
                 MusicControlClient.currentCategory = MusicCategory.OVERWORLD;
@@ -175,7 +173,7 @@ public class MusicCategories {
         }
     }
 
-    public static Identifier chooseIdentifier (final Random random) {
+    public static Identifier chooseIdentifier(final Random random) {
         Identifier identifier = null;
         int acc = 0;
         int i = random.nextInt(getCategoryWeight(MusicControlClient.currentCategory));
@@ -195,7 +193,7 @@ public class MusicCategories {
         return identifier;
     }
 
-    private static int getCategoryWeight (final MusicCategory musicCategory) {
+    private static int getCategoryWeight(final MusicCategory musicCategory) {
         int weight = 0;
         for (Map.Entry<Identifier, Integer> entry : musicCategory.musics.entrySet()) {
             if (!musicCategory.equals(MusicCategory.CUSTOM)

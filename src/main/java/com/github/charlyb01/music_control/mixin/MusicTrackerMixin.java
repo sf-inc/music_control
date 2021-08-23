@@ -30,8 +30,8 @@ public abstract class MusicTrackerMixin {
 
     @Shadow public abstract void play(MusicSound type);
 
-    @Inject(at = @At("HEAD"), method = "play", cancellable = true)
-    private void playMusic (MusicSound type, CallbackInfo ci) {
+    @Inject(method = "play", at = @At("HEAD"), cancellable = true)
+    private void playMusic(MusicSound type, CallbackInfo ci) {
         if (!MusicControlClient.shouldPlay) {
             MusicControlClient.shouldPlay = true;
             this.timeUntilNextSong = ModConfig.get().timer * 20;
@@ -70,16 +70,16 @@ public abstract class MusicTrackerMixin {
         }
     }
 
-    @Inject(at = @At("TAIL"), method = "play")
-    private void playDefaultMusic (MusicSound type, CallbackInfo ci) {
+    @Inject(method = "play", at = @At("TAIL"))
+    private void playDefaultMusic(MusicSound type, CallbackInfo ci) {
         this.timeUntilNextSong = ModConfig.get().timer * 20;
         if (ModConfig.get().display.displayAtStart && this.client.world != null) {
             printMusic();
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "tick")
-    private void changeMusic (CallbackInfo ci) {
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void changeMusic(CallbackInfo ci) {
         if (!ModConfig.get().cheat
                 && !MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT)
                 && this.client.player != null
@@ -130,7 +130,7 @@ public abstract class MusicTrackerMixin {
         }
     }
 
-    private void print(Text text) {
+    private void print(final Text text) {
         switch (ModConfig.get().display.displayType) {
             case JUKEBOX -> this.client.inGameHud.setOverlayMessage(text, true);
             case ACTION_BAR -> this.client.inGameHud.setOverlayMessage(text, false);

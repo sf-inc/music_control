@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Environment(EnvType.CLIENT)
 @Mixin(SoundManager.class)
 public class SoundManagerMixin {
-    @Inject(at = @At("TAIL"), method = "apply")
+    @Inject(method = "apply", at = @At("TAIL"))
     private void onStart(CallbackInfo ci) {
         SoundEvents.SOUNDS_LOADED.invoker().onSoundsLoaded((SoundManager) (Object) this);
     }
