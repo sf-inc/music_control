@@ -62,7 +62,7 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().play(this.current);
             }
 
-            if (ModConfig.get().display.displayAtStart || MusicControlClient.categoryChanged) {
+            if (ModConfig.get().displayAtStart || MusicControlClient.categoryChanged) {
                 printMusic();
             }
 
@@ -74,7 +74,7 @@ public abstract class MusicTrackerMixin {
 
     @Inject(method = "play", at = @At("TAIL"))
     private void playDefaultMusic(MusicSound type, CallbackInfo ci) {
-        if ((ModConfig.get().display.displayAtStart || MusicControlClient.categoryChanged)
+        if ((ModConfig.get().displayAtStart || MusicControlClient.categoryChanged)
                 && this.client.world != null) {
             printMusic();
         }

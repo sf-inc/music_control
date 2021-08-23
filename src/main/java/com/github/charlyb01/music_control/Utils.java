@@ -8,7 +8,7 @@ public class Utils {
     private Utils() {}
 
     public static void print(final MinecraftClient client, final Text text) {
-        switch (ModConfig.get().display.displayType) {
+        switch (ModConfig.get().displayType) {
             case JUKEBOX -> client.inGameHud.setOverlayMessage(text, true);
             case ACTION_BAR -> client.inGameHud.setOverlayMessage(text, false);
             case CHAT -> {

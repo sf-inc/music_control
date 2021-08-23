@@ -10,9 +10,8 @@
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
     "text.autoconfig.music_control.option.timer": "Time between two musics (in seconds)",
-    "text.autoconfig.music_control.option.display": "Display",
-    "text.autoconfig.music_control.option.display.displayAtStart": "Display the text when a music is played",
-    "text.autoconfig.music_control.option.display.displayType": "Display type",
+    "text.autoconfig.music_control.option.displayAtStart": "Display the text when a music is played",
+    "text.autoconfig.music_control.option.displayType": "Display type",
     "text.autoconfig.music_control.option.cheat": "Change category in survival",
     "text.autoconfig.music_control.option.musicCategoryStart": "Music category selected by default",
 
