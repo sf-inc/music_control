@@ -56,24 +56,12 @@ public class MusicControlClient implements ClientModInitializer {
                 "category.music_control.title"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (skipMusic.wasPressed()) {
-                skip = true;
-            }
-        });
-
         pauseResume = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.pause",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_LEFT,
                 "category.music_control.title"
         ));
-
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (pauseResume.wasPressed()) {
-                pause = true;
-            }
-        });
 
         changeCat = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.category",
@@ -82,26 +70,12 @@ public class MusicControlClient implements ClientModInitializer {
                 "category.music_control.title"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (changeCat.wasPressed()) {
-                category = true;
-            }
-        });
-
         randomMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.random",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_PAGE_DOWN,
                 "category.music_control.title"
         ));
-
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (randomMusic.wasPressed()) {
-                if ((client.player != null && client.player.isCreative()) || ModConfig.get().cheat) {
-                    random = true;
-                }
-            }
-        });
 
         printMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.print",
@@ -110,27 +84,12 @@ public class MusicControlClient implements ClientModInitializer {
                 "category.music_control.title"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (printMusic.wasPressed()) {
-                print = true;
-            }
-        });
-
         volumeUp = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.volumeUp",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_UP,
                 "category.music_control.title"
         ));
-
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (volumeUp.wasPressed()) {
-                float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                volume = Math.min(volume + 0.01F, 1.0F);
-                client.options.setSoundVolume(SoundCategory.MUSIC, volume);
-                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
-            }
-        });
 
         volumeDown = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.volumeDown",
@@ -140,6 +99,35 @@ public class MusicControlClient implements ClientModInitializer {
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (skipMusic.wasPressed()) {
+                skip = true;
+            }
+
+            while (pauseResume.wasPressed()) {
+                pause = true;
+            }
+
+            while (changeCat.wasPressed()) {
+                category = true;
+            }
+
+            while (randomMusic.wasPressed()) {
+                if ((client.player != null && client.player.isCreative()) || ModConfig.get().cheat) {
+                    random = true;
+                }
+            }
+
+            while (printMusic.wasPressed()) {
+                print = true;
+            }
+
+            while (volumeUp.wasPressed()) {
+                float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
+                volume = Math.min(volume + 0.01F, 1.0F);
+                client.options.setSoundVolume(SoundCategory.MUSIC, volume);
+                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
+            }
+
             while (volumeDown.wasPressed()) {
                 float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
                 volume = Math.max(volume - 0.01F, 0.0F);
