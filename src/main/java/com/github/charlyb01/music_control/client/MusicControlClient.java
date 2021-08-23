@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.client;
 
+import com.github.charlyb01.music_control.Utils;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.config.ModConfig;
@@ -14,6 +15,8 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.TranslatableText;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
@@ -37,6 +40,8 @@ public class MusicControlClient implements ClientModInitializer {
     private static KeyBinding changeCat;
     private static KeyBinding randomMusic;
     private static KeyBinding printMusic;
+    private static KeyBinding volumeUp;
+    private static KeyBinding volumeDown;
 
     @Override
     public void onInitializeClient() {
@@ -73,7 +78,7 @@ public class MusicControlClient implements ClientModInitializer {
         changeCat = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.category",
                 InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_UP,
+                GLFW.GLFW_KEY_PAGE_UP,
                 "category.music_control.title"
         ));
 
@@ -86,7 +91,7 @@ public class MusicControlClient implements ClientModInitializer {
         randomMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.random",
                 InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_DOWN,
+                GLFW.GLFW_KEY_PAGE_DOWN,
                 "category.music_control.title"
         ));
 
@@ -108,6 +113,38 @@ public class MusicControlClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (printMusic.wasPressed()) {
                 print = true;
+            }
+        });
+
+        volumeUp = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.volumeUp",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_UP,
+                "category.music_control.title"
+        ));
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (volumeUp.wasPressed()) {
+                float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
+                volume = Math.min(volume + 0.01F, 1.0F);
+                client.options.setSoundVolume(SoundCategory.MUSIC, volume);
+                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
+            }
+        });
+
+        volumeDown = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.volumeDown",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_DOWN,
+                "category.music_control.title"
+        ));
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (volumeDown.wasPressed()) {
+                float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
+                volume = Math.max(volume - 0.01F, 0.0F);
+                client.options.setSoundVolume(SoundCategory.MUSIC, volume);
+                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
             }
         });
     }

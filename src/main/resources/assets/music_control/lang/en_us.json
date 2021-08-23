@@ -5,6 +5,8 @@
     "key.music_control.category": "Change music category",
     "key.music_control.random": "Active random music player",
     "key.music_control.print": "Print the current music name",
+    "key.music_control.volumeUp": "Increase music volume",
+    "key.music_control.volumeDown": "Decrease music volume",
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
     "text.autoconfig.music_control.option.timer": "Time between two musics (in seconds)",
@@ -17,6 +19,7 @@
     "music.play": "PLAY",
     "music.pause": "PAUSE",
     "music.paused": "PAUSED",
+    "music.volume": "Volume: %s",
 
     "minecraft:music/game/hal1": "C418 - Subwoofer Lubally",
     "minecraft:music/game/hal2": "C418 - Living Mice",

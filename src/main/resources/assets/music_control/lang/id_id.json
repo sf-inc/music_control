@@ -5,6 +5,8 @@
   "key.music_control.category": "Ganti kategori musik",
   "key.music_control.random": "Pemutar musik acak aktif",
   "key.music_control.print": "Tampilkan musik yang sedang dimainkan",
+  "key.music_control.volumeUp": "Increase music volume",
+  "key.music_control.volumeDown": "Decrease music volume",
 
   "text.autoconfig.music_control.title": "Pengaturan Music Control",
   "text.autoconfig.music_control.option.timer": "Waktu diantara dua musik (detik)",
@@ -17,6 +19,7 @@
   "music.play": "PLAY",
   "music.pause": "PAUSE",
   "music.paused": "PAUSED",
+  "music.volume": "Volume: %s",
 
   "minecraft:music/game/hal1": "C418 - Subwoofer Lubally",
   "minecraft:music/game/hal2": "C418 - Living Mice",

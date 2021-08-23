@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.mixin;
 
+import com.github.charlyb01.music_control.Utils;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.client.MusicControlClient;
@@ -104,14 +105,14 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().resumeAll();
 
                 if (this.client.player != null) {
-                    this.print(new TranslatableText("music.play"));
+                    Utils.print(this.client, new TranslatableText("music.play"));
                 }
             } else {
                 MusicControlClient.isPaused = true;
                 this.client.getSoundManager().pauseAll();
 
                 if (this.client.player != null) {
-                    this.print(new TranslatableText("music.pause"));
+                    Utils.print(this.client, new TranslatableText("music.pause"));
                 }
             }
         }
@@ -135,27 +136,15 @@ public abstract class MusicTrackerMixin {
         }
     }
 
-    private void print(final Text text) {
-        switch (ModConfig.get().display.displayType) {
-            case JUKEBOX -> this.client.inGameHud.setOverlayMessage(text, true);
-            case ACTION_BAR -> this.client.inGameHud.setOverlayMessage(text, false);
-            case CHAT -> {
-                if (this.client.player != null) {
-                    this.client.player.sendMessage(text, false);
-                }
-            }
-        }
-    }
-
     private void printMusic() {
         if (this.current != null) {
             if (MusicControlClient.isPaused) {
-                this.print(new TranslatableText("music.paused"));
+                Utils.print(this.client, new TranslatableText("music.paused"));
             } else if (MusicControlClient.categoryChanged) {
-                this.print(Text.of(MusicControlClient.currentCategory.toString()));
+                Utils.print(this.client, Text.of(MusicControlClient.currentCategory.toString()));
             } else {
                 TranslatableText title = new TranslatableText(this.current.getSound().getIdentifier().toString());
-                this.print(new TranslatableText("record.nowPlaying", title));
+                Utils.print(this.client, new TranslatableText("record.nowPlaying", title));
             }
         }
     }
