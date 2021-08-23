@@ -61,10 +61,11 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().play(this.current);
             }
 
-            if (ModConfig.get().display.displayAtStart) {
+            if (ModConfig.get().display.displayAtStart || MusicControlClient.categoryChanged) {
                 printMusic();
             }
 
+            MusicControlClient.categoryChanged = false;
             this.timeUntilNextSong = ModConfig.get().timer * 20;
             ci.cancel();
         }
@@ -72,10 +73,13 @@ public abstract class MusicTrackerMixin {
 
     @Inject(method = "play", at = @At("TAIL"))
     private void playDefaultMusic(MusicSound type, CallbackInfo ci) {
-        this.timeUntilNextSong = ModConfig.get().timer * 20;
-        if (ModConfig.get().display.displayAtStart && this.client.world != null) {
+        if ((ModConfig.get().display.displayAtStart || MusicControlClient.categoryChanged)
+                && this.client.world != null) {
             printMusic();
         }
+
+        MusicControlClient.categoryChanged = false;
+        this.timeUntilNextSong = ModConfig.get().timer * 20;
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -100,19 +104,20 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().resumeAll();
 
                 if (this.client.player != null) {
-                    this.print(Text.of("PLAY"));
+                    this.print(new TranslatableText("music.play"));
                 }
             } else {
                 MusicControlClient.isPaused = true;
                 this.client.getSoundManager().pauseAll();
 
                 if (this.client.player != null) {
-                    this.print(Text.of("PAUSE"));
+                    this.print(new TranslatableText("music.pause"));
                 }
             }
         }
         if (MusicControlClient.category) {
             MusicControlClient.category = false;
+            MusicControlClient.categoryChanged = true;
 
             MusicCategories.changeCategory(this.client.player);
             this.play(null);
@@ -144,11 +149,14 @@ public abstract class MusicTrackerMixin {
 
     private void printMusic() {
         if (this.current != null) {
-            String text = MusicControlClient.currentCategory.toString() + ": " + this.current.getSound().getIdentifier();
             if (MusicControlClient.isPaused) {
-                text += " [PAUSED] ";
+                this.print(new TranslatableText("music.paused"));
+            } else if (MusicControlClient.categoryChanged) {
+                this.print(Text.of(MusicControlClient.currentCategory.toString()));
+            } else {
+                TranslatableText title = new TranslatableText(this.current.getSound().getIdentifier().toString());
+                this.print(new TranslatableText("record.nowPlaying", title));
             }
-            this.print(new TranslatableText("record.nowPlaying", text));
         }
     }
 }

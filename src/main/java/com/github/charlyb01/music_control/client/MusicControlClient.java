@@ -21,6 +21,7 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean init = false;
     public static boolean isPaused = false;
     public static boolean shouldPlay = true;
+    public static boolean categoryChanged = false;
 
     public static MusicCategory currentCategory;
     public static String currentSubCategory;
