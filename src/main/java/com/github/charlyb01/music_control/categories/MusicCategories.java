@@ -44,21 +44,13 @@ public class MusicCategories {
 
                 for (SoundContainer<Sound> soundContainer : sounds) {
                     if (id.contains("music")) {
-                        if (id.contains("game")
-                                || id.contains("creative")
-                                || id.contains("menu")
-                                || id.contains("under_water")) {
-
-                            MusicCategory.OVERWORLD.add(soundContainer.getSound().getIdentifier());
-                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
-
-                        } else if (id.contains("nether")) {
+                        if (id.contains("nether")) {
 
                             MusicCategory.NETHER.add(soundContainer.getSound().getIdentifier());
                             MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
                         } else if (id.contains("end")
-                                || id.contains("dragon")
+                                || id.contains("boss")
                                 || id.contains("credits")) {
 
                             MusicCategory.END.add(soundContainer.getSound().getIdentifier());
@@ -69,7 +61,17 @@ public class MusicCategories {
                             MusicCategory.DISC.add(soundContainer.getSound().getIdentifier());
                             MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
+                        } else if (id.contains("game")
+                                || id.contains("creative")
+                                || id.contains("menu")
+                                || id.contains("under_water")) {
+
+                            MusicCategory.OVERWORLD.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
+
                         } else {
+                            if (identifier.equals(new Identifier("minecraft", "music.dragon"))) continue;
+
                             if (CUSTOM_LIST.get(namespace) == null) {
                                 CUSTOM_LIST.put(namespace, 1);
                             } else {
