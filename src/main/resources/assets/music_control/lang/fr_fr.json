@@ -3,6 +3,7 @@
     "key.music_control.previous":  "Musique précédente",
     "key.music_control.next":  "Musique suivante",
     "key.music_control.pause":  "Mettre en pause / Reprendre la musique",
+    "key.music_control.loop":  "Jouer en boucle la musique actuelle",
     "key.music_control.category": "Changer de catégorie de musique",
     "key.music_control.random": "Activer le lecteur de musique aléatoire",
     "key.music_control.print": "Afficher la musique qui se joue",
@@ -19,6 +20,8 @@
     "music.play": "LECTURE",
     "music.pause": "PAUSE",
     "music.paused": "EN PAUSE",
+    "music.loop.on": "Boucle: ON",
+    "music.loop.off": "Boucle: OFF",
     "music.volume": "Volume: %s",
 
     "minecraft:music/game/hal1": "C418 - Subwoofer Lubally",

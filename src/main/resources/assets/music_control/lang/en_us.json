@@ -3,6 +3,7 @@
     "key.music_control.previous":  "Previous music",
     "key.music_control.next":  "Next music",
     "key.music_control.pause":  "Pause/Resume music",
+    "key.music_control.loop":  "Loop current music",
     "key.music_control.category": "Change music category",
     "key.music_control.random": "Active random music player",
     "key.music_control.print": "Print the current music name",
@@ -19,6 +20,8 @@
     "music.play": "PLAY",
     "music.pause": "PAUSE",
     "music.paused": "PAUSED",
+    "music.loop.on": "Loop: ON",
+    "music.loop.off": "Loop: OFF",
     "music.volume": "Volume: %s",
 
     "minecraft:music/game/hal1": "C418 - Subwoofer Lubally",

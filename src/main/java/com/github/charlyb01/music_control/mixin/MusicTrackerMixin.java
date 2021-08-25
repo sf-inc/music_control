@@ -50,11 +50,13 @@ public abstract class MusicTrackerMixin {
                 return;
             }
 
-            if (MusicControlClient.currentMusic.equals(MusicControlClient.previousMusic)) {
-                MusicControlClient.previousMusic = null;
-            } else {
-                MusicControlClient.previousMusic = MusicControlClient.currentMusic;
-                MusicControlClient.currentMusic = MusicControlClient.currentCategory.get(this.random);
+            if (!MusicControlClient.loop) {
+                if (MusicControlClient.currentMusic.equals(MusicControlClient.previousMusic)) {
+                    MusicControlClient.previousMusic = null;
+                } else {
+                    MusicControlClient.previousMusic = MusicControlClient.currentMusic;
+                    MusicControlClient.currentMusic = MusicControlClient.currentCategory.get(this.random);
+                }
             }
 
             SoundEvent soundEvent = new SoundEvent(MusicControlClient.currentMusic);
@@ -107,6 +109,7 @@ public abstract class MusicTrackerMixin {
 
         if (MusicControlClient.skip) {
             MusicControlClient.skip = false;
+            MusicControlClient.loop = false;
 
             if (MusicControlClient.isPaused) {
                 printMusic();

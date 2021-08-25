@@ -35,6 +35,7 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean replay = false;
     public static boolean skip = false;
     public static boolean pause = false;
+    public static boolean loop = false;
     public static boolean category = false;
     public static boolean random = false;
     public static boolean print = false;
@@ -42,6 +43,7 @@ public class MusicControlClient implements ClientModInitializer {
     private static KeyBinding previous;
     private static KeyBinding next;
     private static KeyBinding pauseResume;
+    private static KeyBinding loopMusic;
     private static KeyBinding changeCat;
     private static KeyBinding randomMusic;
     private static KeyBinding printMusic;
@@ -72,6 +74,13 @@ public class MusicControlClient implements ClientModInitializer {
                 "key.music_control.pause",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
+                "category.music_control.title"
+        ));
+
+        loopMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.loop",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_ESCAPE,
                 "category.music_control.title"
         ));
 
@@ -121,6 +130,15 @@ public class MusicControlClient implements ClientModInitializer {
 
             while (pauseResume.wasPressed()) {
                 pause = true;
+            }
+
+            while (loopMusic.wasPressed()) {
+                loop = !loop;
+                if (loop) {
+                    Utils.print(client, new TranslatableText("music.loop.on"));
+                } else {
+                    Utils.print(client, new TranslatableText("music.loop.off"));
+                }
             }
 
             while (changeCat.wasPressed()) {
