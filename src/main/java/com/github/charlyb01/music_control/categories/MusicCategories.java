@@ -11,29 +11,22 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+
 
 public class MusicCategories {
-    public final static List<Identifier> OVERWORLD = new ArrayList<>();
-    public final static List<Identifier> NETHER = new ArrayList<>();
-    public final static List<Identifier> END = new ArrayList<>();
-    public final static List<Identifier> DISC = new ArrayList<>();
-    public final static List<Identifier> CUSTOM = new ArrayList<>();
-    public final static List<Identifier> ALL = new ArrayList<>();
-
-    public final static Map<String, Integer> CUSTOM_LIST = new HashMap<>();
+    public final static HashMap<String, Integer> CUSTOM_LIST = new HashMap<>();
 
     private MusicCategories() {}
 
     public static void init(final MinecraftClient client) {
         if (MusicControlClient.init) {
-            OVERWORLD.clear();
-            NETHER.clear();
-            END.clear();
-            DISC.clear();
-            CUSTOM.clear();
             CUSTOM_LIST.clear();
-            ALL.clear();
+            for (MusicCategory musicCategory : MusicCategory.values()) {
+                musicCategory.clear();
+            }
         } else {
             MusicControlClient.init = true;
         }
@@ -56,25 +49,25 @@ public class MusicCategories {
                                 || id.contains("menu")
                                 || id.contains("under_water")) {
 
-                            OVERWORLD.add(soundContainer.getSound().getIdentifier());
-                            ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.OVERWORLD.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
                         } else if (id.contains("nether")) {
 
-                            NETHER.add(soundContainer.getSound().getIdentifier());
-                            ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.NETHER.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
                         } else if (id.contains("end")
                                 || id.contains("dragon")
                                 || id.contains("credits")) {
 
-                            END.add(soundContainer.getSound().getIdentifier());
-                            ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.END.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
                         } else if (id.contains("disc")) {
 
-                            DISC.add(soundContainer.getSound().getIdentifier());
-                            ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.DISC.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
                         } else {
                             if (CUSTOM_LIST.get(namespace) == null) {
@@ -83,8 +76,8 @@ public class MusicCategories {
                                 CUSTOM_LIST.put(namespace, CUSTOM_LIST.get(namespace) + 1);
                             }
 
-                            CUSTOM.add(soundContainer.getSound().getIdentifier());
-                            ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.CUSTOM.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
                         }
                     }
                 }
@@ -133,7 +126,7 @@ public class MusicCategories {
                 MusicControlClient.currentCategory = MusicCategory.DEFAULT;
             } else if (MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT) && player != null) {
                 updateCategory(player.clientWorld);
-            } else if (!CUSTOM.isEmpty()) {
+            } else if (!MusicCategory.CUSTOM.isEmpty()) {
                 MusicControlClient.currentCategory = MusicCategory.CUSTOM;
             } else {
                 MusicControlClient.currentCategory = MusicCategory.DEFAULT;
@@ -171,10 +164,5 @@ public class MusicCategories {
             MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
             return false;
         }
-    }
-
-    public static Identifier chooseIdentifier(final Random random) {
-        int i = random.nextInt(MusicControlClient.currentCategory.musics.size());
-        return MusicControlClient.currentCategory.musics.get(i);
     }
 }

@@ -1,21 +1,40 @@
 package com.github.charlyb01.music_control.categories;
 
+import com.github.charlyb01.music_control.client.MusicControlClient;
 import net.minecraft.util.Identifier;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Random;
 
 public enum MusicCategory {
-    DEFAULT(null),
-    OVERWORLD(MusicCategories.OVERWORLD),
-    NETHER (MusicCategories.NETHER),
-    END (MusicCategories.END),
-    DISC (MusicCategories.DISC),
-    CUSTOM (MusicCategories.CUSTOM),
-    ALL (MusicCategories.ALL);
+    DEFAULT,
+    OVERWORLD,
+    NETHER,
+    END,
+    DISC,
+    CUSTOM,
+    ALL;
 
-    public final List<Identifier> musics;
+    private final HashSet<Identifier> musics = new HashSet<>();
 
-    MusicCategory(final List<Identifier> list) {
-        this.musics = list;
+    public Identifier get(final int i) {
+        return (Identifier) this.musics.toArray()[i];
+    }
+
+    public Identifier get(final Random random) {
+        int i = random.nextInt(MusicControlClient.currentCategory.musics.size());
+        return this.get(i);
+    }
+
+    public void add(final Identifier identifier){
+        this.musics.add(identifier);
+    }
+
+    public void clear() {
+        this.musics.clear();
+    }
+
+    public boolean isEmpty() {
+        return this.musics.isEmpty();
     }
 }

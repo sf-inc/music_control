@@ -52,7 +52,7 @@ public abstract class MusicTrackerMixin {
                 return;
             }
 
-            Identifier identifier = MusicCategories.chooseIdentifier(this.random);
+            Identifier identifier = MusicControlClient.currentCategory.get(this.random);
             SoundEvent soundEvent = Registry.SOUND_EVENT.get(identifier) == null ? new SoundEvent(identifier)
                     : Registry.SOUND_EVENT.get(identifier);
             MusicSound musicSound = new MusicSound(soundEvent, ModConfig.get().timer * 20, ModConfig.get().timer * 20, true);
