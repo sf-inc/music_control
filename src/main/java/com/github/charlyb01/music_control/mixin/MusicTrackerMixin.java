@@ -158,7 +158,10 @@ public abstract class MusicTrackerMixin {
             if (MusicControlClient.isPaused) {
                 Utils.print(this.client, new TranslatableText("music.paused"));
             } else if (MusicControlClient.categoryChanged) {
-                Utils.print(this.client, Text.of(MusicControlClient.currentCategory.toString()));
+                String category = MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)
+                        ? MusicControlClient.currentCategory + ": " + MusicControlClient.currentSubCategory
+                        : MusicControlClient.currentCategory.toString();
+                Utils.print(this.client, Text.of(category));
             } else {
                 TranslatableText title = new TranslatableText(this.current.getSound().getIdentifier().toString());
                 Utils.print(this.client, new TranslatableText("record.nowPlaying", title));
