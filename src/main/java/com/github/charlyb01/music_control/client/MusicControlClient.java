@@ -27,17 +27,20 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean shouldPlay = true;
     public static boolean categoryChanged = false;
 
-    public static Identifier currentMusic;
+    public static Identifier previousMusic;
+    public static Identifier currentMusic = new Identifier("current");
     public static MusicCategory currentCategory;
     public static String currentSubCategory;
 
+    public static boolean replay = false;
     public static boolean skip = false;
     public static boolean pause = false;
     public static boolean category = false;
     public static boolean random = false;
     public static boolean print = false;
 
-    private static KeyBinding skipMusic;
+    private static KeyBinding previous;
+    private static KeyBinding next;
     private static KeyBinding pauseResume;
     private static KeyBinding changeCat;
     private static KeyBinding randomMusic;
@@ -51,8 +54,15 @@ public class MusicControlClient implements ClientModInitializer {
         currentCategory = ModConfig.get().musicCategoryStart;
         SoundEvents.SOUNDS_LOADED.register(((soundManager) -> MusicCategories.init(MinecraftClient.getInstance())));
 
-        skipMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.skip",
+        previous = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.previous",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_LEFT,
+                "category.music_control.title"
+        ));
+
+        next = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.next",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT,
                 "category.music_control.title"
@@ -61,7 +71,7 @@ public class MusicControlClient implements ClientModInitializer {
         pauseResume = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.pause",
                 InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_LEFT,
+                GLFW.GLFW_KEY_RIGHT_SHIFT,
                 "category.music_control.title"
         ));
 
@@ -101,7 +111,11 @@ public class MusicControlClient implements ClientModInitializer {
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (skipMusic.wasPressed()) {
+            while (previous.wasPressed()) {
+                replay = true;
+            }
+
+            while (next.wasPressed()) {
                 skip = true;
             }
 

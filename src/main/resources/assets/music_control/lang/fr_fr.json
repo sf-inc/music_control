@@ -1,6 +1,7 @@
 {
     "category.music_control.title": "Music Control",
-    "key.music_control.skip":  "Prochaine musique (même catégorie)",
+    "key.music_control.previous":  "Musique précédente",
+    "key.music_control.next":  "Musique suivante",
     "key.music_control.pause":  "Mettre en pause / Reprendre la musique",
     "key.music_control.category": "Changer de catégorie de musique",
     "key.music_control.random": "Activer le lecteur de musique aléatoire",

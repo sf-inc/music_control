@@ -51,7 +51,12 @@ public abstract class MusicTrackerMixin {
                 return;
             }
 
-            MusicControlClient.currentMusic = MusicControlClient.currentCategory.get(this.random);
+            if (MusicControlClient.currentMusic.equals(MusicControlClient.previousMusic)) {
+                MusicControlClient.previousMusic = null;
+            } else {
+                MusicControlClient.previousMusic = MusicControlClient.currentMusic;
+                MusicControlClient.currentMusic = MusicControlClient.currentCategory.get(this.random);
+            }
             SoundEvent soundEvent = Registry.SOUND_EVENT.get(MusicControlClient.currentMusic) == null ? new SoundEvent(MusicControlClient.currentMusic)
                     : Registry.SOUND_EVENT.get(MusicControlClient.currentMusic);
             MusicSound musicSound = new MusicSound(soundEvent, ModConfig.get().timer * 20, ModConfig.get().timer * 20, true);
@@ -89,6 +94,17 @@ public abstract class MusicTrackerMixin {
                 && this.client.player != null
                 && !this.client.player.isCreative()) {
                 MusicCategories.updateCategory(this.client.world);
+        }
+
+        if (MusicControlClient.replay) {
+            MusicControlClient.replay = false;
+
+            if (MusicControlClient.isPaused) {
+                printMusic();
+            } else if (MusicControlClient.previousMusic != null) {
+                MusicControlClient.currentMusic = MusicControlClient.previousMusic;
+                this.play(null);
+            }
         }
 
         if (MusicControlClient.skip) {

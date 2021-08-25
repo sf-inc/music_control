@@ -1,6 +1,7 @@
 {
   "category.music_control.title": "Music Control",
-  "key.music_control.skip":  "Musik selanjutnya (kategori yang sama)",
+  "key.music_control.previous":  "Previous music",
+  "key.music_control.next":  "Musik selanjutnya",
   "key.music_control.pause":  "Jeda/Lanjut musik",
   "key.music_control.category": "Ganti kategori musik",
   "key.music_control.random": "Pemutar musik acak aktif",
