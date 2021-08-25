@@ -11,7 +11,6 @@ import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -57,11 +56,10 @@ public abstract class MusicTrackerMixin {
                 MusicControlClient.previousMusic = MusicControlClient.currentMusic;
                 MusicControlClient.currentMusic = MusicControlClient.currentCategory.get(this.random);
             }
-            SoundEvent soundEvent = Registry.SOUND_EVENT.get(MusicControlClient.currentMusic) == null ? new SoundEvent(MusicControlClient.currentMusic)
-                    : Registry.SOUND_EVENT.get(MusicControlClient.currentMusic);
-            MusicSound musicSound = new MusicSound(soundEvent, ModConfig.get().timer * 20, ModConfig.get().timer * 20, true);
 
-            this.current = PositionedSoundInstance.music(musicSound.getSound());
+            SoundEvent soundEvent = new SoundEvent(MusicControlClient.currentMusic);
+            this.current = PositionedSoundInstance.music(soundEvent);
+
             if (this.current.getSound() != SoundManager.MISSING_SOUND) {
                 this.client.getSoundManager().play(this.current);
             }
