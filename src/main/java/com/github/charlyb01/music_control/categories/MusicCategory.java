@@ -22,7 +22,11 @@ public enum MusicCategory {
     }
 
     public Identifier get(final Random random) {
-        int i = random.nextInt(MusicControlClient.currentCategory.musics.size());
+        int i, size = MusicControlClient.currentCategory.musics.size();
+        do {
+            i = random.nextInt(size);
+        } while (this.get(i).equals(MusicControlClient.currentMusic) && size > 1);
+
         return this.get(i);
     }
 

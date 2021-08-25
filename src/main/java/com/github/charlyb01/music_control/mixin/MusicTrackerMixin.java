@@ -11,7 +11,6 @@ import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -52,9 +51,9 @@ public abstract class MusicTrackerMixin {
                 return;
             }
 
-            Identifier identifier = MusicControlClient.currentCategory.get(this.random);
-            SoundEvent soundEvent = Registry.SOUND_EVENT.get(identifier) == null ? new SoundEvent(identifier)
-                    : Registry.SOUND_EVENT.get(identifier);
+            MusicControlClient.currentMusic = MusicControlClient.currentCategory.get(this.random);
+            SoundEvent soundEvent = Registry.SOUND_EVENT.get(MusicControlClient.currentMusic) == null ? new SoundEvent(MusicControlClient.currentMusic)
+                    : Registry.SOUND_EVENT.get(MusicControlClient.currentMusic);
             MusicSound musicSound = new MusicSound(soundEvent, ModConfig.get().timer * 20, ModConfig.get().timer * 20, true);
 
             this.current = PositionedSoundInstance.music(musicSound.getSound());

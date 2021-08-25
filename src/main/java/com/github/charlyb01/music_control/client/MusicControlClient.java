@@ -17,6 +17,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
@@ -26,6 +27,7 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean shouldPlay = true;
     public static boolean categoryChanged = false;
 
+    public static Identifier currentMusic;
     public static MusicCategory currentCategory;
     public static String currentSubCategory;
 
