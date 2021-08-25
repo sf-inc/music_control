@@ -2,7 +2,7 @@ package com.github.charlyb01.music_control.categories;
 
 import net.minecraft.util.Identifier;
 
-import java.util.Map;
+import java.util.List;
 
 public enum MusicCategory {
     DEFAULT(null),
@@ -13,9 +13,9 @@ public enum MusicCategory {
     CUSTOM (MusicCategories.CUSTOM),
     ALL (MusicCategories.ALL);
 
-    public final Map<Identifier, Integer> musics;
+    public final List<Identifier> musics;
 
-    MusicCategory(final Map<Identifier, Integer> map) {
-        this.musics = map;
+    MusicCategory(final List<Identifier> list) {
+        this.musics = list;
     }
 }

@@ -26,6 +26,7 @@
   "mixins": [
     "music_control.mixins.json"
   ],
+  "accessWidener": "music_control.accesswidener",
   "depends": {
     "fabricloader": ">=0.11.0",
     "fabric": "*"

@@ -7,8 +7,9 @@
   ],
   "client": [
     "MusicTrackerMixin",
+    "SoundListMixin",
     "SoundManagerMixin",
-    "SoundSetMixin",
+    "SoundSetAccessor",
     "SoundSystemMixin"
   ],
   "injectors": {
