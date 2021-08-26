@@ -80,7 +80,7 @@ public class MusicControlClient implements ClientModInitializer {
         loopMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.loop",
                 InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_ESCAPE,
+                InputUtil.UNKNOWN_KEY.getCode(),
                 "category.music_control.title"
         ));
 
