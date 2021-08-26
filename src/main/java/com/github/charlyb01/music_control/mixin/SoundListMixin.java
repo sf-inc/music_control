@@ -17,7 +17,7 @@ public class SoundListMixin {
     @Shadow @Final
     Map<Identifier, WeightedSoundSet> loadedSounds;
 
-    @Inject(method = "register", at = @At("TAIL"))
+    @Inject(method = "register(Lnet/minecraft/util/Identifier;Lnet/minecraft/client/sound/SoundEntry;Lnet/minecraft/resource/ResourceManager;)V", at = @At("TAIL"))
     private void addEverySound(Identifier id, SoundEntry entry, ResourceManager resourceManager, CallbackInfo ci) {
 
         for (Sound sound : entry.getSounds()) {
