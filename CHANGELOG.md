@@ -6,6 +6,27 @@ Currently, every **stable** mod versions are available on **1.16.3 or more recen
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.5
+
+* Music display now displays the real music names. If not found, displays the same thing as before
+* Different display options for music, categories and volume
+  * JUKEBOX: print on action bar with changing colors, just like jukebox does
+  * ACTION_BAR: print on action bar in white
+  * CHAT: print on chat, only visible for you
+* When not using cheat, you can change category between the one allowed and custom one
+* Custom music can be put in other categories such as nether, if their name is explicit enough
+* Added a DEFAULT category, that restores Minecraft music behavior, but yu still can use every command (except previous!)
+* Option to choose category when running the game if possible. If you spawn in nether but chose overworld and don't have 
+  cheat enabled, it will automatically change. Useful if you want to keep playing with DEFAULT or ALL for example
+* New keybinds
+  * Volume up and down: to change music category volume
+  * Previous music: to play the previous music, only doable once!
+  * Loop music: to play the same music over and over
+* Every music have now the same probability to be played
+* Don't play anymore the same music two following times, if possible
+* Added various displays for different commands, all in lang files
+* When going in category CUSTOM, now displays also the namespace associated with the sub-category
+
 ## v1.4
 
 * Mods musics support: if you installed mods that contains new musics, you will be able to find them in the CUSTOM
