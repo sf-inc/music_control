@@ -1,10 +1,12 @@
 # Versions Changelog
 
-Currently, every **stable** mod versions are available on **1.16.3 or more recent** Minecraft version. Fabric only!
-
 * **X versions** are major update with lots of new content. Very rare
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
+
+## v1.5.1
+
+* Changed default loop button: was escape key
 
 ## v1.5
 
