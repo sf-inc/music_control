@@ -43,7 +43,12 @@ public class MusicCategories {
                 }
 
                 for (SoundContainer<Sound> soundContainer : sounds) {
-                    if (id.contains("music")) {
+                    if (id.contains("records/")) {
+
+                        MusicCategory.DISC.add(soundContainer.getSound().getIdentifier());
+                        MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
+
+                    } else if (id.contains("music/")) {
                         if (id.contains("nether")) {
 
                             MusicCategory.NETHER.add(soundContainer.getSound().getIdentifier());
@@ -56,11 +61,6 @@ public class MusicCategories {
                             MusicCategory.END.add(soundContainer.getSound().getIdentifier());
                             MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
-                        } else if (id.contains("disc")) {
-
-                            MusicCategory.DISC.add(soundContainer.getSound().getIdentifier());
-                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
-
                         } else if (id.contains("game")
                                 || id.contains("creative")
                                 || id.contains("menu")
@@ -70,8 +70,6 @@ public class MusicCategories {
                             MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
                         } else {
-                            if (identifier.equals(new Identifier("minecraft", "music.dragon"))) continue;
-
                             if (CUSTOM_LIST.get(namespace) == null) {
                                 CUSTOM_LIST.put(namespace, 1);
                             } else {

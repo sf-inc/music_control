@@ -36,6 +36,14 @@
   "minecraft:music/game/piano3": "C418 - Mice on Venus",
   "minecraft:music/game/nuance1": "C418 - Key",
   "minecraft:music/game/nuance2": "C418 - Oxygène",
+  "minecraft:music/game/an_ordinary_day": "Kumi Tanioka - An Ordinary Day",
+  "minecraft:music/game/comforting_memories": "Kumi Tanioka - Comforting Memories",
+  "minecraft:music/game/floating_dream": "Kumi Tanioka - Floating Dream",
+  "minecraft:music/game/infinite_amethyst": "Lena Raine - Infinite Amethyst",
+  "minecraft:music/game/left_to_bloom": "Lena Raine - Left to Bloom",
+  "minecraft:music/game/one_more_day": "Lena Raine - One More Day",
+  "minecraft:music/game/stand_tall": "Lena Raine - Stand Tall",
+  "minecraft:music/game/wending": "Lena Raine - Wending",
   "minecraft:music/game/creative/creative1": "C418 - Biome Fest",
   "minecraft:music/game/creative/creative2": "C418 - Blind Spots",
   "minecraft:music/game/creative/creative3": "C418 - Haunt Muskie",
@@ -71,5 +79,6 @@
   "minecraft:records/ward": "C418 - Ward",
   "minecraft:records/11": "C418 - 11",
   "minecraft:records/wait": "C418 - Wait",
-  "minecraft:records/pigstep": "Lena Raine - Pigstep"
+  "minecraft:records/pigstep": "Lena Raine - Pigstep",
+  "minecraft:records/otherside": "Lena Raine - Otherside"
 }
