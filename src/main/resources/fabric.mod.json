@@ -3,7 +3,7 @@
   "id": "music_control",
   "version": "${version}",
   "name": "Music Control",
-  "description": "More control over Minecraft musics!",
+  "description": "Take control of Minecraft musics!",
   "authors": [
     "Pardys"
   ],
@@ -28,7 +28,7 @@
   ],
   "accessWidener": "music_control.accesswidener",
   "depends": {
-    "fabricloader": ">=0.11.0",
+    "fabricloader": ">=0.12.6",
     "fabric": "*"
   },
   "custom": {
