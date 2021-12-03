@@ -49,22 +49,22 @@ public class MusicCategories {
                         MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
                     } else if (id.contains("music/")) {
-                        if (id.contains("nether")) {
+                        if (id.contains("/nether")) {
 
                             MusicCategory.NETHER.add(soundContainer.getSound().getIdentifier());
                             MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
-                        } else if (id.contains("end")
-                                || id.contains("boss")
-                                || id.contains("credits")) {
+                        } else if (id.contains("/end")
+                                || id.contains("/boss")
+                                || id.contains("/credits")) {
 
                             MusicCategory.END.add(soundContainer.getSound().getIdentifier());
                             MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
 
-                        } else if (id.contains("game")
-                                || id.contains("creative")
-                                || id.contains("menu")
-                                || id.contains("under_water")) {
+                        } else if (id.contains("/game")
+                                || id.contains("/creative")
+                                || id.contains("/menu")
+                                || id.contains("/under_water")) {
 
                             MusicCategory.OVERWORLD.add(soundContainer.getSound().getIdentifier());
                             MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
