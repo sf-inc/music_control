@@ -12,18 +12,21 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 
 public class MusicCategories {
     public final static HashMap<String, Integer> CUSTOM_LIST = new HashMap<>();
+    public final static LinkedList<Identifier> PLAYED_MUSICS = new LinkedList<>();
 
     private MusicCategories() {}
 
     public static void init(final MinecraftClient client) {
         if (MusicControlClient.init) {
             CUSTOM_LIST.clear();
+            PLAYED_MUSICS.clear();
             for (MusicCategory musicCategory : MusicCategory.values()) {
                 musicCategory.clear();
             }

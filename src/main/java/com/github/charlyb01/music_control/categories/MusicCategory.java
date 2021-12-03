@@ -1,6 +1,7 @@
 package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.util.Identifier;
 
 import java.util.HashSet;
@@ -22,12 +23,20 @@ public enum MusicCategory {
     }
 
     public Identifier get(final Random random) {
+        Identifier identifier;
         int i, size = MusicControlClient.currentCategory.musics.size();
+
+        while (MusicCategories.PLAYED_MUSICS.size() >= Math.min(ModConfig.get().musicQueue, size))
+            MusicCategories.PLAYED_MUSICS.poll();
+
         do {
             i = random.nextInt(size);
-        } while (this.get(i).equals(MusicControlClient.currentMusic) && size > 1);
+            identifier = this.get(i);
+        } while (MusicCategories.PLAYED_MUSICS.contains(identifier) && size > MusicCategories.PLAYED_MUSICS.size());
 
-        return this.get(i);
+        MusicCategories.PLAYED_MUSICS.add(identifier);
+
+        return identifier;
     }
 
     public void add(final Identifier identifier){

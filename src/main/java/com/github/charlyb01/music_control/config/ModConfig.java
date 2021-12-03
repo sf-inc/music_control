@@ -11,6 +11,9 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 1, max = 300)
     public int timer = 15;
 
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 15)
+    public int musicQueue = 5;
+
     public boolean displayAtStart = true;
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public DisplayType displayType = DisplayType.JUKEBOX;

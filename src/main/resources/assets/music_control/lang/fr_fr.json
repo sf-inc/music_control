@@ -12,6 +12,7 @@
 
     "text.autoconfig.music_control.title": "Configuration de Music Control",
     "text.autoconfig.music_control.option.timer": "Temps entre deux musiques (en secondes)",
+    "text.autoconfig.music_control.option.musicQueue": "File des dernières musiques jouées",
     "text.autoconfig.music_control.option.displayAtStart": "Afficher le texte quand une musique se joue",
     "text.autoconfig.music_control.option.displayType": "Type d'affichage",
     "text.autoconfig.music_control.option.cheat": "Changer de catégorie en survie",
