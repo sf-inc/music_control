@@ -4,6 +4,11 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## 1.5.2
+
+* Added last played musics queue: in order to not have the same musics following too many times
+* Better display of custom subcategories
+
 ## v1.5.1
 
 * Changed default loop button: was escape key
