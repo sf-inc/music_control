@@ -4,6 +4,11 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.5.3
+
+* Fixed custom category auto changing after a music was played, when not in creative or cheat disabled
+* Display ALL category when enabling it
+
 ## 1.5.2
 
 * Added last played musics queue: in order to not have the same musics following too many times
