@@ -145,6 +145,7 @@ public abstract class MusicTrackerMixin {
         }
         if (MusicControlClient.random) {
             MusicControlClient.random = false;
+            MusicControlClient.categoryChanged = true;
 
             MusicControlClient.currentCategory = MusicCategory.ALL;
             this.play(null);
