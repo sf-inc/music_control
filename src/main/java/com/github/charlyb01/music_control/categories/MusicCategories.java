@@ -138,7 +138,10 @@ public class MusicCategories {
     }
 
     public static void updateCategory(final ClientWorld world) {
-        if (MusicControlClient.init && world != null) {
+        if (MusicControlClient.init
+                && world != null
+                && !MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
+
             if (world.getRegistryKey().equals(World.OVERWORLD)) {
                 MusicControlClient.currentCategory = MusicCategory.OVERWORLD;
 
