@@ -156,15 +156,15 @@ public class MusicCategories {
 
     private static boolean changeSubCategory() {
         int current = 0;
-        for (String subCategory: CUSTOM_LIST.keySet()) {
+        for (String subCategory : CUSTOM_LIST.keySet()) {
             if (MusicControlClient.currentSubCategory.equals(subCategory)) {
                 break;
             }
             current++;
         }
 
-        if (current < CUSTOM_LIST.keySet().size()-1) {
-            MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[current+1];
+        if (current < CUSTOM_LIST.keySet().size() - 1) {
+            MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[current + 1];
             return true;
         } else {
             MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];

@@ -39,7 +39,7 @@ public enum MusicCategory {
         return identifier;
     }
 
-    public void add(final Identifier identifier){
+    public void add(final Identifier identifier) {
         this.musics.add(identifier);
     }
 
