@@ -61,7 +61,7 @@
     "music.paused": "PAUSED",
     "music.loop.on": "LOOP: ON",
     "music.loop.off": "LOOP: OFF",
-    "music.volume": "VOLUME: %s",
+    "music.volume": "VOLUME: %s%%",
 
     "minecraft:music/game/hal1": "C418 - Subwoofer Lubally",
     "minecraft:music/game/hal2": "C418 - Living Mice",

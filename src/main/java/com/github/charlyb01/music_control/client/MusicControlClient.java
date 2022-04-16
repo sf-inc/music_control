@@ -161,7 +161,7 @@ public class MusicControlClient implements ClientModInitializer {
                 volume = Utils.clamp(newVolume, 0.0F, ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
-                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)).append("%"));
+                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
             }
 
             while (volumeDown.wasPressed()) {
@@ -170,7 +170,7 @@ public class MusicControlClient implements ClientModInitializer {
                 volume = Utils.clamp(newVolume, 0.0F, ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
-                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)).append("%"));
+                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
             }
         });
     }
