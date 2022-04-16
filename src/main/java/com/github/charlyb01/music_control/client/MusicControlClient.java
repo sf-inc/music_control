@@ -157,20 +157,20 @@ public class MusicControlClient implements ClientModInitializer {
 
             while (volumeUp.wasPressed()) {
                 float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                float newVolume = Utils.roundUp(volume + (float) ModConfig.get().volumeIncrement / 100, 2);
-                volume = Utils.clamp(newVolume, 0.0F, ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
+                float newVolume = (float) Math.round((volume + (float) ModConfig.get().volumeIncrement / 100) * 100) / 100;
+                volume = Math.min(newVolume, ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
-                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
+                Utils.print(client, new TranslatableText("music.volume", Math.round(100 * volume)));
             }
 
             while (volumeDown.wasPressed()) {
                 float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                float newVolume = Utils.roundDown(volume - (float) ModConfig.get().volumeIncrement / 100, 2);
-                volume = Utils.clamp(newVolume, 0.0F, ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
+                float newVolume = (float) Math.round((volume - (float) ModConfig.get().volumeIncrement / 100) * 100) / 100;
+                volume = Math.max(newVolume, 0.0F);
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
-                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
+                Utils.print(client, new TranslatableText("music.volume", Math.round(100 * volume)));
             }
         });
     }

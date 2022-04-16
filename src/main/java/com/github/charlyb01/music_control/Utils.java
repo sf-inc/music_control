@@ -21,20 +21,4 @@ public class Utils {
             }
         }
     }
-
-    public static float clamp(float num, float min, float max) {
-        return Math.min(Math.max(num, min), max);
-    }
-
-    public static float roundUp(float value, int places) {
-        BigDecimal bd = new BigDecimal(Float.toString(value));
-        bd = bd.setScale(places, RoundingMode.CEILING);
-        return bd.floatValue();
-    }
-
-    public static float roundDown(float value, int places) {
-        BigDecimal bd = new BigDecimal(Float.toString(value));
-        bd = bd.setScale(places, RoundingMode.FLOOR);
-        return bd.floatValue();
-    }
 }
