@@ -4,9 +4,6 @@ import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 public class Utils {
     private Utils() {}
 
