@@ -4,6 +4,14 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.6.0
+
+* Added volume increment feature (@naturecodevoid)
+* Added feature that allows user to increment the music volume up to 200% (disabled by default) (@naturecodevoid)
+* Improved config: added categories and tooltips (@naturecodevoid)
+* Improved volume display by adding percent symbol to the end of it (@naturecodevoid)
+* Fixed grammar in en_us (@naturecodevoid)
+
 ## v1.5.3
 
 * Fixed custom category auto changing after a music was played, when not in creative or cheat disabled
