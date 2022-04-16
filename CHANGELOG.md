@@ -6,11 +6,11 @@
 
 ## v1.6.0
 
-* Added volume increment feature (@naturecodevoid)
-* Added feature that allows user to increment the music volume up to 200% (disabled by default) (@naturecodevoid)
-* Improved config: added categories and tooltips (@naturecodevoid)
-* Improved volume display by adding percent symbol to the end of it (@naturecodevoid)
-* Fixed grammar in en_us (@naturecodevoid)
+* Added volume increment feature ([@naturecodevoid](https://github.com/naturecodevoid))
+* Added feature that allows user to increment the music volume up to 200% (disabled by default) ([@naturecodevoid](https://github.com/naturecodevoid))
+* Improved config: added categories and tooltips ([@naturecodevoid](https://github.com/naturecodevoid))
+* Improved volume display by adding percent symbol to the end of i ([@naturecodevoid](https://github.com/naturecodevoid))
+* Fixed grammar in en_us ([@naturecodevoid](https://github.com/naturecodevoid))
 
 ## v1.5.3
 
