@@ -21,7 +21,7 @@ public class ModConfig implements ConfigData {
     public boolean cheat = false;
 
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-    public MusicCategory musicCategoryStart = MusicCategory.OVERWORLD;
+    public MusicCategory musicCategoryStart = MusicCategory.DIMENSION;
 
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();

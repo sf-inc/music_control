@@ -55,7 +55,7 @@ public abstract class MusicTrackerMixin {
                     MusicControlClient.previousMusic = null;
                 } else {
                     MusicControlClient.previousMusic = MusicControlClient.currentMusic;
-                    MusicControlClient.currentMusic = MusicControlClient.currentCategory.get(this.random);
+                    MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
                 }
             }
 
@@ -93,7 +93,7 @@ public abstract class MusicTrackerMixin {
                 && !MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT)
                 && this.client.player != null
                 && !this.client.player.isCreative()) {
-                MusicCategories.updateCategory(this.client.world);
+                MusicCategories.updateDimension(this.client.world);
         }
 
         if (MusicControlClient.replay) {
