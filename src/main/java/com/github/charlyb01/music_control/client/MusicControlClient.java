@@ -157,8 +157,7 @@ public class MusicControlClient implements ClientModInitializer {
 
             while (volumeUp.wasPressed()) {
                 float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                float newVolume = (float) Math.round(volume * 100 + (float) ModConfig.get().volumeIncrement) / 100;
-                volume = Math.min(newVolume, ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
+                volume = Math.min((float) Math.round(volume * 100 + (float) ModConfig.get().volumeIncrement) / 100, ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
                 Utils.print(client, new TranslatableText("music.volume", Math.round(100 * volume)));
@@ -166,8 +165,7 @@ public class MusicControlClient implements ClientModInitializer {
 
             while (volumeDown.wasPressed()) {
                 float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                float newVolume = (float) Math.round(volume * 100 - (float) ModConfig.get().volumeIncrement) / 100;
-                volume = Math.max(newVolume, 0.0F);
+                volume = Math.max((float) Math.round(volume * 100 - (float) ModConfig.get().volumeIncrement) / 100, 0.0F);
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
                 Utils.print(client, new TranslatableText("music.volume", Math.round(100 * volume)));
