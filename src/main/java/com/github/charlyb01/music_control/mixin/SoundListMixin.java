@@ -1,9 +1,6 @@
 package com.github.charlyb01.music_control.mixin;
 
-import net.minecraft.client.sound.Sound;
-import net.minecraft.client.sound.SoundEntry;
-import net.minecraft.client.sound.SoundManager;
-import net.minecraft.client.sound.WeightedSoundSet;
+import net.minecraft.client.sound.*;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
