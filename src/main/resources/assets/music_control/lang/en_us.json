@@ -1,9 +1,9 @@
 {
     "category.music_control.title": "Music Control",
-    "key.music_control.previous": "Previous music",
-    "key.music_control.next": "Next music",
-    "key.music_control.pause": "Pause/Resume music",
-    "key.music_control.loop": "Loop current music",
+    "key.music_control.previous":  "Previous music",
+    "key.music_control.next":  "Next music",
+    "key.music_control.pause":  "Pause/Resume music",
+    "key.music_control.loop":  "Loop current music",
     "key.music_control.category": "Change music category",
     "key.music_control.random": "Active random music player",
     "key.music_control.print": "Print the current music name",
