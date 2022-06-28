@@ -3,9 +3,9 @@ package com.github.charlyb01.music_control.categories;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
 
 import java.util.HashSet;
-import java.util.Random;
 
 public enum MusicCategory {
     DEFAULT,

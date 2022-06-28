@@ -4,12 +4,12 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
-## v?.?.?
+## v1.5.4 ([@naturecodevoid](https://github.com/naturecodevoid))
 
-* Added volume increment feature ([@naturecodevoid](https://github.com/naturecodevoid))
-* Added feature that allows user to increment the music volume up to 200% (disabled by default) ([@naturecodevoid](https://github.com/naturecodevoid))
-* Improved config: added categories and tooltips ([@naturecodevoid](https://github.com/naturecodevoid))
-* Improved volume display by adding percent symbol to the end of the displayed text ([@naturecodevoid](https://github.com/naturecodevoid))
+* Added volume increment setting
+* Added setting that allows user to increment the music volume up to 200% (disabled by default)
+* Improved config: added categories and tooltips
+* Improved volume display by adding percent symbol to the end of the displayed text
 
 ## v1.5.3
 

@@ -9,6 +9,7 @@ import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundContainer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -34,6 +35,7 @@ public class MusicCategories {
             MusicControlClient.init = true;
         }
 
+        Random random = Random.createLocal();
         for (Identifier identifier : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(identifier) != null) {
 
@@ -48,29 +50,29 @@ public class MusicCategories {
                 for (SoundContainer<Sound> soundContainer : sounds) {
                     if (id.contains("records/")) {
 
-                        MusicCategory.DISC.add(soundContainer.getSound().getIdentifier());
-                        MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
+                        MusicCategory.DISC.add(soundContainer.getSound(random).getIdentifier());
+                        MusicCategory.ALL.add(soundContainer.getSound(random).getIdentifier());
 
                     } else if (id.contains("music/")) {
                         if (id.contains("/nether")) {
 
-                            MusicCategory.NETHER.add(soundContainer.getSound().getIdentifier());
-                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.NETHER.add(soundContainer.getSound(random).getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound(random).getIdentifier());
 
                         } else if (id.contains("/end")
                                 || id.contains("/boss")
                                 || id.contains("/credits")) {
 
-                            MusicCategory.END.add(soundContainer.getSound().getIdentifier());
-                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.END.add(soundContainer.getSound(random).getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound(random).getIdentifier());
 
                         } else if (id.contains("/game")
                                 || id.contains("/creative")
                                 || id.contains("/menu")
                                 || id.contains("/under_water")) {
 
-                            MusicCategory.OVERWORLD.add(soundContainer.getSound().getIdentifier());
-                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.OVERWORLD.add(soundContainer.getSound(random).getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound(random).getIdentifier());
 
                         } else {
                             if (CUSTOM_LIST.get(namespace) == null) {
@@ -79,8 +81,8 @@ public class MusicCategories {
                                 CUSTOM_LIST.put(namespace, CUSTOM_LIST.get(namespace) + 1);
                             }
 
-                            MusicCategory.CUSTOM.add(soundContainer.getSound().getIdentifier());
-                            MusicCategory.ALL.add(soundContainer.getSound().getIdentifier());
+                            MusicCategory.CUSTOM.add(soundContainer.getSound(random).getIdentifier());
+                            MusicCategory.ALL.add(soundContainer.getSound(random).getIdentifier());
                         }
                     }
                 }
