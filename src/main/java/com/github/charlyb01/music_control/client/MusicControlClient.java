@@ -6,7 +6,8 @@ import com.github.charlyb01.music_control.categories.Event;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.config.ModConfig;
-import com.github.charlyb01.music_control.event.SoundEvents;
+import com.github.charlyb01.music_control.event.SoundEventBiome;
+import com.github.charlyb01.music_control.event.SoundLoadedEvent;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
@@ -24,6 +25,8 @@ import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
 public class MusicControlClient implements ClientModInitializer {
+    public static final String MOD_ID = "music_control";
+
     public static boolean init = false;
     public static boolean isPaused = false;
     public static boolean shouldPlay = true;
@@ -57,7 +60,8 @@ public class MusicControlClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
-        SoundEvents.SOUNDS_LOADED.register(((soundManager) -> MusicCategories.init(MinecraftClient.getInstance())));
+        SoundEventBiome.init();
+        SoundLoadedEvent.SOUNDS_LOADED.register(((soundManager) -> MusicCategories.init(MinecraftClient.getInstance())));
 
         currentCategory = ModConfig.get().musicCategoryStart;
         currentDimension = Dimension.OVERWORLD;

@@ -47,7 +47,11 @@ public class MusicCategories {
                     id = identifier.toString().split(":")[1];
                 }
 
+                if (id.contains("music"))
+                    System.out.println(namespace + " : " + id);
                 for (SoundContainer<Sound> soundContainer : sounds) {
+                    if (id.contains("music"))
+                        System.out.println("musics : " + soundContainer.getSound().getIdentifier());
                     Music music = new Music(soundContainer.getSound().getIdentifier());
 
                     if (id.contains("records/")) {

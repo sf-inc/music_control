@@ -6,6 +6,8 @@
   "mixins": [
   ],
   "client": [
+    "BiomeEffectsIMixin",
+    "BiomeMixin",
     "MusicTrackerMixin",
     "SoundListMixin",
     "SoundManagerMixin",

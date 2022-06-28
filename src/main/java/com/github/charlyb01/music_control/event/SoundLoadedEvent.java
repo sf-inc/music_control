@@ -7,8 +7,8 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.sound.SoundManager;
 
 @Environment(EnvType.CLIENT)
-public final class SoundEvents {
-    private SoundEvents() {
+public final class SoundLoadedEvent {
+    private SoundLoadedEvent() {
     }
 
     /**
