@@ -3,7 +3,6 @@ package com.github.charlyb01.music_control.categories;
 public enum MusicCategory {
     DEFAULT,
     DIMENSION,
-    EVENT,
     DISC,
     CUSTOM,
     ALL

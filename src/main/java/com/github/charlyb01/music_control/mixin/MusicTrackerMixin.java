@@ -50,13 +50,9 @@ public abstract class MusicTrackerMixin {
                 return;
             }
 
-            if (!MusicControlClient.loop) {
-                if (MusicControlClient.currentMusic.equals(MusicControlClient.previousMusic)) {
-                    MusicControlClient.previousMusic = null;
-                } else {
-                    MusicControlClient.previousMusic = MusicControlClient.currentMusic;
-                    MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
-                }
+            if (!MusicControlClient.loop && !MusicControlClient.currentMusic.equals(MusicControlClient.previousMusic)) {
+                MusicControlClient.previousMusic = MusicControlClient.currentMusic;
+                MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
             }
 
             SoundEvent soundEvent = new SoundEvent(MusicControlClient.currentMusic);
@@ -70,7 +66,10 @@ public abstract class MusicTrackerMixin {
                 printMusic();
             }
 
-            MusicControlClient.categoryChanged = false;
+            if (MusicControlClient.categoryChanged) {
+                MusicControlClient.categoryChanged = false;
+            }
+
             this.timeUntilNextSong = ModConfig.get().timer * 20;
             ci.cancel();
         }
@@ -83,19 +82,46 @@ public abstract class MusicTrackerMixin {
             printMusic();
         }
 
-        MusicControlClient.categoryChanged = false;
+        if (MusicControlClient.categoryChanged) {
+            MusicControlClient.categoryChanged = false;
+        }
+
         this.timeUntilNextSong = ModConfig.get().timer * 20;
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void changeMusic(CallbackInfo ci) {
         if (!ModConfig.get().cheat
-                && !MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT)
                 && this.client.player != null
                 && !this.client.player.isCreative()) {
                 MusicCategories.updateDimension(this.client.world);
         }
 
+        handlePreviousMusicKey();
+        handleNextMusicKey();
+        handleResumePauseKey();
+        handleChangeCategoryKey();
+        handleRandomMusicKey();
+        handleDisplayMusicKey();
+    }
+
+    private void printMusic() {
+        if (this.current != null) {
+            if (MusicControlClient.isPaused) {
+                Utils.print(this.client, new TranslatableText("music.paused"));
+            } else if (MusicControlClient.categoryChanged) {
+                String category = MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)
+                        ? MusicControlClient.currentCategory + ": " + MusicControlClient.currentSubCategory.toUpperCase().replace('_', ' ')
+                        : MusicControlClient.currentCategory.toString();
+                Utils.print(this.client, Text.of(category));
+            } else {
+                TranslatableText title = new TranslatableText(this.current.getSound().getIdentifier().toString());
+                Utils.print(this.client, new TranslatableText("record.nowPlaying", title));
+            }
+        }
+    }
+
+    private void handlePreviousMusicKey() {
         if (MusicControlClient.replay) {
             MusicControlClient.replay = false;
 
@@ -106,7 +132,9 @@ public abstract class MusicTrackerMixin {
                 this.play(null);
             }
         }
+    }
 
+    private void handleNextMusicKey() {
         if (MusicControlClient.skip) {
             MusicControlClient.skip = false;
             MusicControlClient.loop = false;
@@ -117,6 +145,9 @@ public abstract class MusicTrackerMixin {
                 this.play(null);
             }
         }
+    }
+
+    private void handleResumePauseKey() {
         if (MusicControlClient.pause) {
             MusicControlClient.pause = false;
 
@@ -136,6 +167,9 @@ public abstract class MusicTrackerMixin {
                 }
             }
         }
+    }
+
+    private void handleChangeCategoryKey() {
         if (MusicControlClient.category) {
             MusicControlClient.category = false;
             MusicControlClient.categoryChanged = true;
@@ -143,33 +177,26 @@ public abstract class MusicTrackerMixin {
             MusicCategories.changeCategory(this.client.player);
             this.play(null);
         }
+    }
+
+    private void handleRandomMusicKey() {
         if (MusicControlClient.random) {
             MusicControlClient.random = false;
             MusicControlClient.categoryChanged = true;
 
-            MusicControlClient.currentCategory = MusicCategory.ALL;
+            if (MusicControlClient.currentCategory != MusicCategory.ALL) {
+                MusicControlClient.currentCategory = MusicCategory.ALL;
+            }
+
             this.play(null);
         }
+    }
+
+    private void handleDisplayMusicKey() {
         if (MusicControlClient.print) {
             MusicControlClient.print = false;
 
             printMusic();
-        }
-    }
-
-    private void printMusic() {
-        if (this.current != null) {
-            if (MusicControlClient.isPaused) {
-                Utils.print(this.client, new TranslatableText("music.paused"));
-            } else if (MusicControlClient.categoryChanged) {
-                String category = MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)
-                        ? MusicControlClient.currentCategory + ": " + MusicControlClient.currentSubCategory.toUpperCase().replace('_', ' ')
-                        : MusicControlClient.currentCategory.toString();
-                Utils.print(this.client, Text.of(category));
-            } else {
-                TranslatableText title = new TranslatableText(this.current.getSound().getIdentifier().toString());
-                Utils.print(this.client, new TranslatableText("record.nowPlaying", title));
-            }
         }
     }
 }

@@ -13,7 +13,6 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 
 import static com.github.charlyb01.music_control.categories.Dimension.DIMENSIONS;
-import static com.github.charlyb01.music_control.categories.Event.EVENTS;
 import static com.github.charlyb01.music_control.categories.Music.MUSICS;
 import static com.github.charlyb01.music_control.categories.Music.CUSTOMS;
 import static com.github.charlyb01.music_control.categories.Music.DISCS;
@@ -29,7 +28,6 @@ public class MusicCategories {
         if (MusicControlClient.init) {
             MUSICS.clear();
             DIMENSIONS.clear();
-            EVENTS.clear();
             PLAYED_MUSICS.clear();
             CUSTOM_LIST.clear();
         } else {
@@ -39,56 +37,40 @@ public class MusicCategories {
         for (Identifier identifier : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(identifier) != null) {
 
-                List<SoundContainer<Sound>> sounds = ((SoundSetAccessor) (Objects.requireNonNull(client.getSoundManager().get(identifier)))).getSounds();
-                String namespace = "";
-                String id = "";
-                if (identifier.toString().split(":").length > 1) {
-                    namespace = identifier.toString().split(":")[0];
-                    id = identifier.toString().split(":")[1];
-                }
+                List<SoundContainer<Sound>> sounds = ((SoundSetAccessor) client.getSoundManager().get(identifier)).getSounds();
+                String namespace = identifier.getNamespace();
+                String path = identifier.getPath();
 
-                if (id.contains("music"))
-                    System.out.println(namespace + " : " + id);
+                if (!path.contains("music"))
+                    continue;
+
                 for (SoundContainer<Sound> soundContainer : sounds) {
-                    if (id.contains("music"))
-                        System.out.println("musics : " + soundContainer.getSound().getIdentifier());
-                    Music music = new Music(soundContainer.getSound().getIdentifier());
 
-                    if (id.contains("records/")) {
+                    Identifier musicIdentifier = soundContainer.getSound().getIdentifier();
+                    Music music = new Music(musicIdentifier, path.contains("music_disc"));
+                    if (MUSICS.contains(music))
+                        continue;
 
-                        MUSICS.add(music);
-                        music.setDisc();    // Liste de catégories autres ?
+                    MUSICS.add(music);
 
-                    } else if (id.contains("music/")) {
+                    if (namespace.equals("minecraft")) {
 
-                        MUSICS.add(music);
+                        if (path.contains("nether")) {
 
-                        if (id.contains("/nether")) {
+                            music.addDimension(Dimension.NETHER);
 
-                            music.setDimension(Dimension.NETHER);
+                        } else if (path.contains("end")
+                                || path.contains("boss")
+                                || path.contains("credits")) {
 
-                        } else if (id.contains("/end")
-                                || id.contains("/boss")
-                                || id.contains("/credits")) {
-
-                            music.setDimension(Dimension.END);
-
-                        } else if (id.contains("/game")
-                                || id.contains("/creative")
-                                || id.contains("/menu")
-                                || id.contains("/under_water")) {
-
-                            music.setDimension(Dimension.OVERWORLD);
+                            music.addDimension(Dimension.END);
 
                         } else {
-                            if (CUSTOM_LIST.get(namespace) == null) {
-                                CUSTOM_LIST.put(namespace, 1);
-                            } else {
-                                CUSTOM_LIST.put(namespace, CUSTOM_LIST.get(namespace) + 1);
-                            }
-
-                            CUSTOMS.add(music);
+                            music.addDimension(Dimension.OVERWORLD);
                         }
+                    } else {
+                        CUSTOM_LIST.merge(namespace, 1, Integer::sum);
+                        CUSTOMS.add(music);
                     }
                 }
             }
@@ -195,7 +177,7 @@ public class MusicCategories {
         switch (MusicControlClient.currentCategory) {
             case DIMENSION -> musics = MusicControlClient.currentDimension.getMusics();
             case DISC -> musics = DISCS;
-            case EVENT, CUSTOM, ALL -> musics = MUSICS; // Separate in the future
+            case CUSTOM, ALL -> musics = MUSICS; // Separate in the future
             case DEFAULT -> {
                 return null;
             }

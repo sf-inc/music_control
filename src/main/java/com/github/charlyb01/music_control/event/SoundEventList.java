@@ -1,6 +1,5 @@
 package com.github.charlyb01.music_control.event;
 
-import com.github.charlyb01.music_control.client.MusicControlClient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;

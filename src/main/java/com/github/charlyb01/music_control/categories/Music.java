@@ -11,43 +11,31 @@ public class Music {
     public final static ArrayList<Music> CUSTOMS = new ArrayList<>();
 
     private final Identifier identifier;
-    private Dimension dimension;
-    private final HashSet<Event> events;
-    private boolean isDisc;
+    private final HashSet<Dimension> dimensions;
 
     public Identifier getIdentifier() {
         return identifier;
     }
 
-    public Music(final Identifier identifier) {
+    public Music(final Identifier identifier, final boolean isDisc) {
         this.identifier = identifier;
-        this.events = new HashSet<>();
-        this.isDisc = false;
+        this.dimensions = new HashSet<>();
+        if (isDisc) {
+            DISCS.add(this);
+        }
     }
 
-    public HashSet<Event> getEvents() {
-        return events;
+    public HashSet<Dimension> getDimensions() {
+        return dimensions;
     }
 
-    public void addEvent(final Event event) {
-        events.add(event);
+    public void addDimension(final Dimension dimension) {
+        dimension.addMusic(this);
+        this.dimensions.add(dimension);
     }
 
-    public Dimension getDimension() {
-        return dimension;
-    }
-
-    public void setDimension(final Dimension dimension) {
-        this.dimension = dimension;
-        this.dimension.addMusic(this);
-    }
-
-    public boolean isDisc() {
-        return isDisc;
-    }
-
-    public void setDisc() {
-        isDisc = true;
-        DISCS.add(this);
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Music && this.identifier.equals(((Music) obj).identifier);
     }
 }
