@@ -48,10 +48,14 @@ public class MusicCategories {
 
                     Identifier musicIdentifier = soundContainer.getSound().getIdentifier();
                     Music music = new Music(musicIdentifier, path.contains("music_disc"));
-                    if (MUSICS.contains(music))
+                    if (MUSICS.contains(music)) {
+                        music = MUSICS.get(MUSICS.indexOf(music));
+                        music.addEvent(identifier);
                         continue;
+                    }
 
                     MUSICS.add(music);
+                    music.addEvent(identifier);
 
                     if (namespace.equals("minecraft")) {
 
@@ -60,7 +64,7 @@ public class MusicCategories {
                             music.addDimension(Dimension.NETHER);
 
                         } else if (path.contains("end")
-                                || path.contains("boss")
+                                || path.contains("dragon")
                                 || path.contains("credits")) {
 
                             music.addDimension(Dimension.END);
