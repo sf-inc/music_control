@@ -18,7 +18,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -143,9 +143,9 @@ public class MusicControlClient implements ClientModInitializer {
             while (loopMusic.wasPressed()) {
                 loop = !loop;
                 if (loop) {
-                    Utils.print(client, new TranslatableText("music.loop.on"));
+                    Utils.print(client, Text.translatable("music.loop.on"));
                 } else {
-                    Utils.print(client, new TranslatableText("music.loop.off"));
+                    Utils.print(client, Text.translatable("music.loop.off"));
                 }
             }
 
@@ -165,18 +165,18 @@ public class MusicControlClient implements ClientModInitializer {
 
             while (volumeUp.wasPressed()) {
                 float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                volume = Math.min(volume + 0.01F, 1.0F);
+                volume = Math.min(volume + (ModConfig.get().volumeIncrement / 100.F), ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
-                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
+                Utils.print(client, Text.translatable("music.volume", Math.round(100.F * volume)));
             }
 
             while (volumeDown.wasPressed()) {
                 float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                volume = Math.max(volume - 0.01F, 0.0F);
+                volume = Math.max(volume - (ModConfig.get().volumeIncrement / 100.F), 0.0F);
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
-                Utils.print(client, new TranslatableText("music.volume", (int) (100 * volume)));
+                Utils.print(client, Text.translatable("music.volume", Math.round(100.F * volume)));
             }
         });
     }

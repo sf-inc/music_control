@@ -34,7 +34,8 @@ public abstract class SoundEventList {
     public static final SoundEvent MUSIC_OVERWORLD_BIRCH_FOREST = register("music.overworld.birch_forest");
     public static final SoundEvent MUSIC_OVERWORLD_OLD_GROWTH_BIRCH_FOREST = register("music.overworld.old_growth_birch_forest");
     public static final SoundEvent MUSIC_OVERWORLD_DARK_FOREST = register("music.overworld.dark_forest");
-    public static final SoundEvent MUSIC_OVERWORLD_SWAMP = register("music.overworld.swamp");
+    public static final SoundEvent MUSIC_OVERWORLD_SWAMP = SoundEvents.MUSIC_OVERWORLD_SWAMP;
+    public static final SoundEvent MUSIC_OVERWORLD_MANGROVE_SWAMP = register("music.overworld.mangrove_swamp");
     public static final SoundEvent MUSIC_OVERWORLD_JUNGLE = register("music.overworld.jungle");
     public static final SoundEvent MUSIC_OVERWORLD_SPARSE_JUNGLE = register("music.overworld.sparse_jungle");
     public static final SoundEvent MUSIC_OVERWORLD_BAMBOO_JUNGLE = register("music.overworld.bamboo_jungle");
@@ -64,6 +65,7 @@ public abstract class SoundEventList {
 
     public static final SoundEvent MUSIC_OVERWORLD_DRIPSTONE_CAVES = SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES;
     public static final SoundEvent MUSIC_OVERWORLD_LUSH_CAVES = SoundEvents.MUSIC_OVERWORLD_LUSH_CAVES;
+    public static final SoundEvent MUSIC_OVERWORLD_DEEP_DARK = SoundEvents.MUSIC_OVERWORLD_DEEP_DARK;
 
     public static final SoundEvent MUSIC_NETHER_NETHER_WASTES = SoundEvents.MUSIC_NETHER_NETHER_WASTES;
     public static final SoundEvent MUSIC_NETHER_SOUL_SAND_VALLEY = SoundEvents.MUSIC_NETHER_SOUL_SAND_VALLEY;

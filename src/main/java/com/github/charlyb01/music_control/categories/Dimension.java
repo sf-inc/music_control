@@ -35,6 +35,8 @@ public class Dimension {
     }
 
     public void addMusic(final Music music) {
-        musics.add(music);
+        if (!musics.contains(music)) {
+            musics.add(music);
+        }
     }
 }

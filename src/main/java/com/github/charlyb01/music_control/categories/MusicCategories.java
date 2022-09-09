@@ -9,8 +9,12 @@ import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundContainer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import static com.github.charlyb01.music_control.categories.Dimension.DIMENSIONS;
 import static com.github.charlyb01.music_control.categories.Music.MUSICS;
@@ -34,6 +38,8 @@ public class MusicCategories {
             MusicControlClient.init = true;
         }
 
+        Random random = Random.createLocal();
+
         for (Identifier identifier : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(identifier) != null) {
 
@@ -46,7 +52,7 @@ public class MusicCategories {
 
                 for (SoundContainer<Sound> soundContainer : sounds) {
 
-                    Identifier musicIdentifier = soundContainer.getSound().getIdentifier();
+                    Identifier musicIdentifier = soundContainer.getSound(random).getIdentifier();
                     Music music = new Music(musicIdentifier, path.contains("music_disc"));
                     if (MUSICS.contains(music)) {
                         music = MUSICS.get(MUSICS.indexOf(music));

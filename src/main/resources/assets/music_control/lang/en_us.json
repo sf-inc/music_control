@@ -11,19 +11,57 @@
     "key.music_control.volumeDown": "Decrease music volume",
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
-    "text.autoconfig.music_control.option.timer": "Time between two musics (in seconds)",
-    "text.autoconfig.music_control.option.musicQueue": "Last played musics queue",
-    "text.autoconfig.music_control.option.displayAtStart": "Display the text when a music is played",
+
+    "text.autoconfig.music_control.option.timer": "Delay between musics (in seconds)",
+    "text.autoconfig.music_control.option.timer.@Tooltip[0]": "This setting defines how many seconds",
+    "text.autoconfig.music_control.option.timer.@Tooltip[1]": "there will be a delay between music.",
+
+    "text.autoconfig.music_control.option.musicQueue": "Number of musics to keep in history",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[0]": "This setting defines how many",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[1]": "music will be kept in history",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[2]": "so that random music player",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[3]": "won't pick them again.",
+
+    "text.autoconfig.music_control.option.displayAtStart": "Display text when music is played",
+    "text.autoconfig.music_control.option.displayAtStart.@Tooltip[0]": "This setting defines if there will be text",
+    "text.autoconfig.music_control.option.displayAtStart.@Tooltip[1]": "displayed when a new music is played.",
+
     "text.autoconfig.music_control.option.displayType": "Display type",
+    "text.autoconfig.music_control.option.displayType.@Tooltip[0]": "This setting defines where text will be",
+    "text.autoconfig.music_control.option.displayType.@Tooltip[1]": "displayed if the above setting is enabled.",
+
     "text.autoconfig.music_control.option.cheat": "Change category in survival",
+    "text.autoconfig.music_control.option.cheat.@Tooltip[0]": "This setting defines if the mod will change music",
+    "text.autoconfig.music_control.option.cheat.@Tooltip[1]": "category randomly while in survival. Normally,",
+    "text.autoconfig.music_control.option.cheat.@Tooltip[2]": "this doesn't happen because category is based",
+    "text.autoconfig.music_control.option.cheat.@Tooltip[3]": "on location, such as The End or Overworld.",
+
     "text.autoconfig.music_control.option.musicCategoryStart": "Music category selected by default",
+    "text.autoconfig.music_control.option.musicCategoryStart.@Tooltip[0]": "This setting defines what",
+    "text.autoconfig.music_control.option.musicCategoryStart.@Tooltip[1]": "the default category will be.",
+
+    "text.autoconfig.music_control.option.volumeIncrement": "Volume percent to increment",
+    "text.autoconfig.music_control.option.volumeIncrement.@Tooltip[0]": "This setting defines how much",
+    "text.autoconfig.music_control.option.volumeIncrement.@Tooltip[1]": "percent of volume will be",
+    "text.autoconfig.music_control.option.volumeIncrement.@Tooltip[2]": "incremented when using",
+    "text.autoconfig.music_control.option.volumeIncrement.@Tooltip[3]": "\"Volume up\" or \"Volume down\".",
+
+    "text.autoconfig.music_control.option.allowHighVolume": "Allow setting volume up to 200%",
+    "text.autoconfig.music_control.option.allowHighVolume.@Tooltip[0]": "This setting defines whether to",
+    "text.autoconfig.music_control.option.allowHighVolume.@Tooltip[1]": "enable using the \"Volume up\" key",
+    "text.autoconfig.music_control.option.allowHighVolume.@Tooltip[2]": "to turn the music volume up to 200%.",
+
+    "text.autoconfig.music_control.category.general": "General",
+    "text.autoconfig.music_control.category.display": "Display",
+    "text.autoconfig.music_control.category.volume": "Volume",
+    "text.autoconfig.music_control.category.categories": "Categories",
 
     "music.play": "PLAY",
     "music.pause": "PAUSE",
     "music.paused": "PAUSED",
     "music.loop.on": "Loop: ON",
     "music.loop.off": "Loop: OFF",
-    "music.volume": "Volume: %s",
+    "music.volume": "Volume: %s%%",
 
     "minecraft:music/game/hal1": "C418 - Subwoofer Lubally",
     "minecraft:music/game/hal2": "C418 - Living Mice",
@@ -37,6 +75,7 @@
     "minecraft:music/game/piano3": "C418 - Mice on Venus",
     "minecraft:music/game/nuance1": "C418 - Key",
     "minecraft:music/game/nuance2": "C418 - Oxygène",
+    "minecraft:music/game/ancestry": "Lena Raine - Ancestry",
     "minecraft:music/game/an_ordinary_day": "Kumi Tanioka - An Ordinary Day",
     "minecraft:music/game/comforting_memories": "Kumi Tanioka - Comforting Memories",
     "minecraft:music/game/floating_dream": "Kumi Tanioka - Floating Dream",
@@ -55,6 +94,9 @@
     "minecraft:music/menu/menu2": "C418 - Moog City 2",
     "minecraft:music/menu/menu3": "C418 - Beginning 2",
     "minecraft:music/menu/menu4": "C418 - Floating Trees",
+    "minecraft:music/game/swamp/aerie": "Lena Raine - Aerie",
+    "minecraft:music/game/swamp/firebugs": "Lena Raine - Firebugs",
+    "minecraft:music/game/swamp/labyrinthine": "Lena Raine - Labyrinthine",
     "minecraft:music/game/water/axolotl": "C418 - Axolotl",
     "minecraft:music/game/water/dragon_fish": "C418 - Dragon Fish",
     "minecraft:music/game/water/shuniji": "C418 - Shuniji",
@@ -68,7 +110,7 @@
     "minecraft:music/game/end/end": "C418 - The End",
     "minecraft:music/game/end/boss": "C418 - Boss",
     "minecraft:music/game/end/credits": "C418 - Alpha",
-    "minecraft:records/13": "C418 - Thirteen",
+    "minecraft:records/13": "C418 - 13",
     "minecraft:records/cat": "C418 - Cat",
     "minecraft:records/blocks": "C418 - Blocks",
     "minecraft:records/chirp": "C418 - Chirp",
@@ -81,5 +123,6 @@
     "minecraft:records/11": "C418 - 11",
     "minecraft:records/wait": "C418 - Wait",
     "minecraft:records/pigstep": "Lena Raine - Pigstep",
-    "minecraft:records/otherside": "Lena Raine - Otherside"
+    "minecraft:records/otherside": "Lena Raine - Otherside",
+    "minecraft:records/5": "Samuel Åberg - 5"
 }

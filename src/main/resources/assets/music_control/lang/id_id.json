@@ -23,5 +23,5 @@
   "music.paused": "PAUSED",
   "music.loop.on": "Loop: ON",
   "music.loop.off": "Loop: OFF",
-  "music.volume": "Volume: %s"
+  "music.volume": "Volume: %s%%"
 }

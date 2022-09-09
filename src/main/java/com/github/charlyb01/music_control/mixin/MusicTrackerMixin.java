@@ -10,15 +10,13 @@ import net.minecraft.client.sound.*;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Random;
 
 @Mixin(MusicTracker.class)
 public abstract class MusicTrackerMixin {
@@ -108,15 +106,15 @@ public abstract class MusicTrackerMixin {
     private void printMusic() {
         if (this.current != null) {
             if (MusicControlClient.isPaused) {
-                Utils.print(this.client, new TranslatableText("music.paused"));
+                Utils.print(this.client, Text.translatable("music.paused"));
             } else if (MusicControlClient.categoryChanged) {
                 String category = MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)
                         ? MusicControlClient.currentCategory + ": " + MusicControlClient.currentSubCategory.toUpperCase().replace('_', ' ')
                         : MusicControlClient.currentCategory.toString();
                 Utils.print(this.client, Text.of(category));
             } else {
-                TranslatableText title = new TranslatableText(this.current.getSound().getIdentifier().toString());
-                Utils.print(this.client, new TranslatableText("record.nowPlaying", title));
+                Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
+                Utils.print(this.client, Text.translatable("record.nowPlaying", title));
             }
         }
     }
@@ -156,14 +154,14 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().resumeAll();
 
                 if (this.client.player != null) {
-                    Utils.print(this.client, new TranslatableText("music.play"));
+                    Utils.print(this.client, Text.translatable("music.play"));
                 }
             } else {
                 MusicControlClient.isPaused = true;
                 this.client.getSoundManager().pauseAll();
 
                 if (this.client.player != null) {
-                    Utils.print(this.client, new TranslatableText("music.pause"));
+                    Utils.print(this.client, Text.translatable("music.pause"));
                 }
             }
         }

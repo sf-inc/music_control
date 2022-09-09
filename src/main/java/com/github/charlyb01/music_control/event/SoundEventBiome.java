@@ -26,7 +26,7 @@ public class SoundEventBiome {
         ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.BIRCH_FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_BIRCH_FOREST);
         ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_OLD_GROWTH_BIRCH_FOREST);
         ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.DARK_FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_DARK_FOREST);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SWAMP)).setMusic(SoundEventList.MUSIC_OVERWORLD_SWAMP);
+        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.MANGROVE_SWAMP)).setMusic(SoundEventList.MUSIC_OVERWORLD_MANGROVE_SWAMP);
         ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.JUNGLE)).setMusic(SoundEventList.MUSIC_OVERWORLD_JUNGLE);
         ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SPARSE_JUNGLE)).setMusic(SoundEventList.MUSIC_OVERWORLD_SPARSE_JUNGLE);
         ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.BAMBOO_JUNGLE)).setMusic(SoundEventList.MUSIC_OVERWORLD_BAMBOO_JUNGLE);
