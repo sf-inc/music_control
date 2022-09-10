@@ -1,6 +1,7 @@
 package com.github.charlyb01.music_control.mixin;
 
 import com.github.charlyb01.music_control.Utils;
+import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.client.MusicControlClient;
@@ -48,9 +49,16 @@ public abstract class MusicTrackerMixin {
                 return;
             }
 
-            if (!MusicControlClient.loop && !MusicControlClient.currentMusic.equals(MusicControlClient.previousMusic)) {
-                MusicControlClient.previousMusic = MusicControlClient.currentMusic;
-                MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
+            if (!MusicControlClient.loop) {
+                if (MusicControlClient.replay) {
+                    MusicControlClient.replay = false;
+                    Music music = MusicCategories.PLAYED_MUSICS.peekLast();
+                    if (music != null) {
+                        MusicControlClient.currentMusic = music.getIdentifier();
+                    }
+                } else {
+                    MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
+                }
             }
 
             SoundEvent soundEvent = new SoundEvent(MusicControlClient.currentMusic);
@@ -121,12 +129,11 @@ public abstract class MusicTrackerMixin {
 
     private void handlePreviousMusicKey() {
         if (MusicControlClient.replay) {
-            MusicControlClient.replay = false;
-
             if (MusicControlClient.isPaused) {
+                MusicControlClient.replay = false;
                 printMusic();
-            } else if (MusicControlClient.previousMusic != null) {
-                MusicControlClient.currentMusic = MusicControlClient.previousMusic;
+            } else {
+                MusicCategories.PLAYED_MUSICS.pollLast();
                 this.play(null);
             }
         }
