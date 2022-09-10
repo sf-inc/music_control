@@ -43,7 +43,7 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Category("categories")
     @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-    public MusicCategory musicCategoryStart = MusicCategory.DIMENSION;
+    public MusicCategory musicCategoryStart = MusicCategory.DEFAULT;
 
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();

@@ -1,7 +1,6 @@
 package com.github.charlyb01.music_control.client;
 
 import com.github.charlyb01.music_control.Utils;
-import com.github.charlyb01.music_control.categories.Dimension;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.config.ModConfig;
@@ -33,7 +32,6 @@ public class MusicControlClient implements ClientModInitializer {
 
     public static Identifier currentMusic = new Identifier("current");
     public static MusicCategory currentCategory;
-    public static Dimension currentDimension;
     public static String currentSubCategory;
 
     public static boolean replay = false;
@@ -61,7 +59,6 @@ public class MusicControlClient implements ClientModInitializer {
         SoundLoadedEvent.SOUNDS_LOADED.register(((soundManager) -> MusicCategories.init(MinecraftClient.getInstance())));
 
         currentCategory = ModConfig.get().musicCategoryStart;
-        currentDimension = Dimension.OVERWORLD;
 
         previous = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.previous",

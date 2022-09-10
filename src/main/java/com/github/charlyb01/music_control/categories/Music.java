@@ -12,7 +12,6 @@ public class Music {
     public final static ArrayList<Identifier> EVENTS = new ArrayList<>();
 
     private final Identifier identifier;
-    private final HashSet<Dimension> dimensions;
     private final HashSet<Identifier> events;
 
     public Identifier getIdentifier() {
@@ -21,20 +20,10 @@ public class Music {
 
     public Music(final Identifier identifier, final boolean isDisc) {
         this.identifier = identifier;
-        this.dimensions = new HashSet<>();
         this.events = new HashSet<>();
         if (isDisc) {
             DISCS.add(this);
         }
-    }
-
-    public HashSet<Dimension> getDimensions() {
-        return dimensions;
-    }
-
-    public void addDimension(final Dimension dimension) {
-        dimension.addMusic(this);
-        this.dimensions.add(dimension);
     }
 
     public HashSet<Identifier> getEvents() {

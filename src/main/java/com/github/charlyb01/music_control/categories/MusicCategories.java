@@ -7,7 +7,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundContainer;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 
@@ -16,7 +15,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.github.charlyb01.music_control.categories.Dimension.DIMENSIONS;
 import static com.github.charlyb01.music_control.categories.Music.MUSICS;
 import static com.github.charlyb01.music_control.categories.Music.CUSTOMS;
 import static com.github.charlyb01.music_control.categories.Music.DISCS;
@@ -62,22 +60,7 @@ public class MusicCategories {
                     MUSICS.add(music);
                     music.addEvent(identifier);
 
-                    if (namespace.equals("minecraft")) {
-
-                        if (path.contains("nether")) {
-
-                            music.addDimension(Dimension.NETHER);
-
-                        } else if (path.contains("end")
-                                || path.contains("dragon")
-                                || path.contains("credits")) {
-
-                            music.addDimension(Dimension.END);
-
-                        } else {
-                            music.addDimension(Dimension.OVERWORLD);
-                        }
-                    } else {
+                    if (!namespace.equals("minecraft")) {
                         CUSTOM_LIST.merge(namespace, 1, Integer::sum);
                         CUSTOMS.add(music);
                     }
@@ -88,7 +71,7 @@ public class MusicCategories {
         if (!CUSTOM_LIST.isEmpty()) {
             MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
         } else if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
-            MusicControlClient.currentCategory = MusicCategory.DIMENSION;
+            MusicControlClient.currentCategory = MusicCategory.DEFAULT;
         }
     }
 
@@ -125,22 +108,10 @@ public class MusicCategories {
         } else {
             if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
                 MusicControlClient.currentCategory = MusicCategory.DEFAULT;
-            } else if (MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT) && player != null) {
-                updateDimension(player.clientWorld);
-                MusicControlClient.currentCategory = MusicCategory.DIMENSION;
             } else if (!Music.CUSTOMS.isEmpty()) {
                 MusicControlClient.currentCategory = MusicCategory.CUSTOM;
             } else {
                 MusicControlClient.currentCategory = MusicCategory.DEFAULT;
-            }
-        }
-    }
-
-    public static void updateDimension(final ClientWorld world) {
-        if (MusicControlClient.init && world != null) {
-            for (Dimension dimension : DIMENSIONS) {
-                if (world.getRegistryKey().equals(dimension.getWorldRegistryKey()))
-                    MusicControlClient.currentDimension = dimension;
             }
         }
     }
@@ -181,7 +152,6 @@ public class MusicCategories {
     public static Identifier getMusicIdentifier(final Random random) {
         ArrayList<Music> musics = null;
         switch (MusicControlClient.currentCategory) {
-            case DIMENSION -> musics = MusicControlClient.currentDimension.getMusics();
             case DISC -> musics = DISCS;
             case CUSTOM, ALL -> musics = MUSICS; // Separate in the future
             case DEFAULT -> {

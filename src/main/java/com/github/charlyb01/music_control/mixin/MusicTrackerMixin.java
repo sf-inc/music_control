@@ -97,12 +97,6 @@ public abstract class MusicTrackerMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void changeMusic(CallbackInfo ci) {
-        if (!ModConfig.get().cheat
-                && this.client.player != null
-                && !this.client.player.isCreative()) {
-                MusicCategories.updateDimension(this.client.world);
-        }
-
         handlePreviousMusicKey();
         handleNextMusicKey();
         handleResumePauseKey();
