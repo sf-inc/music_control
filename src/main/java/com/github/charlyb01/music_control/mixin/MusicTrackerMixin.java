@@ -68,31 +68,14 @@ public abstract class MusicTrackerMixin {
                 this.client.getSoundManager().play(this.current);
             }
 
-            if (ModConfig.get().displayAtStart || MusicControlClient.categoryChanged) {
-                printMusic();
-            }
-
-            if (MusicControlClient.categoryChanged) {
-                MusicControlClient.categoryChanged = false;
-            }
-
-            this.timeUntilNextSong = ModConfig.get().timer * 20;
+            postPlay();
             ci.cancel();
         }
     }
 
     @Inject(method = "play", at = @At("TAIL"))
     private void playDefaultMusic(MusicSound type, CallbackInfo ci) {
-        if ((ModConfig.get().displayAtStart || MusicControlClient.categoryChanged)
-                && this.client.world != null) {
-            printMusic();
-        }
-
-        if (MusicControlClient.categoryChanged) {
-            MusicControlClient.categoryChanged = false;
-        }
-
-        this.timeUntilNextSong = ModConfig.get().timer * 20;
+        postPlay();
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -105,19 +88,34 @@ public abstract class MusicTrackerMixin {
         handleDisplayMusicKey();
     }
 
+    private void postPlay() {
+        if (ModConfig.get().displayAtStart || MusicControlClient.categoryChanged) {
+            printMusic();
+        }
+
+        if (MusicControlClient.categoryChanged) {
+            MusicControlClient.categoryChanged = false;
+        }
+
+        this.timeUntilNextSong = ModConfig.get().timer * 20;
+    }
+
     private void printMusic() {
-        if (this.current != null) {
-            if (MusicControlClient.isPaused) {
-                Utils.print(this.client, Text.translatable("music.paused"));
-            } else if (MusicControlClient.categoryChanged) {
-                String category = MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)
-                        ? MusicControlClient.currentCategory + ": " + MusicControlClient.currentSubCategory.toUpperCase().replace('_', ' ')
-                        : MusicControlClient.currentCategory.toString();
-                Utils.print(this.client, Text.of(category));
-            } else {
-                Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
-                Utils.print(this.client, Text.translatable("record.nowPlaying", title));
-            }
+        if (this.current == null || this.client.world == null)
+            return;
+
+        if (MusicControlClient.isPaused) {
+            Utils.print(this.client, Text.translatable("music.paused"));
+
+        } else if (MusicControlClient.categoryChanged) {
+            String category = MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)
+                    ? MusicControlClient.currentCategory + ": " + MusicControlClient.currentSubCategory.toUpperCase().replace('_', ' ')
+                    : MusicControlClient.currentCategory.toString();
+            Utils.print(this.client, Text.of(category));
+
+        } else {
+            Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
+            Utils.print(this.client, Text.translatable("record.nowPlaying", title));
         }
     }
 

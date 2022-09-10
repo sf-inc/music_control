@@ -38,7 +38,7 @@ public class MusicControlClient implements ClientModInitializer {
     public void onInitializeClient() {
         AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
         SoundEventBiome.init();
-        SoundLoadedEvent.SOUNDS_LOADED.register(((soundManager) -> MusicCategories.init(MinecraftClient.getInstance())));
+        SoundLoadedEvent.SOUNDS_LOADED.register(soundManager -> MusicCategories.init(MinecraftClient.getInstance()));
 
         currentCategory = ModConfig.get().musicCategoryStart;
 
