@@ -3,12 +3,14 @@ package com.github.charlyb01.music_control.categories;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Music {
-    public final static ArrayList<Music> MUSICS = new ArrayList<>();
-    public final static ArrayList<Music> DISCS = new ArrayList<>();
-    public final static ArrayList<Music> CUSTOMS = new ArrayList<>();
+    public final static String ALL_MUSICS = "all";
+    public final static String ALL_MUSIC_DISCS = "disc";
+    public final static String DEFAULT_MUSICS = "default";
+    public final static HashMap<String, ArrayList<Music>> MUSIC_LISTS = new HashMap<>();
     public final static ArrayList<Identifier> EVENTS = new ArrayList<>();
 
     private final Identifier identifier;
@@ -18,12 +20,9 @@ public class Music {
         return identifier;
     }
 
-    public Music(final Identifier identifier, final boolean isDisc) {
+    public Music(final Identifier identifier) {
         this.identifier = identifier;
         this.events = new HashSet<>();
-        if (isDisc) {
-            DISCS.add(this);
-        }
     }
 
     public HashSet<Identifier> getEvents() {

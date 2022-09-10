@@ -3,7 +3,6 @@ package com.github.charlyb01.music_control.mixin;
 import com.github.charlyb01.music_control.Utils;
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.categories.MusicCategories;
-import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
@@ -40,7 +39,7 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.init && this.client.world != null) {
             this.client.getSoundManager().stop(this.current);
 
-            if (MusicControlClient.currentCategory.equals(MusicCategory.DEFAULT)) {
+            if (MusicControlClient.currentCategory.equals("default")) {
                 if (this.timeUntilNextSong > 0 || this.current != null) {
                     this.timeUntilNextSong = 0;
                     this.current = null;
@@ -84,7 +83,6 @@ public abstract class MusicTrackerMixin {
         handleNextMusicKey();
         handleResumePauseKey();
         handleChangeCategoryKey();
-        handleRandomMusicKey();
         handleDisplayMusicKey();
     }
 
@@ -108,9 +106,7 @@ public abstract class MusicTrackerMixin {
             Utils.print(this.client, Text.translatable("music.paused"));
 
         } else if (MusicControlClient.categoryChanged) {
-            String category = MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)
-                    ? MusicControlClient.currentCategory + ": " + MusicControlClient.currentSubCategory.toUpperCase().replace('_', ' ')
-                    : MusicControlClient.currentCategory.toString();
+            String category = MusicControlClient.currentCategory.toUpperCase().replace('_', ' ');
             Utils.print(this.client, Text.of(category));
 
         } else {
@@ -167,22 +163,14 @@ public abstract class MusicTrackerMixin {
     }
 
     private void handleChangeCategoryKey() {
-        if (MusicControlClient.changeCategory) {
-            MusicControlClient.changeCategory = false;
+        if (MusicControlClient.nextCategory || MusicControlClient.previousCategory) {
             MusicControlClient.categoryChanged = true;
+            MusicCategories.changeCategory(MusicControlClient.nextCategory);
 
-            MusicCategories.changeCategory(this.client.player);
-            this.play(null);
-        }
-    }
-
-    private void handleRandomMusicKey() {
-        if (MusicControlClient.randomMusic) {
-            MusicControlClient.randomMusic = false;
-            MusicControlClient.categoryChanged = true;
-
-            if (MusicControlClient.currentCategory != MusicCategory.ALL) {
-                MusicControlClient.currentCategory = MusicCategory.ALL;
+            if (MusicControlClient.nextCategory) {
+                MusicControlClient.nextCategory = false;
+            } else {
+                MusicControlClient.previousCategory = false;
             }
 
             this.play(null);

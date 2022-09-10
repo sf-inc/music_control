@@ -15,22 +15,22 @@ public class MusicKeyBinding {
     private static KeyBinding nextMusic;
     private static KeyBinding pauseResume;
     private static KeyBinding loopMusic;
-    private static KeyBinding changeCategory;
-    private static KeyBinding randomMusic;
+    private static KeyBinding previousCategory;
+    private static KeyBinding nextCategory;
     private static KeyBinding printMusic;
     private static KeyBinding volumeUp;
     private static KeyBinding volumeDown;
 
     public static void init() {
         previousMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.previous",
+                "key.music_control.previousMusic",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_LEFT,
                 "category.music_control.title"
         ));
 
         nextMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.next",
+                "key.music_control.nextMusic",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT,
                 "category.music_control.title"
@@ -50,15 +50,15 @@ public class MusicKeyBinding {
                 "category.music_control.title"
         ));
 
-        changeCategory = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.category",
+        previousCategory = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.previousCategory",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_PAGE_UP,
                 "category.music_control.title"
         ));
 
-        randomMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.random",
+        nextCategory = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.nextCategory",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_PAGE_DOWN,
                 "category.music_control.title"
@@ -109,14 +109,12 @@ public class MusicKeyBinding {
                 }
             }
 
-            while (changeCategory.wasPressed()) {
-                MusicControlClient.changeCategory = true;
+            while (previousCategory.wasPressed()) {
+                MusicControlClient.previousCategory = true;
             }
 
-            while (randomMusic.wasPressed()) {
-                if ((client.player != null && client.player.isCreative()) || ModConfig.get().cheat) {
-                    MusicControlClient.randomMusic = true;
-                }
+            while (nextCategory.wasPressed()) {
+                MusicControlClient.nextCategory = true;
             }
 
             while (printMusic.wasPressed()) {

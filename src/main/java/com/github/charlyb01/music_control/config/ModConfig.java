@@ -1,6 +1,6 @@
 package com.github.charlyb01.music_control.config;
 
-import com.github.charlyb01.music_control.categories.MusicCategory;
+import com.github.charlyb01.music_control.categories.Music;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -37,13 +37,8 @@ public class ModConfig implements ConfigData {
     public boolean allowHighVolume = false;
 
     @ConfigEntry.Category("categories")
-    @ConfigEntry.Gui.Tooltip(count = 4)
-    public boolean cheat = false;
-
-    @ConfigEntry.Category("categories")
     @ConfigEntry.Gui.Tooltip(count = 2)
-    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-    public MusicCategory musicCategoryStart = MusicCategory.DEFAULT;
+    public String musicCategoryStart = Music.DEFAULT_MUSICS;
 
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();

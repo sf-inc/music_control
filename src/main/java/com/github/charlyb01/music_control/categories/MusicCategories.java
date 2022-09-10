@@ -4,38 +4,38 @@ import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundContainer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.github.charlyb01.music_control.categories.Music.MUSICS;
-import static com.github.charlyb01.music_control.categories.Music.CUSTOMS;
-import static com.github.charlyb01.music_control.categories.Music.DISCS;
+import static com.github.charlyb01.music_control.categories.Music.*;
 
 
 public class MusicCategories {
+    public final static ArrayList<String> CATEGORIES = new ArrayList<>(Arrays.asList(ALL_MUSICS, DEFAULT_MUSICS, ALL_MUSIC_DISCS));
     public final static LinkedList<Music> PLAYED_MUSICS = new LinkedList<>();
-    public final static HashMap<String, Integer> CUSTOM_LIST = new HashMap<>();
 
     private MusicCategories() {}
 
     public static void init(final MinecraftClient client) {
         if (MusicControlClient.init) {
-            MUSICS.clear();
             PLAYED_MUSICS.clear();
-            CUSTOM_LIST.clear();
+            MUSIC_LISTS.clear();
         } else {
             MusicControlClient.init = true;
         }
 
         Random random = Random.createLocal();
+        ArrayList<Music> musics = new ArrayList<>();
+        ArrayList<Music> discs = new ArrayList<>();
+        MUSIC_LISTS.put(ALL_MUSICS, musics);
+        MUSIC_LISTS.put(ALL_MUSIC_DISCS, discs);
 
         for (Identifier identifier : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(identifier) != null) {
@@ -50,88 +50,47 @@ public class MusicCategories {
                 for (SoundContainer<Sound> soundContainer : sounds) {
 
                     Identifier musicIdentifier = soundContainer.getSound(random).getIdentifier();
-                    Music music = new Music(musicIdentifier, path.contains("music_disc"));
-                    if (MUSICS.contains(music)) {
-                        music = MUSICS.get(MUSICS.indexOf(music));
+                    Music music = new Music(musicIdentifier);
+
+                    if (musics.contains(music)) {
+                        music = musics.get(musics.indexOf(music));
                         music.addEvent(identifier);
                         continue;
                     }
+                    if (path.contains("music_disc")) {
+                        discs.add(music);
+                    }
 
-                    MUSICS.add(music);
+                    musics.add(music);
                     music.addEvent(identifier);
 
                     if (!namespace.equals("minecraft")) {
-                        CUSTOM_LIST.merge(namespace, 1, Integer::sum);
-                        CUSTOMS.add(music);
+                        ArrayList<Music> customMusics = MUSIC_LISTS.computeIfAbsent(namespace, k -> new ArrayList<>());
+                        if (!customMusics.contains(music)) {
+                            customMusics.add(music);
+                        }
+                        if (!CATEGORIES.contains(namespace)) {
+                            CATEGORIES.add(namespace);
+                        }
                     }
                 }
             }
         }
 
-        if (!CUSTOM_LIST.isEmpty()) {
-            MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
-        } else if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
-            MusicControlClient.currentCategory = MusicCategory.DEFAULT;
+        if (!CATEGORIES.contains(MusicControlClient.currentCategory)) {
+            MusicControlClient.currentCategory = DEFAULT_MUSICS;
         }
     }
 
-    public static void changeCategory(final ClientPlayerEntity player) {
-        boolean canChangeCategory = (player != null && player.isCreative()) || ModConfig.get().cheat;
-        int current = 0;
-        for (MusicCategory category : MusicCategory.values()) {
-            if (MusicControlClient.currentCategory.equals(category)) {
-                break;
-            }
-            current++;
+    public static void changeCategory(final boolean nextCategory) {
+        int index = nextCategory
+                ? (CATEGORIES.indexOf(MusicControlClient.currentCategory) + 1) % CATEGORIES.size()
+                : (CATEGORIES.indexOf(MusicControlClient.currentCategory) - 1);
+        if (index < 0) {
+            index =  CATEGORIES.size() - 1;
         }
 
-        if (canChangeCategory) {
-            int next = (current + 1) % MusicCategory.values().length;
-
-            if (MusicCategory.values()[current].equals(MusicCategory.CUSTOM)) {
-                if (changeSubCategory()) {
-                    next = current;
-                } else {
-                    next = 0;
-                }
-            }
-
-            if (MusicCategory.values()[next].equals(MusicCategory.CUSTOM)) {
-                if (CUSTOM_LIST.isEmpty()) {
-                    next = 0;
-                }
-            } else if (MusicCategory.values()[next].equals(MusicCategory.ALL)) {
-                next = 0;
-            }
-
-            MusicControlClient.currentCategory = MusicCategory.values()[next];
-        } else {
-            if (MusicControlClient.currentCategory.equals(MusicCategory.CUSTOM)) {
-                MusicControlClient.currentCategory = MusicCategory.DEFAULT;
-            } else if (!Music.CUSTOMS.isEmpty()) {
-                MusicControlClient.currentCategory = MusicCategory.CUSTOM;
-            } else {
-                MusicControlClient.currentCategory = MusicCategory.DEFAULT;
-            }
-        }
-    }
-
-    private static boolean changeSubCategory() {
-        int current = 0;
-        for (String subCategory: CUSTOM_LIST.keySet()) {
-            if (MusicControlClient.currentSubCategory.equals(subCategory)) {
-                break;
-            }
-            current++;
-        }
-
-        if (current < CUSTOM_LIST.keySet().size()-1) {
-            MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[current+1];
-            return true;
-        } else {
-            MusicControlClient.currentSubCategory = (String) CUSTOM_LIST.keySet().toArray()[0];
-            return false;
-        }
+        MusicControlClient.currentCategory = CATEGORIES.get(index);
     }
 
     private static Identifier getRandomMusicIdentifier(final ArrayList<Music> musics, final Random random) {
@@ -150,15 +109,11 @@ public class MusicCategories {
     }
 
     public static Identifier getMusicIdentifier(final Random random) {
-        ArrayList<Music> musics = null;
-        switch (MusicControlClient.currentCategory) {
-            case DISC -> musics = DISCS;
-            case CUSTOM, ALL -> musics = MUSICS; // Separate in the future
-            case DEFAULT -> {
-                return null;
-            }
+        if (MUSIC_LISTS.containsKey(MusicControlClient.currentCategory)) {
+            ArrayList<Music> musics = MUSIC_LISTS.get(MusicControlClient.currentCategory);
+            return getRandomMusicIdentifier(musics, random);
+        } else {
+            return null;
         }
-
-        return getRandomMusicIdentifier(musics, random);
     }
 }
