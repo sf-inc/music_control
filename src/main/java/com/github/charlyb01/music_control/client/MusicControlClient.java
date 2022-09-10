@@ -1,6 +1,5 @@
 package com.github.charlyb01.music_control.client;
 
-import com.github.charlyb01.music_control.Utils;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.categories.MusicCategory;
 import com.github.charlyb01.music_control.config.ModConfig;
@@ -11,15 +10,8 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
 public class MusicControlClient implements ClientModInitializer {
@@ -34,23 +26,13 @@ public class MusicControlClient implements ClientModInitializer {
     public static MusicCategory currentCategory;
     public static String currentSubCategory;
 
-    public static boolean replay = false;
-    public static boolean skip = false;
-    public static boolean pause = false;
-    public static boolean loop = false;
-    public static boolean category = false;
-    public static boolean random = false;
-    public static boolean print = false;
-
-    private static KeyBinding previous;
-    private static KeyBinding next;
-    private static KeyBinding pauseResume;
-    private static KeyBinding loopMusic;
-    private static KeyBinding changeCat;
-    private static KeyBinding randomMusic;
-    private static KeyBinding printMusic;
-    private static KeyBinding volumeUp;
-    private static KeyBinding volumeDown;
+    public static boolean previousMusic = false;
+    public static boolean nextMusic = false;
+    public static boolean pauseResume = false;
+    public static boolean loopMusic = false;
+    public static boolean changeCategory = false;
+    public static boolean randomMusic = false;
+    public static boolean printMusic = false;
 
     @Override
     public void onInitializeClient() {
@@ -60,120 +42,7 @@ public class MusicControlClient implements ClientModInitializer {
 
         currentCategory = ModConfig.get().musicCategoryStart;
 
-        previous = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.previous",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_LEFT,
-                "category.music_control.title"
-        ));
-
-        next = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.next",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_RIGHT,
-                "category.music_control.title"
-        ));
-
-        pauseResume = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.pause",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_RIGHT_SHIFT,
-                "category.music_control.title"
-        ));
-
-        loopMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.loop",
-                InputUtil.Type.KEYSYM,
-                InputUtil.UNKNOWN_KEY.getCode(),
-                "category.music_control.title"
-        ));
-
-        changeCat = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.category",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_PAGE_UP,
-                "category.music_control.title"
-        ));
-
-        randomMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.random",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_PAGE_DOWN,
-                "category.music_control.title"
-        ));
-
-        printMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.print",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_RIGHT_CONTROL,
-                "category.music_control.title"
-        ));
-
-        volumeUp = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.volumeUp",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_UP,
-                "category.music_control.title"
-        ));
-
-        volumeDown = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.music_control.volumeDown",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_DOWN,
-                "category.music_control.title"
-        ));
-
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (previous.wasPressed()) {
-                replay = true;
-            }
-
-            while (next.wasPressed()) {
-                skip = true;
-            }
-
-            while (pauseResume.wasPressed()) {
-                pause = true;
-            }
-
-            while (loopMusic.wasPressed()) {
-                loop = !loop;
-                if (loop) {
-                    Utils.print(client, Text.translatable("music.loop.on"));
-                } else {
-                    Utils.print(client, Text.translatable("music.loop.off"));
-                }
-            }
-
-            while (changeCat.wasPressed()) {
-                category = true;
-            }
-
-            while (randomMusic.wasPressed()) {
-                if ((client.player != null && client.player.isCreative()) || ModConfig.get().cheat) {
-                    random = true;
-                }
-            }
-
-            while (printMusic.wasPressed()) {
-                print = true;
-            }
-
-            while (volumeUp.wasPressed()) {
-                float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                volume = Math.min(volume + (ModConfig.get().volumeIncrement / 100.F), ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
-                client.options.setSoundVolume(SoundCategory.MUSIC, volume);
-                client.options.write();
-                Utils.print(client, Text.translatable("music.volume", Math.round(100.F * volume)));
-            }
-
-            while (volumeDown.wasPressed()) {
-                float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                volume = Math.max(volume - (ModConfig.get().volumeIncrement / 100.F), 0.0F);
-                client.options.setSoundVolume(SoundCategory.MUSIC, volume);
-                client.options.write();
-                Utils.print(client, Text.translatable("music.volume", Math.round(100.F * volume)));
-            }
-        });
+        MusicKeyBinding.init();
+        MusicKeyBinding.register();
     }
 }

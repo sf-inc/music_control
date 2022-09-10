@@ -49,9 +49,9 @@ public abstract class MusicTrackerMixin {
                 return;
             }
 
-            if (!MusicControlClient.loop) {
-                if (MusicControlClient.replay) {
-                    MusicControlClient.replay = false;
+            if (!MusicControlClient.loopMusic) {
+                if (MusicControlClient.previousMusic) {
+                    MusicControlClient.previousMusic = false;
                     Music music = MusicCategories.PLAYED_MUSICS.peekLast();
                     if (music != null) {
                         MusicControlClient.currentMusic = music.getIdentifier();
@@ -122,9 +122,9 @@ public abstract class MusicTrackerMixin {
     }
 
     private void handlePreviousMusicKey() {
-        if (MusicControlClient.replay) {
+        if (MusicControlClient.previousMusic) {
             if (MusicControlClient.isPaused) {
-                MusicControlClient.replay = false;
+                MusicControlClient.previousMusic = false;
                 printMusic();
             } else {
                 MusicCategories.PLAYED_MUSICS.pollLast();
@@ -134,9 +134,9 @@ public abstract class MusicTrackerMixin {
     }
 
     private void handleNextMusicKey() {
-        if (MusicControlClient.skip) {
-            MusicControlClient.skip = false;
-            MusicControlClient.loop = false;
+        if (MusicControlClient.nextMusic) {
+            MusicControlClient.nextMusic = false;
+            MusicControlClient.loopMusic = false;
 
             if (MusicControlClient.isPaused) {
                 printMusic();
@@ -147,8 +147,8 @@ public abstract class MusicTrackerMixin {
     }
 
     private void handleResumePauseKey() {
-        if (MusicControlClient.pause) {
-            MusicControlClient.pause = false;
+        if (MusicControlClient.pauseResume) {
+            MusicControlClient.pauseResume = false;
 
             if (MusicControlClient.isPaused) {
                 MusicControlClient.isPaused = false;
@@ -169,8 +169,8 @@ public abstract class MusicTrackerMixin {
     }
 
     private void handleChangeCategoryKey() {
-        if (MusicControlClient.category) {
-            MusicControlClient.category = false;
+        if (MusicControlClient.changeCategory) {
+            MusicControlClient.changeCategory = false;
             MusicControlClient.categoryChanged = true;
 
             MusicCategories.changeCategory(this.client.player);
@@ -179,8 +179,8 @@ public abstract class MusicTrackerMixin {
     }
 
     private void handleRandomMusicKey() {
-        if (MusicControlClient.random) {
-            MusicControlClient.random = false;
+        if (MusicControlClient.randomMusic) {
+            MusicControlClient.randomMusic = false;
             MusicControlClient.categoryChanged = true;
 
             if (MusicControlClient.currentCategory != MusicCategory.ALL) {
@@ -192,8 +192,8 @@ public abstract class MusicTrackerMixin {
     }
 
     private void handleDisplayMusicKey() {
-        if (MusicControlClient.print) {
-            MusicControlClient.print = false;
+        if (MusicControlClient.printMusic) {
+            MusicControlClient.printMusic = false;
 
             printMusic();
         }
