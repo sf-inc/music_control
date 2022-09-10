@@ -31,7 +31,6 @@ public class MusicCategories {
     public static void init(final MinecraftClient client) {
         if (MusicControlClient.init) {
             MUSICS.clear();
-            DIMENSIONS.clear();
             PLAYED_MUSICS.clear();
             CUSTOM_LIST.clear();
         } else {
@@ -138,10 +137,7 @@ public class MusicCategories {
     }
 
     public static void updateDimension(final ClientWorld world) {
-        if (MusicControlClient.init
-                && MusicControlClient.currentCategory.equals(MusicCategory.DIMENSION)
-                && world != null) {
-
+        if (MusicControlClient.init && world != null) {
             for (Dimension dimension : DIMENSIONS) {
                 if (world.getRegistryKey().equals(dimension.getWorldRegistryKey()))
                     MusicControlClient.currentDimension = dimension;
