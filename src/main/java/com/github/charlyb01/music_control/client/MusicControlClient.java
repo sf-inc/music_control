@@ -4,6 +4,8 @@ import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.event.SoundEventBiome;
 import com.github.charlyb01.music_control.event.SoundLoadedEvent;
+import com.github.charlyb01.music_control.gui.MusicControlGUI;
+import com.github.charlyb01.music_control.gui.MusicControlScreen;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
@@ -15,6 +17,8 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class MusicControlClient implements ClientModInitializer {
     public static final String MOD_ID = "music_control";
+
+    public static final MusicControlScreen MUSIC_CONTROL_SCREEN = new MusicControlScreen(new MusicControlGUI());
 
     public static boolean init = false;
     public static boolean isPaused = false;

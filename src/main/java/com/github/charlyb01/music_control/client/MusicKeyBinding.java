@@ -20,6 +20,7 @@ public class MusicKeyBinding {
     private static KeyBinding printMusic;
     private static KeyBinding volumeUp;
     private static KeyBinding volumeDown;
+    private static KeyBinding openMenu;
 
     public static void init() {
         previousMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -84,6 +85,13 @@ public class MusicKeyBinding {
                 GLFW.GLFW_KEY_DOWN,
                 "category.music_control.title"
         ));
+
+        openMenu = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.music_control.openMenu",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_M,
+                "category.music_control.title"
+        ));
     }
 
     public static void register() {
@@ -135,6 +143,10 @@ public class MusicKeyBinding {
                 client.options.setSoundVolume(SoundCategory.MUSIC, volume);
                 client.options.write();
                 Utils.print(client, Text.translatable("music.volume", Math.round(100.F * volume)));
+            }
+
+            while (openMenu.wasPressed()) {
+                client.setScreen(MusicControlClient.MUSIC_CONTROL_SCREEN);
             }
         });
     }

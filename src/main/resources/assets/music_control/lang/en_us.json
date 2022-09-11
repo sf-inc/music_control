@@ -9,6 +9,7 @@
     "key.music_control.print": "Print the current music name",
     "key.music_control.volumeUp": "Increase music volume",
     "key.music_control.volumeDown": "Decrease music volume",
+    "key.music_control.openMenu": "Open music screen menu",
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
 
@@ -56,6 +57,9 @@
     "music.loop.on": "Loop: ON",
     "music.loop.off": "Loop: OFF",
     "music.volume": "Volume: %s%%",
+
+    "gui.music_control.panel1": "Main",
+    "gui.music_control.panel2": "Other",
 
     "minecraft:music/game/hal1": "C418 - Subwoofer Lubally",
     "minecraft:music/game/hal2": "C418 - Living Mice",
