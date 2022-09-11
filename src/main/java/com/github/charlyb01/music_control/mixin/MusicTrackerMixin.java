@@ -106,8 +106,9 @@ public abstract class MusicTrackerMixin {
             Utils.print(this.client, Text.translatable("music.paused"));
 
         } else if (MusicControlClient.categoryChanged) {
-            String category = MusicControlClient.currentCategory.toUpperCase().replace('_', ' ');
-            Utils.print(this.client, Text.of(category));
+            String category = MusicControlClient.currentCategory.toUpperCase().replace('_', ' ') + ": %s";
+            Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
+            Utils.print(this.client, Text.translatable(category, title));
 
         } else {
             Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
