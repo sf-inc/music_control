@@ -1,18 +1,18 @@
 {
     "category.music_control.title": "Music Control",
-    "key.music_control.previous":  "Previous music",
-    "key.music_control.next":  "Next music",
+    "key.music_control.previousMusic":  "Previous music",
+    "key.music_control.nextMusic":  "Next music",
     "key.music_control.pause":  "Pause/Resume music",
     "key.music_control.loop":  "Loop current music",
-    "key.music_control.category": "Change music category",
-    "key.music_control.random": "Active random music player",
+    "key.music_control.previousCategory": "Previous music category",
+    "key.music_control.nextCategory": "Next music category",
     "key.music_control.print": "Print the current music name",
     "key.music_control.volumeUp": "Increase music volume",
     "key.music_control.volumeDown": "Decrease music volume",
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
 
-    "text.autoconfig.music_control.option.timer": "Delay between musics (in seconds)",
+    "text.autoconfig.music_control.option.timer": "Delay between musics",
     "text.autoconfig.music_control.option.timer.@Tooltip[0]": "This setting defines how many seconds",
     "text.autoconfig.music_control.option.timer.@Tooltip[1]": "there will be a delay between music.",
 
@@ -29,12 +29,6 @@
     "text.autoconfig.music_control.option.displayType": "Display type",
     "text.autoconfig.music_control.option.displayType.@Tooltip[0]": "This setting defines where text will be",
     "text.autoconfig.music_control.option.displayType.@Tooltip[1]": "displayed if the above setting is enabled.",
-
-    "text.autoconfig.music_control.option.cheat": "Change category in survival",
-    "text.autoconfig.music_control.option.cheat.@Tooltip[0]": "This setting defines if the mod will change music",
-    "text.autoconfig.music_control.option.cheat.@Tooltip[1]": "category randomly while in survival. Normally,",
-    "text.autoconfig.music_control.option.cheat.@Tooltip[2]": "this doesn't happen because category is based",
-    "text.autoconfig.music_control.option.cheat.@Tooltip[3]": "on location, such as The End or Overworld.",
 
     "text.autoconfig.music_control.option.musicCategoryStart": "Music category selected by default",
     "text.autoconfig.music_control.option.musicCategoryStart.@Tooltip[0]": "This setting defines what",
