@@ -55,6 +55,9 @@ public abstract class MusicTrackerMixin {
                     if (music != null) {
                         MusicControlClient.currentMusic = music.getIdentifier();
                     }
+                } else if (MusicControlClient.musicSelected != null) {
+                    MusicControlClient.currentMusic = MusicControlClient.musicSelected;
+                    MusicControlClient.musicSelected = null;
                 } else {
                     MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
                 }

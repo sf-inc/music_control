@@ -2,6 +2,8 @@ package com.github.charlyb01.music_control.client;
 
 import com.github.charlyb01.music_control.Utils;
 import com.github.charlyb01.music_control.config.ModConfig;
+import com.github.charlyb01.music_control.gui.MusicControlGUI;
+import com.github.charlyb01.music_control.gui.MusicControlScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
@@ -146,7 +148,7 @@ public class MusicKeyBinding {
             }
 
             while (openMenu.wasPressed()) {
-                client.setScreen(MusicControlClient.MUSIC_CONTROL_SCREEN);
+                client.setScreen(new MusicControlScreen(new MusicControlGUI()));
             }
         });
     }

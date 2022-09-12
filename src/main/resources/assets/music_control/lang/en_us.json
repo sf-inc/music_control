@@ -57,9 +57,10 @@
     "music.loop.on": "Loop: ON",
     "music.loop.off": "Loop: OFF",
     "music.volume": "Volume: %s%%",
+    "music.none": "None",
 
-    "gui.music_control.panel1": "Main",
-    "gui.music_control.panel2": "Other",
+    "gui.music_control.panel.play": "Play",
+    "gui.music_control.label.musicSelected": "Music selected: %s",
 
     "minecraft:music/game/hal1": "C418 - Subwoofer Lubally",
     "minecraft:music/game/hal2": "C418 - Living Mice",
