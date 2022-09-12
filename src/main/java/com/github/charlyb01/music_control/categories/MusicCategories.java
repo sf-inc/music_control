@@ -6,13 +6,12 @@ import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundContainer;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static com.github.charlyb01.music_control.categories.Music.*;
 
@@ -54,7 +53,7 @@ public class MusicCategories {
 
                     if (musics.contains(music)) {
                         music = musics.get(musics.indexOf(music));
-                        music.addEvent(identifier);
+                        music.addEvent(path);
                         continue;
                     }
                     if (path.contains("music_disc")) {
@@ -62,7 +61,7 @@ public class MusicCategories {
                     }
 
                     musics.add(music);
-                    music.addEvent(identifier);
+                    music.addEvent(path);
 
                     if (!namespace.equals("minecraft")) {
                         ArrayList<Music> customMusics = MUSIC_LISTS.computeIfAbsent(namespace, k -> new ArrayList<>());
@@ -74,6 +73,15 @@ public class MusicCategories {
                         }
                     }
                 }
+            }
+        }
+
+        MUSIC_LISTS.forEach((String namespace, ArrayList<Music> musicList) -> Collections.sort(musicList));
+
+        for (SoundEvent soundEvent : Registry.SOUND_EVENT) {
+            String event = soundEvent.getId().getPath();
+            if (event.contains("music") && !EVENTS.contains(event)) {
+                EVENTS.add(event);
             }
         }
 
