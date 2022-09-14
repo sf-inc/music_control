@@ -36,12 +36,19 @@ public class MusicCategories {
         MUSIC_LISTS.put(ALL_MUSICS, musics);
         MUSIC_LISTS.put(ALL_MUSIC_DISCS, discs);
 
-        for (Identifier identifier : client.getSoundManager().getKeys()) {
-            if (client.getSoundManager().get(identifier) != null) {
+        for (SoundEvent soundEvent : Registry.SOUND_EVENT) {
+            Identifier event = soundEvent.getId();
+            if (event.getPath().contains("music") && !EVENTS.contains(event)) {
+                EVENTS.add(event);
+            }
+        }
 
-                List<SoundContainer<Sound>> sounds = ((SoundSetAccessor) client.getSoundManager().get(identifier)).getSounds();
-                String namespace = identifier.getNamespace();
-                String path = identifier.getPath();
+        for (Identifier eventIdentifier : client.getSoundManager().getKeys()) {
+            if (client.getSoundManager().get(eventIdentifier) != null) {
+
+                List<SoundContainer<Sound>> sounds = ((SoundSetAccessor) client.getSoundManager().get(eventIdentifier)).getSounds();
+                String namespace = eventIdentifier.getNamespace();
+                String path = eventIdentifier.getPath();
 
                 if (!path.contains("music"))
                     continue;
@@ -53,7 +60,7 @@ public class MusicCategories {
 
                     if (musics.contains(music)) {
                         music = musics.get(musics.indexOf(music));
-                        music.addEvent(path);
+                        music.addEvent(eventIdentifier);
                         continue;
                     }
                     if (path.contains("music_disc")) {
@@ -61,7 +68,7 @@ public class MusicCategories {
                     }
 
                     musics.add(music);
-                    music.addEvent(path);
+                    music.addEvent(eventIdentifier);
 
                     if (!namespace.equals("minecraft")) {
                         ArrayList<Music> customMusics = MUSIC_LISTS.computeIfAbsent(namespace, k -> new ArrayList<>());
@@ -77,13 +84,7 @@ public class MusicCategories {
         }
 
         MUSIC_LISTS.forEach((String namespace, ArrayList<Music> musicList) -> Collections.sort(musicList));
-
-        for (SoundEvent soundEvent : Registry.SOUND_EVENT) {
-            String event = soundEvent.getId().getPath();
-            if (event.contains("music") && !EVENTS.contains(event)) {
-                EVENTS.add(event);
-            }
-        }
+        Collections.sort(EVENTS);
 
         if (!CATEGORIES.contains(MusicControlClient.currentCategory)) {
             MusicControlClient.currentCategory = DEFAULT_MUSICS;

@@ -12,10 +12,10 @@ public class Music implements Comparable<Music> {
     public final static String ALL_MUSIC_DISCS = "disc";
     public final static String DEFAULT_MUSICS = "default";
     public final static HashMap<String, ArrayList<Music>> MUSIC_LISTS = new HashMap<>();
-    public final static ArrayList<String> EVENTS = new ArrayList<>();
+    public final static ArrayList<Identifier> EVENTS = new ArrayList<>();
 
     private final Identifier identifier;
-    private final HashSet<String> events;
+    private final HashSet<Identifier> events;
 
     public Identifier getIdentifier() {
         return identifier;
@@ -26,12 +26,12 @@ public class Music implements Comparable<Music> {
         this.events = new HashSet<>();
     }
 
-    public HashSet<String> getEvents() {
+    public HashSet<Identifier> getEvents() {
         return events;
     }
 
-    public void addEvent(final String event) {
-        if (!event.equals(identifier.getPath())) {
+    public void addEvent(final Identifier event) {
+        if (EVENTS.contains(identifier)) {
             this.events.add(event);
         }
     }
