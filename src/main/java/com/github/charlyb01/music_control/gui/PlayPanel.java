@@ -41,8 +41,8 @@ public class PlayPanel extends WBox {
             });
         };
 
-        ArrayList<Identifier> musics = new ArrayList<>(MUSIC_LISTS.get(ALL_MUSICS).size());
-        for (Music music : MUSIC_LISTS.get(ALL_MUSICS)) {
+        ArrayList<Identifier> musics = new ArrayList<>(MUSIC_BY_NAMESPACE.get(ALL_MUSICS).size());
+        for (Music music : MUSIC_BY_NAMESPACE.get(ALL_MUSICS)) {
             musics.add(music.getIdentifier());
         }
 

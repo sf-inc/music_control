@@ -25,7 +25,9 @@ public class MusicCategories {
     public static void init(final MinecraftClient client) {
         if (MusicControlClient.init) {
             PLAYED_MUSICS.clear();
-            MUSIC_LISTS.clear();
+            MUSIC_BY_NAMESPACE.clear();
+            MUSIC_BY_EVENT.clear();
+            EVENTS.clear();
         } else {
             MusicControlClient.init = true;
         }
@@ -33,13 +35,14 @@ public class MusicCategories {
         Random random = Random.createLocal();
         ArrayList<Music> musics = new ArrayList<>();
         ArrayList<Music> discs = new ArrayList<>();
-        MUSIC_LISTS.put(ALL_MUSICS, musics);
-        MUSIC_LISTS.put(ALL_MUSIC_DISCS, discs);
+        MUSIC_BY_NAMESPACE.put(ALL_MUSICS, musics);
+        MUSIC_BY_NAMESPACE.put(ALL_MUSIC_DISCS, discs);
 
         for (SoundEvent soundEvent : Registry.SOUND_EVENT) {
             Identifier event = soundEvent.getId();
             if (event.getPath().contains("music") && !EVENTS.contains(event)) {
                 EVENTS.add(event);
+                MUSIC_BY_EVENT.put(event, new HashSet<>());
             }
         }
 
@@ -71,7 +74,7 @@ public class MusicCategories {
                     music.addEvent(eventIdentifier);
 
                     if (!namespace.equals("minecraft")) {
-                        ArrayList<Music> customMusics = MUSIC_LISTS.computeIfAbsent(namespace, k -> new ArrayList<>());
+                        ArrayList<Music> customMusics = MUSIC_BY_NAMESPACE.computeIfAbsent(namespace, k -> new ArrayList<>());
                         if (!customMusics.contains(music)) {
                             customMusics.add(music);
                         }
@@ -83,7 +86,7 @@ public class MusicCategories {
             }
         }
 
-        MUSIC_LISTS.forEach((String namespace, ArrayList<Music> musicList) -> Collections.sort(musicList));
+        MUSIC_BY_NAMESPACE.forEach((String namespace, ArrayList<Music> musicList) -> Collections.sort(musicList));
         Collections.sort(EVENTS);
 
         if (!CATEGORIES.contains(MusicControlClient.currentCategory)) {
@@ -118,8 +121,8 @@ public class MusicCategories {
     }
 
     public static Identifier getMusicIdentifier(final Random random) {
-        if (MUSIC_LISTS.containsKey(MusicControlClient.currentCategory)) {
-            ArrayList<Music> musics = MUSIC_LISTS.get(MusicControlClient.currentCategory);
+        if (MUSIC_BY_NAMESPACE.containsKey(MusicControlClient.currentCategory)) {
+            ArrayList<Music> musics = MUSIC_BY_NAMESPACE.get(MusicControlClient.currentCategory);
             return getRandomMusicIdentifier(musics, random);
         } else {
             return null;
