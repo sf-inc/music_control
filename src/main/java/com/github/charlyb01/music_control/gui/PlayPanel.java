@@ -1,6 +1,5 @@
 package com.github.charlyb01.music_control.gui;
 
-import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
@@ -9,14 +8,15 @@ import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
 import java.util.function.BiConsumer;
-
-import static com.github.charlyb01.music_control.categories.Music.*;
+import java.util.function.Consumer;
 
 public class PlayPanel extends WBox {
-    private final static Text NONE_TEXT = Text.translatable("music.none");
-    private final static String SELECTED_KEY = "gui.music_control.label.selected";
+    protected final static Text NONE_TEXT = Text.translatable("music.none");
+    protected final static String SELECTED_KEY = "gui.music_control.label.selected";
+    protected static boolean isEvent = false;
+
+    protected WButton hoveredButton;
 
     public PlayPanel() {
         super(Axis.VERTICAL);
@@ -25,44 +25,39 @@ public class PlayPanel extends WBox {
         WLabel selected = new WLabel(Text.translatable(SELECTED_KEY, NONE_TEXT));
         selected.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
-        BiConsumer<Identifier, WButton> configurator = (Identifier identifier, WButton button) -> {
-            Text sound = Text.translatable(identifier.toString());
-            button.setLabel(sound);
-            button.setOnClick(() -> {
-                if (identifier.equals(MusicControlClient.musicSelected)) {
-                    MusicControlClient.nextMusic = false;
-                    MusicControlClient.musicSelected = null;
-                    selected.setText(Text.translatable(SELECTED_KEY, NONE_TEXT));
+        BiConsumer<Identifier, WButton> onSoundClicked = (Identifier identifier, WButton button) -> {
+            if (identifier.equals(MusicControlClient.musicSelected)) {
+                MusicControlClient.nextMusic = false;
+                MusicControlClient.musicSelected = null;
+                selected.setText(Text.translatable(SELECTED_KEY, NONE_TEXT));
+            } else {
+                MusicControlClient.nextMusic = true;
+                MusicControlClient.musicSelected = identifier;
+                selected.setText(Text.translatable(SELECTED_KEY, Text.translatable(identifier.toString())));
+            }
+
+            if (hoveredButton != null) {
+                hoveredButton.releaseFocus();
+                if (hoveredButton.equals(button)) {
+                    hoveredButton = null;
                 } else {
-                    MusicControlClient.nextMusic = true;
-                    MusicControlClient.musicSelected = identifier;
-                    selected.setText(Text.translatable(SELECTED_KEY, sound));
+                    hoveredButton = button;
+                    hoveredButton.requestFocus();
                 }
-            });
+            } else {
+                hoveredButton = button;
+                hoveredButton.requestFocus();
+            }
         };
 
-        ArrayList<Identifier> musics = new ArrayList<>(MUSIC_BY_NAMESPACE.get(ALL_MUSICS).size());
-        for (Music music : MUSIC_BY_NAMESPACE.get(ALL_MUSICS)) {
-            musics.add(music.getIdentifier());
-        }
-
-        WListPanel<Identifier, WButton> musicListPanel = new WListPanel<>(musics, WButton::new, configurator);
-        WListPanel<Identifier, WButton> eventListPanel = new WListPanel<>(EVENTS, WButton::new, configurator);
-        WCardPanel listPanel = new WCardPanel();
-        listPanel.add(musicListPanel);
-        listPanel.add(eventListPanel);
-
-        WToggleButton toggleButton = new WToggleButton(Text.translatable("gui.music_control.toggle.musicEvent"));
-        toggleButton.setOnToggle((Boolean isEvent) -> {
-            if (isEvent) {
-                listPanel.setSelectedCard(eventListPanel);
-            } else {
-                listPanel.setSelectedCard(musicListPanel);
+        Consumer<Boolean> onToggle = (Boolean isEvent) -> {
+            PlayPanel.isEvent = isEvent;
+            if (hoveredButton != null) {
+                hoveredButton.requestFocus();
             }
-        });
+        };
 
-        this.add(toggleButton);
-        this.add(listPanel, 300, 130);
-        this.add(selected, 300, 20);
+        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, 300, PlayPanel.isEvent));
+        this.add(selected, 300, 10);
     }
 }
