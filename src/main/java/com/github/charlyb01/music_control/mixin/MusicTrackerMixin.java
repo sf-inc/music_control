@@ -39,15 +39,6 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.init && this.client.world != null) {
             this.client.getSoundManager().stop(this.current);
 
-            if (MusicControlClient.currentCategory.equals("default")) {
-                if (this.timeUntilNextSong > 0 || this.current != null) {
-                    this.timeUntilNextSong = 0;
-                    this.current = null;
-                    ci.cancel();
-                }
-                return;
-            }
-
             if (!MusicControlClient.loopMusic) {
                 if (MusicControlClient.previousMusic) {
                     MusicControlClient.previousMusic = false;
@@ -63,7 +54,9 @@ public abstract class MusicTrackerMixin {
                 }
             }
 
-            SoundEvent soundEvent = new SoundEvent(MusicControlClient.currentMusic);
+            SoundEvent soundEvent = type == null || !MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
+                    ? new SoundEvent(MusicControlClient.currentMusic)
+                    : type.getSound();
             this.current = PositionedSoundInstance.music(soundEvent);
 
             if (this.current.getSound() != SoundManager.MISSING_SOUND) {
@@ -75,13 +68,8 @@ public abstract class MusicTrackerMixin {
         }
     }
 
-    @Inject(method = "play", at = @At("TAIL"))
-    private void playDefaultMusic(MusicSound type, CallbackInfo ci) {
-        postPlay();
-    }
-
     @Inject(method = "tick", at = @At("HEAD"))
-    private void changeMusic(CallbackInfo ci) {
+    private void handleMusic(CallbackInfo ci) {
         handlePreviousMusicKey();
         handleNextMusicKey();
         handleResumePauseKey();
@@ -139,7 +127,7 @@ public abstract class MusicTrackerMixin {
             if (MusicControlClient.isPaused) {
                 printMusic();
             } else {
-                this.play(null);
+                this.play(this.client.getMusicType());
             }
         }
     }
@@ -177,7 +165,7 @@ public abstract class MusicTrackerMixin {
                 MusicControlClient.previousCategory = false;
             }
 
-            this.play(null);
+            this.play(this.client.getMusicType());
         }
     }
 
