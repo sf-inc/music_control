@@ -148,7 +148,7 @@ public class MusicKeyBinding {
             }
 
             while (openMenu.wasPressed()) {
-                client.setScreen(new MusicControlScreen(new MusicControlGUI()));
+                client.setScreen(new MusicControlScreen(new MusicControlGUI(client)));
             }
         });
     }

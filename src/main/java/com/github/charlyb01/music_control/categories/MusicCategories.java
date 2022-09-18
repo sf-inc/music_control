@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.categories;
 
+import com.github.charlyb01.music_control.ResourcePackUtils;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
@@ -94,6 +95,8 @@ public class MusicCategories {
         if (!CATEGORIES.contains(MusicControlClient.currentCategory)) {
             MusicControlClient.currentCategory = DEFAULT_MUSICS;
         }
+
+        ResourcePackUtils.createResourcePack();
     }
 
     public static void changeCategory(final boolean nextCategory) {
