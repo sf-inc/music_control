@@ -12,7 +12,8 @@
     "SoundListMixin",
     "SoundManagerMixin",
     "SoundSetAccessor",
-    "SoundSystemMixin"
+    "SoundSystemMixin",
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
