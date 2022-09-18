@@ -18,6 +18,7 @@ import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class MusicCategories {
     public final static ArrayList<String> CATEGORIES = new ArrayList<>(Arrays.asList(ALL_MUSICS, DEFAULT_MUSICS, ALL_MUSIC_DISCS));
+    public final static ArrayList<String> NAMESPACES = new ArrayList<>(List.of("minecraft"));
     public final static LinkedList<Music> PLAYED_MUSICS = new LinkedList<>();
 
     private MusicCategories() {}
@@ -80,6 +81,7 @@ public class MusicCategories {
                         }
                         if (!CATEGORIES.contains(namespace)) {
                             CATEGORIES.add(namespace);
+                            NAMESPACES.add(namespace);
                         }
                     }
                 }
