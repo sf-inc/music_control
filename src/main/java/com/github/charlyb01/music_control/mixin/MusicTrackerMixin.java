@@ -59,9 +59,10 @@ public abstract class MusicTrackerMixin {
                     : type.getSound();
             this.current = PositionedSoundInstance.music(soundEvent);
 
-            if (this.current.getSound() != SoundManager.MISSING_SOUND) {
-                this.client.getSoundManager().play(this.current);
+            if (this.current.getSound() == null || this.current.getSound().equals(SoundManager.MISSING_SOUND)) {
+                this.current = PositionedSoundInstance.music(MusicType.GAME.getSound());
             }
+            this.client.getSoundManager().play(this.current);
 
             postPlay();
             ci.cancel();
