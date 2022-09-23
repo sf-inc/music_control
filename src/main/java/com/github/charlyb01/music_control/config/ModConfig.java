@@ -15,8 +15,8 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.Tooltip(count = 4)
-    @ConfigEntry.BoundedDiscrete(min = 1, max = 15)
-    public int musicQueue = 5;
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 25)
+    public int musicQueue = 10;
 
     @ConfigEntry.Category("display")
     @ConfigEntry.Gui.Tooltip(count = 2)
