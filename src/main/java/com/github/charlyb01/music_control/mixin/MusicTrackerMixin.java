@@ -10,6 +10,7 @@ import net.minecraft.client.sound.*;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,6 +18,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.ArrayList;
 
 @Mixin(MusicTracker.class)
 public abstract class MusicTrackerMixin {
@@ -42,27 +45,30 @@ public abstract class MusicTrackerMixin {
             if (!MusicControlClient.loopMusic) {
                 if (MusicControlClient.previousMusic) {
                     MusicControlClient.previousMusic = false;
-                    Music music = MusicCategories.PLAYED_MUSICS.peekLast();
+                    Identifier music = MusicCategories.PLAYED_MUSICS.peekLast();
                     if (music != null) {
-                        MusicControlClient.currentMusic = music.getIdentifier();
+                        MusicControlClient.currentMusic = music;
                     }
                 } else if (MusicControlClient.musicSelected != null) {
                     MusicControlClient.currentMusic = MusicControlClient.musicSelected;
                     MusicControlClient.musicSelected = null;
+                } else if (type != null
+                        && MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
+                        && Music.MUSIC_BY_EVENT.containsKey(type.getSound().getId())) {
+                    ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(type.getSound().getId()));
+                    if (musics.isEmpty()) {
+                        musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().getId()));
+                    }
+                    MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(musics, this.random);
                 } else {
                     MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
                 }
             }
 
-            SoundEvent soundEvent = type == null || !MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
-                    ? new SoundEvent(MusicControlClient.currentMusic)
-                    : type.getSound();
-            this.current = PositionedSoundInstance.music(soundEvent);
-
-            if (this.current.getSound() == null || this.current.getSound().equals(SoundManager.MISSING_SOUND)) {
-                this.current = PositionedSoundInstance.music(MusicType.GAME.getSound());
+            this.current = PositionedSoundInstance.music(new SoundEvent(MusicControlClient.currentMusic));
+            if (this.current.getSound() != SoundManager.MISSING_SOUND) {
+                this.client.getSoundManager().play(this.current);
             }
-            this.client.getSoundManager().play(this.current);
 
             postPlay();
             ci.cancel();

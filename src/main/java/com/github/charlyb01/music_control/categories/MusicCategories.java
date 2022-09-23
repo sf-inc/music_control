@@ -20,7 +20,7 @@ import static com.github.charlyb01.music_control.categories.Music.*;
 public class MusicCategories {
     public final static ArrayList<String> CATEGORIES = new ArrayList<>(Arrays.asList(ALL_MUSICS, DEFAULT_MUSICS, ALL_MUSIC_DISCS));
     public final static ArrayList<String> NAMESPACES = new ArrayList<>(List.of("minecraft"));
-    public final static LinkedList<Music> PLAYED_MUSICS = new LinkedList<>();
+    public final static LinkedList<Identifier> PLAYED_MUSICS = new LinkedList<>();
 
     private MusicCategories() {}
 
@@ -110,19 +110,22 @@ public class MusicCategories {
         MusicControlClient.currentCategory = CATEGORIES.get(index);
     }
 
-    private static Identifier getRandomMusicIdentifier(final ArrayList<Music> musics, final Random random) {
-        Music music;
+    public static Identifier getRandomMusicIdentifier(final ArrayList<Music> musics, final Random random) {
+        if (musics.isEmpty()) return null;
+
+        Identifier music;
         int size = musics.size();
 
-        while (MusicCategories.PLAYED_MUSICS.size() >= Math.min(ModConfig.get().musicQueue, size))
+        while (MusicCategories.PLAYED_MUSICS.size() >= Math.min(ModConfig.get().musicQueue, size)) {
             MusicCategories.PLAYED_MUSICS.poll();
+        }
 
         do {
-            music = musics.get(random.nextInt(size));
+            music = musics.get(random.nextInt(size)).getIdentifier();
         } while (MusicCategories.PLAYED_MUSICS.contains(music) && size > MusicCategories.PLAYED_MUSICS.size());
 
         MusicCategories.PLAYED_MUSICS.add(music);
-        return music.getIdentifier();
+        return music;
     }
 
     public static Identifier getMusicIdentifier(final Random random) {
