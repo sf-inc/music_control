@@ -140,7 +140,6 @@ public class ResourcePackUtils {
             for (Music music : musics) {
                 JsonObject musicJson = new JsonObject();
                 musicJson.addProperty("name", music.getIdentifier().toString());
-                musicJson.addProperty("replace", true);
                 musicJson.addProperty("stream", true);
 
                 soundsJson.add(musicJson);
@@ -148,6 +147,7 @@ public class ResourcePackUtils {
 
             JsonObject soundEventJson = new JsonObject();
             soundEventJson.addProperty("category", "music");
+            soundEventJson.addProperty("replace", true);
             soundEventJson.add("sounds", soundsJson);
 
             jsonObjects.get(event.getNamespace()).add(event.getPath(), soundEventJson);
