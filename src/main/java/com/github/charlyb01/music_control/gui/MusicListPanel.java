@@ -2,8 +2,11 @@ package com.github.charlyb01.music_control.gui;
 
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.WButton;
+import io.github.cottonmc.cotton.gui.widget.WText;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -28,6 +31,10 @@ public class MusicListPanel extends WBox {
         };
 
         ButtonListPanel playedListPanel = new ButtonListPanel(musics, onMusicClicked, 300, HEIGHT);
+        WText text = new WText(Text.translatable("gui.music_control.text.played_music"));
+        text.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+        this.add(text, 300, 20);
         this.add(playedListPanel);
     }
 }

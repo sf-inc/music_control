@@ -67,6 +67,7 @@
     "gui.music_control.toggle.removeAdd": "Remove / Add",
     "gui.music_control.toggle.musicEvent": "Music / Event",
     "gui.music_control.button.save": "Save Config",
+    "gui.music_control.text.played_music": "Last played music list",
 
     "music_control.metadata.description": "Music Control - Built-in Resource Pack",
 
