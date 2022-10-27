@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.gui;
 
+import com.github.charlyb01.music_control.config.ModConfig;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
@@ -28,7 +29,7 @@ public class ConfigPanel extends WBox {
             if (soundConfigPanel != null) {
                 this.remove(soundConfigPanel);
             }
-            soundConfigPanel = new SoundConfigPanel(identifier, isEvent, 150);
+            soundConfigPanel = new SoundConfigPanel(identifier, isEvent, ModConfig.get().width / 2);
             this.add(soundConfigPanel);
             this.layout();
         };
@@ -42,6 +43,6 @@ public class ConfigPanel extends WBox {
             }
         };
 
-        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, 150, isEvent));
+        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().width / 2, isEvent));
     }
 }

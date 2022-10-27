@@ -18,6 +18,10 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 1, max = 25)
     public int musicQueue = 10;
 
+    @ConfigEntry.Category("general")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public String musicCategoryStart = Music.DEFAULT_MUSICS;
+
     @ConfigEntry.Category("display")
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean displayAtStart = true;
@@ -36,9 +40,13 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 3)
     public boolean allowHighVolume = false;
 
-    @ConfigEntry.Category("categories")
-    @ConfigEntry.Gui.Tooltip(count = 2)
-    public String musicCategoryStart = Music.DEFAULT_MUSICS;
+    @ConfigEntry.Category("gui")
+    @ConfigEntry.BoundedDiscrete(min = 100, max = 200)
+    public int height = 150;
+
+    @ConfigEntry.Category("gui")
+    @ConfigEntry.BoundedDiscrete(min = 150, max = 400)
+    public int width = 300;
 
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();

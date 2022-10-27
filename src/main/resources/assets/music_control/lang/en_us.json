@@ -46,10 +46,13 @@
     "text.autoconfig.music_control.option.allowHighVolume.@Tooltip[1]": "enable using the \"Volume up\" key",
     "text.autoconfig.music_control.option.allowHighVolume.@Tooltip[2]": "to turn the music volume up to 200%.",
 
+    "text.autoconfig.music_control.option.height": "Height of music screen",
+    "text.autoconfig.music_control.option.width": "Width of music screen",
+
     "text.autoconfig.music_control.category.general": "General",
     "text.autoconfig.music_control.category.display": "Display",
     "text.autoconfig.music_control.category.volume": "Volume",
-    "text.autoconfig.music_control.category.categories": "Categories",
+    "text.autoconfig.music_control.category.gui": "GUI",
 
     "music.play": "PLAY",
     "music.pause": "PAUSE",

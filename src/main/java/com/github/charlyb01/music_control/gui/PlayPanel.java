@@ -1,6 +1,7 @@
 package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.github.charlyb01.music_control.config.ModConfig;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
@@ -57,7 +58,7 @@ public class PlayPanel extends WBox {
             }
         };
 
-        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, 300, PlayPanel.isEvent));
-        this.add(selected, 300, 10);
+        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().width, PlayPanel.isEvent));
+        this.add(selected, ModConfig.get().width, 20);
     }
 }

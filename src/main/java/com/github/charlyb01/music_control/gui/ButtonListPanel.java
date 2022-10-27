@@ -16,7 +16,7 @@ public class ButtonListPanel extends WBox {
         super(Axis.VERTICAL);
 
         BiConsumer<Identifier, WButton> configurator = (Identifier identifier, WButton button) -> {
-            button.setLabel(Text.translatable(identifier.toString()));
+            button.setLabel(Text.of(Text.translatable(identifier.toString()).asTruncatedString(width / 7)));
             button.setOnClick(() -> onClicked.accept(identifier, button));
         };
 

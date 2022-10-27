@@ -1,6 +1,7 @@
 package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.categories.Music;
+import com.github.charlyb01.music_control.config.ModConfig;
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WCardPanel;
@@ -15,7 +16,6 @@ import java.util.function.BiConsumer;
 import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class SoundConfigPanel extends WBox {
-    private static final int HEIGHT = 125;
     public SoundConfigPanel(final Identifier sound, final boolean isEvent, final int width) {
         super(Axis.VERTICAL);
 
@@ -73,8 +73,8 @@ public class SoundConfigPanel extends WBox {
             }
         };
 
-        ButtonListPanel addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, HEIGHT);
-        ButtonListPanel removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, HEIGHT);
+        ButtonListPanel addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().height - 20);
+        ButtonListPanel removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().height - 20);
         WCardPanel listPanel = new WCardPanel();
         listPanel.add(removeListPanel);
         listPanel.add(addListPanel);

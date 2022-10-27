@@ -16,11 +16,13 @@
     "text.autoconfig.music_control.option.displayAtStart": "Afficher le texte quand une musique se joue",
     "text.autoconfig.music_control.option.displayType": "Type d'affichage",
     "text.autoconfig.music_control.option.musicCategoryStart": "Catégorie sélectionnée par défaut",
+    "text.autoconfig.music_control.option.height": "Hauteur de l'écran de musique",
+    "text.autoconfig.music_control.option.width": "Largeur de l'écran de musique",
 
     "text.autoconfig.music_control.category.general": "Général",
     "text.autoconfig.music_control.category.display": "Affichage",
     "text.autoconfig.music_control.category.volume": "Volume",
-    "text.autoconfig.music_control.category.categories": "Catégories",
+    "text.autoconfig.music_control.category.gui": "GUI",
 
     "music.play": "LECTURE",
     "music.pause": "PAUSE",
