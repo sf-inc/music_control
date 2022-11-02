@@ -1,9 +1,10 @@
 package com.github.charlyb01.music_control;
 
+import blue.endless.jankson.JsonArray;
+import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.JsonPrimitive;
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.SharedConstants;
@@ -82,12 +83,12 @@ public class ResourcePackUtils {
 
                 JsonObject data = new JsonObject();
                 JsonObject pack = new JsonObject();
-                pack.addProperty("pack_format", ResourceType.CLIENT_RESOURCES.getPackVersion(SharedConstants.getGameVersion()));
-                pack.addProperty("description", Text.translatable("music_control.metadata.description").getString());
-                data.add("pack", pack);
+                pack.put("pack_format", JsonPrimitive.of(Long.valueOf(ResourceType.CLIENT_RESOURCES.getPackVersion(SharedConstants.getGameVersion()))));
+                pack.put("description", JsonPrimitive.of(Text.translatable("music_control.metadata.description").getString()));
+                data.put("pack", pack);
 
                 try (PrintWriter out = new PrintWriter(new FileWriter(path.toFile()))) {
-                    out.write(data.toString());
+                    out.write(data.toJson(false, true));
                     out.flush();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -139,23 +140,23 @@ public class ResourcePackUtils {
             JsonArray soundsJson = new JsonArray();
             for (Music music : musics) {
                 JsonObject musicJson = new JsonObject();
-                musicJson.addProperty("name", music.getIdentifier().toString());
-                musicJson.addProperty("stream", true);
+                musicJson.put("name", JsonPrimitive.of(music.getIdentifier().toString()));
+                musicJson.put("stream", JsonPrimitive.of(true));
 
                 soundsJson.add(musicJson);
             }
 
             JsonObject soundEventJson = new JsonObject();
-            soundEventJson.addProperty("category", "music");
-            soundEventJson.addProperty("replace", true);
-            soundEventJson.add("sounds", soundsJson);
+            soundEventJson.put("category", JsonPrimitive.of("music"));
+            soundEventJson.put("replace", JsonPrimitive.of(true));
+            soundEventJson.put("sounds", soundsJson);
 
-            jsonObjects.get(event.getNamespace()).add(event.getPath(), soundEventJson);
+            jsonObjects.get(event.getNamespace()).put(event.getPath(), soundEventJson);
         });
 
         fileWriters.forEach((String namespace, FileWriter fileWriter) -> {
             try (PrintWriter out = new PrintWriter(fileWriter)) {
-                out.write(jsonObjects.get(namespace).toString());
+                out.write(jsonObjects.get(namespace).toJson(false, true));
                 out.flush();
             } catch (Exception e) {
                 e.printStackTrace();
