@@ -4,6 +4,23 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.6: beta
+
+* Previous music works with last played music list, meaning we can go back further
+* Removed dimension category, use default by default which is minecraft sound event behavior
+* Controls work with default category
+* Added sound events for each overworld biomes
+* Display music name when changing category
+* Replaced random keybinding with previous category keybinding
+* Added new custom gui, bound to 'M' key
+  * Has a panel to play a specific music or event
+  * Has a panel to see last played music list
+  * Has a panel to configure in which sound events can be played a music/which musics can be played by a sound event
+  * Has a panel to save the customized config and reload the custom resource pack
+* Play "game" sound event if trying to play an empty sound event
+* Display correct music name for disc events, as we can add several musics to a disc
+* Custom gui dimensions are configurable
+
 ## v1.5.4 ([@naturecodevoid](https://github.com/naturecodevoid))
 
 * Added volume increment setting
