@@ -1,6 +1,7 @@
 package com.github.charlyb01.music_control.client;
 
 import com.github.charlyb01.music_control.Utils;
+import com.github.charlyb01.music_control.access.GameOptionsAccess;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.gui.MusicControlGUI;
 import com.github.charlyb01.music_control.gui.MusicControlScreen;
@@ -132,19 +133,19 @@ public class MusicKeyBinding {
             }
 
             while (volumeUp.wasPressed()) {
-                float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                volume = Math.min(volume + (ModConfig.get().volumeIncrement / 100.F), ModConfig.get().allowHighVolume ? 2.0F : 1.0F);
-                client.options.setSoundVolume(SoundCategory.MUSIC, volume);
+                int volume = Math.round(client.options.getSoundVolume(SoundCategory.MUSIC) * 100.F);
+                volume = Math.min(volume + ModConfig.get().volumeIncrement, ModConfig.get().allowHighVolume ? 200 : 100);
+                ((GameOptionsAccess) client.options).setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.0);
                 client.options.write();
-                Utils.print(client, Text.translatable("music.volume", Math.round(100.F * volume)));
+                Utils.print(client, Text.translatable("music.volume", volume));
             }
 
             while (volumeDown.wasPressed()) {
-                float volume = client.options.getSoundVolume(SoundCategory.MUSIC);
-                volume = Math.max(volume - (ModConfig.get().volumeIncrement / 100.F), 0.0F);
-                client.options.setSoundVolume(SoundCategory.MUSIC, volume);
+                int volume = Math.round(client.options.getSoundVolume(SoundCategory.MUSIC) * 100.F);
+                volume = Math.max(volume - ModConfig.get().volumeIncrement, 0);
+                ((GameOptionsAccess) client.options).setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.0);
                 client.options.write();
-                Utils.print(client, Text.translatable("music.volume", Math.round(100.F * volume)));
+                Utils.print(client, Text.translatable("music.volume", volume));
             }
 
             while (openMenu.wasPressed()) {

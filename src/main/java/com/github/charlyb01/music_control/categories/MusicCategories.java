@@ -7,10 +7,10 @@ import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundContainer;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
 
 import java.util.*;
 
@@ -40,7 +40,7 @@ public class MusicCategories {
         MUSIC_BY_NAMESPACE.put(ALL_MUSICS, musics);
         MUSIC_BY_NAMESPACE.put(ALL_MUSIC_DISCS, discs);
 
-        for (SoundEvent soundEvent : Registry.SOUND_EVENT) {
+        for (SoundEvent soundEvent : Registries.SOUND_EVENT) {
             Identifier event = soundEvent.getId();
             if (event.getPath().contains("music") && !EVENTS.contains(event)) {
                 EVENTS.add(event);

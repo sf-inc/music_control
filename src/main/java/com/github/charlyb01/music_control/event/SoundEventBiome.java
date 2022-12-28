@@ -1,55 +1,142 @@
 package com.github.charlyb01.music_control.event;
 
 import com.github.charlyb01.music_control.access.BiomeAccess;
-import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
+
+import static net.fabricmc.fabric.impl.biome.modification.BuiltInRegistryKeys.biomeRegistryWrapper;
 
 public class SoundEventBiome {
     public static void init() {
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SNOWY_PLAINS)).setMusic(SoundEventList.MUSIC_OVERWORLD_SNOWY_PLAINS);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.ICE_SPIKES)).setMusic(SoundEventList.MUSIC_OVERWORLD_ICE_SPIKES);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SNOWY_TAIGA)).setMusic(SoundEventList.MUSIC_OVERWORLD_SNOWY_TAIGA);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SNOWY_BEACH)).setMusic(SoundEventList.MUSIC_OVERWORLD_SNOWY_BEACH);
+        final RegistryEntryLookup<Biome> biomeRegistryEntryLookup = biomeRegistryWrapper();
 
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.WINDSWEPT_HILLS)).setMusic(SoundEventList.MUSIC_OVERWORLD_WINDSWEPT_HILLS);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)).setMusic(SoundEventList.MUSIC_OVERWORLD_WINDSWEPT_GRAVELLY_HILLS);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.WINDSWEPT_FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_WINDSWEPT_FOREST);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.TAIGA)).setMusic(SoundEventList.MUSIC_OVERWORLD_TAIGA);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.OLD_GROWTH_PINE_TAIGA)).setMusic(SoundEventList.MUSIC_OVERWORLD_OLD_GROWTH_PINE_TAIGA);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)).setMusic(SoundEventList.MUSIC_OVERWORLD_OLD_GROWTH_SPRUCE_TAIGA);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.STONY_SHORE)).setMusic(SoundEventList.MUSIC_OVERWORLD_STONY_SHORE);
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.SNOWY_PLAINS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.SNOWY_PLAINS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_SNOWY_PLAINS);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.ICE_SPIKES).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.ICE_SPIKES).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_ICE_SPIKES);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.SNOWY_TAIGA).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.SNOWY_TAIGA).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_SNOWY_TAIGA);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.SNOWY_BEACH).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.SNOWY_BEACH).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_SNOWY_BEACH);
+        }
 
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.PLAINS)).setMusic(SoundEventList.MUSIC_OVERWORLD_PLAINS);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SUNFLOWER_PLAINS)).setMusic(SoundEventList.MUSIC_OVERWORLD_SUNFLOWER_PLAINS);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_FOREST);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.FLOWER_FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_FLOWER_FOREST);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.BIRCH_FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_BIRCH_FOREST);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_OLD_GROWTH_BIRCH_FOREST);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.DARK_FOREST)).setMusic(SoundEventList.MUSIC_OVERWORLD_DARK_FOREST);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.MANGROVE_SWAMP)).setMusic(SoundEventList.MUSIC_OVERWORLD_MANGROVE_SWAMP);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.JUNGLE)).setMusic(SoundEventList.MUSIC_OVERWORLD_JUNGLE);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SPARSE_JUNGLE)).setMusic(SoundEventList.MUSIC_OVERWORLD_SPARSE_JUNGLE);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.BAMBOO_JUNGLE)).setMusic(SoundEventList.MUSIC_OVERWORLD_BAMBOO_JUNGLE);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.BEACH)).setMusic(SoundEventList.MUSIC_OVERWORLD_BEACH);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.MUSHROOM_FIELDS)).setMusic(SoundEventList.MUSIC_OVERWORLD_MUSHROOM_FIELDS);
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.WINDSWEPT_HILLS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.WINDSWEPT_HILLS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_WINDSWEPT_HILLS);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_WINDSWEPT_GRAVELLY_HILLS);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.WINDSWEPT_FOREST).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.WINDSWEPT_FOREST).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_WINDSWEPT_FOREST);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.TAIGA).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.TAIGA).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_TAIGA);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.OLD_GROWTH_PINE_TAIGA).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.OLD_GROWTH_PINE_TAIGA).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_OLD_GROWTH_PINE_TAIGA);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_OLD_GROWTH_SPRUCE_TAIGA);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.STONY_SHORE).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.STONY_SHORE).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_STONY_SHORE);
+        }
 
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.DESERT)).setMusic(SoundEventList.MUSIC_OVERWORLD_DESERT);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SAVANNA)).setMusic(SoundEventList.MUSIC_OVERWORLD_SAVANNA);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.SAVANNA_PLATEAU)).setMusic(SoundEventList.MUSIC_OVERWORLD_SAVANNA_PLATEAU);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.WINDSWEPT_SAVANNA)).setMusic(SoundEventList.MUSIC_OVERWORLD_WINDSWEPT_SAVANNA);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.BADLANDS)).setMusic(SoundEventList.MUSIC_OVERWORLD_BADLANDS);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.WOODED_BADLANDS)).setMusic(SoundEventList.MUSIC_OVERWORLD_WOODED_BADLANDS);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.ERODED_BADLANDS)).setMusic(SoundEventList.MUSIC_OVERWORLD_ERODED_BADLANDS);
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.PLAINS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.PLAINS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_PLAINS);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.SUNFLOWER_PLAINS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.SUNFLOWER_PLAINS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_SUNFLOWER_PLAINS);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.FOREST).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.FOREST).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_FOREST);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.FLOWER_FOREST).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.FLOWER_FOREST).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_FLOWER_FOREST);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.BIRCH_FOREST).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.BIRCH_FOREST).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_BIRCH_FOREST);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.OLD_GROWTH_BIRCH_FOREST).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.OLD_GROWTH_BIRCH_FOREST).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_OLD_GROWTH_BIRCH_FOREST);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.DARK_FOREST).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.DARK_FOREST).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_DARK_FOREST);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.MANGROVE_SWAMP).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.MANGROVE_SWAMP).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_MANGROVE_SWAMP);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.JUNGLE).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.JUNGLE).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_JUNGLE);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.SPARSE_JUNGLE).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.SPARSE_JUNGLE).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_SPARSE_JUNGLE);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.BAMBOO_JUNGLE).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.BAMBOO_JUNGLE).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_BAMBOO_JUNGLE);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.BEACH).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.BEACH).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_BEACH);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.MUSHROOM_FIELDS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.MUSHROOM_FIELDS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_MUSHROOM_FIELDS);
+        }
 
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.RIVER)).setMusic(SoundEventList.MUSIC_OVERWORLD_RIVER);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.FROZEN_RIVER)).setMusic(SoundEventList.MUSIC_OVERWORLD_FROZEN_RIVER);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.WARM_OCEAN)).setMusic(SoundEventList.MUSIC_OVERWORLD_WARM_OCEAN);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.LUKEWARM_OCEAN)).setMusic(SoundEventList.MUSIC_OVERWORLD_LUKEWARM_OCEAN);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.OCEAN)).setMusic(SoundEventList.MUSIC_OVERWORLD_OCEAN);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.DEEP_OCEAN)).setMusic(SoundEventList.MUSIC_OVERWORLD_DEEP_OCEAN);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.COLD_OCEAN)).setMusic(SoundEventList.MUSIC_OVERWORLD_COLD_OCEAN);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.DEEP_COLD_OCEAN)).setMusic(SoundEventList.MUSIC_OVERWORLD_DEEP_COLD_OCEAN);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.FROZEN_OCEAN)).setMusic(SoundEventList.MUSIC_OVERWORLD_FROZEN_OCEAN);
-        ((BiomeAccess) (Object) BuiltinRegistries.BIOME.get(BiomeKeys.DEEP_FROZEN_OCEAN)).setMusic(SoundEventList.MUSIC_OVERWORLD_DEEP_FROZEN_OCEAN);
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.DESERT).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.DESERT).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_DESERT);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.SAVANNA).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.SAVANNA).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_SAVANNA);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.SAVANNA_PLATEAU).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.SAVANNA_PLATEAU).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_SAVANNA_PLATEAU);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.WINDSWEPT_SAVANNA).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.WINDSWEPT_SAVANNA).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_WINDSWEPT_SAVANNA);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.BADLANDS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.BADLANDS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_BADLANDS);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.WOODED_BADLANDS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.WOODED_BADLANDS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_WOODED_BADLANDS);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.ERODED_BADLANDS).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.ERODED_BADLANDS).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_ERODED_BADLANDS);
+        }
+
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.RIVER).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.RIVER).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_RIVER);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.FROZEN_RIVER).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.FROZEN_RIVER).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_FROZEN_RIVER);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.WARM_OCEAN).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.WARM_OCEAN).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_WARM_OCEAN);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.LUKEWARM_OCEAN).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.LUKEWARM_OCEAN).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_LUKEWARM_OCEAN);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.OCEAN).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.OCEAN).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_OCEAN);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.DEEP_OCEAN).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.DEEP_OCEAN).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_DEEP_OCEAN);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.COLD_OCEAN).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.COLD_OCEAN).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_COLD_OCEAN);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.DEEP_COLD_OCEAN).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.DEEP_COLD_OCEAN).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_DEEP_COLD_OCEAN);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.FROZEN_OCEAN).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.FROZEN_OCEAN).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_FROZEN_OCEAN);
+        }
+        if (biomeRegistryEntryLookup.getOptional(BiomeKeys.DEEP_FROZEN_OCEAN).isPresent()) {
+            ((BiomeAccess) (Object) biomeRegistryEntryLookup.getOptional(BiomeKeys.DEEP_FROZEN_OCEAN).get().value()).setMusic(SoundEventList.MUSIC_OVERWORLD_DEEP_FROZEN_OCEAN);
+        }
     }
 }

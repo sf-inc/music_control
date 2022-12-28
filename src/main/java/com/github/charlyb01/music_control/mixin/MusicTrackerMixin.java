@@ -54,10 +54,10 @@ public abstract class MusicTrackerMixin {
                     MusicControlClient.musicSelected = null;
                 } else if (type != null
                         && MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
-                        && Music.MUSIC_BY_EVENT.containsKey(type.getSound().getId())) {
-                    ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(type.getSound().getId()));
+                        && Music.MUSIC_BY_EVENT.containsKey(type.getSound().value().getId())) {
+                    ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(type.getSound().value().getId()));
                     if (musics.isEmpty()) {
-                        musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().getId()));
+                        musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().value().getId()));
                     }
                     MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(musics, this.random);
                 } else {
@@ -65,7 +65,7 @@ public abstract class MusicTrackerMixin {
                 }
             }
 
-            this.current = PositionedSoundInstance.music(new SoundEvent(MusicControlClient.currentMusic));
+            this.current = PositionedSoundInstance.music(SoundEvent.of(MusicControlClient.currentMusic));
             if (this.current.getSound() != SoundManager.MISSING_SOUND) {
                 this.client.getSoundManager().play(this.current);
             }
