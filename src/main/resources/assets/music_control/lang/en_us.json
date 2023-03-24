@@ -59,6 +59,7 @@
     "music.play": "PLAY",
     "music.pause": "PAUSE",
     "music.paused": "PAUSED",
+    "music.no_playing": "No music playing",
     "music.loop.on": "Loop: ON",
     "music.loop.off": "Loop: OFF",
     "music.volume": "Volume: %s%%",

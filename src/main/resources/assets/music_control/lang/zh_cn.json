@@ -43,6 +43,7 @@
     "music.play": "播放",
     "music.pause": "暂停",
     "music.paused": "已暂停",
+    "music.no_playing": "当前未播放音乐",
     "music.loop.on": "循环：开",
     "music.loop.off": "循环：关",
     "music.volume": "音量: %s%%",

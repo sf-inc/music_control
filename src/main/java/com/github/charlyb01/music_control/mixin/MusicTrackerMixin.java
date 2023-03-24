@@ -23,12 +23,19 @@ import java.util.ArrayList;
 
 @Mixin(MusicTracker.class)
 public abstract class MusicTrackerMixin {
-    @Shadow @Final private MinecraftClient client;
-    @Shadow @Final private Random random;
-    @Shadow private int timeUntilNextSong;
-    @Shadow private SoundInstance current;
+    @Shadow
+    @Final
+    private MinecraftClient client;
+    @Shadow
+    @Final
+    private Random random;
+    @Shadow
+    private int timeUntilNextSong;
+    @Shadow
+    private SoundInstance current;
 
-    @Shadow public abstract void play(MusicSound type);
+    @Shadow
+    public abstract void play(MusicSound type);
 
     @Inject(method = "play", at = @At("HEAD"), cancellable = true)
     private void playMusic(MusicSound type, CallbackInfo ci) {
@@ -55,7 +62,8 @@ public abstract class MusicTrackerMixin {
                 } else if (type != null
                         && MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
                         && Music.MUSIC_BY_EVENT.containsKey(type.getSound().value().getId())) {
-                    ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(type.getSound().value().getId()));
+                    ArrayList<Music> musics = new ArrayList<>(
+                            Music.MUSIC_BY_EVENT.get(type.getSound().value().getId()));
                     if (musics.isEmpty()) {
                         musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().value().getId()));
                     }
@@ -96,21 +104,29 @@ public abstract class MusicTrackerMixin {
         this.timeUntilNextSong = ModConfig.get().timer * 20;
     }
 
+    private static final String EMPTY_MUSIC = "minecraft:empty";
+
     private void printMusic() {
         if (this.current == null || this.client.world == null)
             return;
-
+        final var currentMusic = this.current.getSound().getIdentifier().toString();
         if (MusicControlClient.isPaused) {
             Utils.print(this.client, Text.translatable("music.paused"));
 
         } else if (MusicControlClient.categoryChanged) {
             String category = MusicControlClient.currentCategory.toUpperCase().replace('_', ' ') + ": %s";
-            Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
-            Utils.print(this.client, Text.translatable(category, title));
+            Text title = Text.translatable(currentMusic);
+            if (currentMusic.equals(EMPTY_MUSIC))
+                Utils.print(this.client, Text.translatable("music.no_playing"));
+            else
+                Utils.print(this.client, Text.translatable(category, title));
 
         } else {
-            Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
-            Utils.print(this.client, Text.translatable("record.nowPlaying", title));
+            Text title = Text.translatable(currentMusic);
+            if (currentMusic.equals(EMPTY_MUSIC))
+                Utils.print(this.client, Text.translatable("music.no_playing"));
+            else
+                Utils.print(this.client, Text.translatable("record.nowPlaying", title));
         }
     }
 
