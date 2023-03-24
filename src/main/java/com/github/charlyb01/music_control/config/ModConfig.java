@@ -8,6 +8,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = "music_control")
 public class ModConfig implements ConfigData {
+
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.BoundedDiscrete(min = 1, max = 300)

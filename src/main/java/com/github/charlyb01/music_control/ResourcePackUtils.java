@@ -83,7 +83,7 @@ public class ResourcePackUtils {
 
                 JsonObject data = new JsonObject();
                 JsonObject pack = new JsonObject();
-                pack.put("pack_format", JsonPrimitive.of(Long.valueOf(ResourceType.CLIENT_RESOURCES.getPackVersion(SharedConstants.getGameVersion()))));
+                pack.put("pack_format", JsonPrimitive.of(Long.valueOf(SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES))));
                 pack.put("description", JsonPrimitive.of(Text.translatable("music_control.metadata.description").getString()));
                 data.put("pack", pack);
 

@@ -2,7 +2,6 @@ package com.github.charlyb01.music_control.mixin;
 
 import net.minecraft.client.sound.*;
 import net.minecraft.resource.ResourceFactory;
-import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
