@@ -64,6 +64,8 @@
     "music.volume": "Volume: %s%%",
     "music.none": "None",
 
+    "gui.component.filter.placeholder": "Input Keywords",
+
     "gui.music_control.panel.play": "Play",
     "gui.music_control.panel.list": "List",
     "gui.music_control.panel.config": "Config",

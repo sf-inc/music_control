@@ -73,8 +73,8 @@ public class SoundConfigPanel extends WBox {
             }
         };
 
-        ButtonListPanel addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().height - 20);
-        ButtonListPanel removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().height - 20);
+        ButtonListPanel addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().height - 20, true);
+        ButtonListPanel removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().height - 20, true);
         WCardPanel listPanel = new WCardPanel();
         listPanel.add(removeListPanel);
         listPanel.add(addListPanel);

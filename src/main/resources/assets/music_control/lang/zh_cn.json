@@ -48,6 +48,8 @@
     "music.volume": "音量: %s%%",
     "music.none": "无",
 
+    "gui.component.filter.placeholder": "键入关键字",
+
     "gui.music_control.panel.play": "播放",
     "gui.music_control.panel.list": "列表",
     "gui.music_control.panel.config": "配置",

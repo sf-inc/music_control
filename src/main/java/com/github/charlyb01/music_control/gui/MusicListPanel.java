@@ -29,7 +29,12 @@ public class MusicListPanel extends WBox {
             musics.remove(identifier);
         };
 
-        ButtonListPanel playedListPanel = new ButtonListPanel(musics, onMusicClicked, ModConfig.get().width, ModConfig.get().height - 20);
+        ButtonListPanel playedListPanel = new ButtonListPanel(
+                musics,
+                onMusicClicked,
+                ModConfig.get().width,
+                ModConfig.get().height - 20,
+                true);
         WText text = new WText(Text.translatable("gui.music_control.text.played_music"));
         text.setHorizontalAlignment(HorizontalAlignment.CENTER);
 

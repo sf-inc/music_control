@@ -42,7 +42,7 @@ public class ModConfig implements ConfigData {
     public boolean allowHighVolume = false;
 
     @ConfigEntry.Category("gui")
-    @ConfigEntry.BoundedDiscrete(min = 100, max = 200)
+    @ConfigEntry.BoundedDiscrete(min = 100, max = 250)
     public int height = 150;
 
     @ConfigEntry.Category("gui")
