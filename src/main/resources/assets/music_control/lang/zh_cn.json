@@ -11,10 +11,10 @@
     "key.music_control.volumeDown": "减小音乐音量",
     "key.music_control.openMenu": "打开音乐控制菜单",
 
-    "text.autoconfig.music_control.title": "音乐控制器配置",
+    "text.autoconfig.music_control.title": "音乐控制器设置",
 
-    "text.autoconfig.music_control.option.timer": "音乐间隔",
-    "text.autoconfig.music_control.option.timer.@Tooltip[0]": "该选项指示两首音乐间会有多少秒的间隔。",
+    "text.autoconfig.music_control.option.timer": "最大音乐间隔[秒]",
+    "text.autoconfig.music_control.option.timer.@Tooltip[0]": "该选项指示两首音乐间最大会有多少秒的间隔。",
 
     "text.autoconfig.music_control.option.musicQueue": "音乐历史长度",
     "text.autoconfig.music_control.option.musicQueue.@Tooltip[0]": "该选项决定了一首音乐被随机选择器重复选择的",
@@ -44,6 +44,7 @@
     "music.pause": "暂停",
     "music.paused": "已暂停",
     "music.no_playing": "当前未播放音乐",
+    "music.no_playing_with_time": "当前未播放音乐（下次选曲：%s秒后）",
     "music.loop.on": "循环：开",
     "music.loop.off": "循环：关",
     "music.volume": "音量: %s%%",

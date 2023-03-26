@@ -37,6 +37,7 @@ public class ConfigPanel extends WBox {
             }
             soundConfigPanel = new SoundConfigPanel(identifier, isEvent, innerWidth / 2);
             self.add(soundConfigPanel);
+            soundConfigPanel.setHost(self.getHost());
             self.layout();
         };
         Consumer<Boolean> onToggle = (Boolean isEvent) -> {

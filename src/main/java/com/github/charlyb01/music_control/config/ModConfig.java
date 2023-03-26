@@ -29,6 +29,10 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Category("display")
     @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean displayRemainingSeconds = false;
+
+    @ConfigEntry.Category("display")
+    @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public DisplayType displayType = DisplayType.JUKEBOX;
 
@@ -46,8 +50,8 @@ public class ModConfig implements ConfigData {
     public int height = 150;
 
     @ConfigEntry.Category("gui")
-    @ConfigEntry.BoundedDiscrete(min = 150, max = 400)
-    public int width = 300;
+    @ConfigEntry.BoundedDiscrete(min = 150, max = 450)
+    public int width = 320;
 
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();

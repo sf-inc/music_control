@@ -11,6 +11,8 @@ public class Music implements Comparable<Music> {
     public final static String ALL_MUSICS = "all";
     public final static String ALL_MUSIC_DISCS = "disc";
     public final static String DEFAULT_MUSICS = "default";
+    public static final String EMPTY_MUSIC = "minecraft:empty";
+    public static final Identifier EMPTY_MUSIC_ID = new Identifier(EMPTY_MUSIC);
     public final static HashMap<String, ArrayList<Music>> MUSIC_BY_NAMESPACE = new HashMap<>();
     public final static ArrayList<Identifier> EVENTS = new ArrayList<>();
     public final static HashMap<Identifier, HashSet<Music>> MUSIC_BY_EVENT = new HashMap<>();

@@ -13,9 +13,9 @@
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
 
-    "text.autoconfig.music_control.option.timer": "Delay between musics",
+    "text.autoconfig.music_control.option.timer": "Maximum delay between musics [s]",
     "text.autoconfig.music_control.option.timer.@Tooltip[0]": "This setting defines how many seconds",
-    "text.autoconfig.music_control.option.timer.@Tooltip[1]": "there will be a delay between music.",
+    "text.autoconfig.music_control.option.timer.@Tooltip[1]": "at most there will be a delay between music.",
 
     "text.autoconfig.music_control.option.musicQueue": "Number of musics to keep in history",
     "text.autoconfig.music_control.option.musicQueue.@Tooltip[0]": "This setting defines how many",
@@ -60,6 +60,7 @@
     "music.pause": "PAUSE",
     "music.paused": "PAUSED",
     "music.no_playing": "No music playing",
+    "music.no_playing_with_time": "No music playing (Next selection after %ss)",
     "music.loop.on": "Loop: ON",
     "music.loop.off": "Loop: OFF",
     "music.volume": "Volume: %s%%",

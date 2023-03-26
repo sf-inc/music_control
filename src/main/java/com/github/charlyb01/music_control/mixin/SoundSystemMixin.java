@@ -34,7 +34,8 @@ public class SoundSystemMixin {
     private void printRecord(SoundInstance soundInstance, CallbackInfo ci, WeightedSoundSet weightedSoundSet, Identifier identifier, Sound sound) {
         Identifier record = sound.getIdentifier();
         if (identifier.getPath().contains("music_disc")) {
-            MinecraftClient.getInstance().inGameHud.setRecordPlayingOverlay(Text.translatable(record.toString()));
+            final MinecraftClient client = MinecraftClient.getInstance();
+            client.inGameHud.setRecordPlayingOverlay(Text.translatable(record.toString()));
         }
     }
 }

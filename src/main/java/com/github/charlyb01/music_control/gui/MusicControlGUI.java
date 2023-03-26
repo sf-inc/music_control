@@ -13,6 +13,7 @@ public class MusicControlGUI extends LightweightGuiDescription {
         tabs.add(new MusicListPanel(), tab -> tab.title(Text.translatable("gui.music_control.panel.list")));
         tabs.add(new ConfigPanel(), tab -> tab.title(Text.translatable("gui.music_control.panel.config")));
         tabs.add(new OptionPanel(client), tab -> tab.title(Text.translatable("gui.music_control.panel.option")));
+        tabs.setHost(this);
         this.setRootPanel(tabs);
     }
 }
