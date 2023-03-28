@@ -47,6 +47,8 @@ public abstract class MusicTrackerMixin {
         final Identifier id = type != null ? type.getSound().value().getId() : null;
         final ModConfig config = ModConfig.get();
 
+        MusicControlClient.inCustomTracking = false;
+
         // do nothing if world is not loaded or controller is not enabled
         if (!MusicControlClient.init || this.client.world == null) {
             return;
@@ -102,24 +104,38 @@ public abstract class MusicTrackerMixin {
         this.current = PositionedSoundInstance.music(SoundEvent.of(MusicControlClient.currentMusic));
         if (this.current.getSound() != SoundManager.MISSING_SOUND) {
             this.client.getSoundManager().play(this.current);
+            MusicControlClient.inCustomTracking = true;
         }
 
-        postPlay();
+        displayMusic();
 
         this.timeUntilNextSong = config.timer * 20;
         ci.cancel();
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void handleMusic(CallbackInfo ci) {
         handlePreviousMusicKey();
         handleNextMusicKey();
         handleResumePauseKey();
         handleChangeCategoryKey();
         handleDisplayMusicKey();
+
+        if (MusicControlClient.inCustomTracking) {
+            if (this.client == null // no client
+                    || !MusicControlClient.init || this.client.world == null // not in game
+                    || this.current == null || !this.client.getSoundManager().isPlaying(this.current)) { // current stopped
+                MusicControlClient.inCustomTracking = false;
+            } else {
+                // The music in playing could be forcedly replaced by the original tracker
+                // if `this.client.getMusicType().shouldReplaceCurrentMusic()` is true.
+                // This causes the absence of custom music in some cases (like in the end).
+                ci.cancel();
+            }
+        }
     }
 
-    private void postPlay() {
+    private void displayMusic() {
         if (ModConfig.get().displayAtStart || MusicControlClient.categoryChanged) {
             printMusic();
         }
