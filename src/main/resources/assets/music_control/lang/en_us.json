@@ -71,7 +71,6 @@
     "gui.music_control.panel.play": "Play",
     "gui.music_control.panel.list": "List",
     "gui.music_control.panel.config": "Config",
-    "gui.music_control.panel.option": "Option",
     "gui.music_control.label.selected": "Selected: %s",
     "gui.music_control.toggle.removeAdd": "Remove / Add",
     "gui.music_control.toggle.musicEvent": "Music / Event",

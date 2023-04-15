@@ -1,10 +1,13 @@
 package com.github.charlyb01.music_control.gui;
 
+import com.github.charlyb01.music_control.ResourcePackUtils;
 import com.github.charlyb01.music_control.config.ModConfig;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.function.BiConsumer;
@@ -16,7 +19,7 @@ public class ConfigPanel extends WBox {
     protected WButton hoveredButton;
     protected SoundConfigPanel soundConfigPanel;
 
-    public ConfigPanel() {
+    public ConfigPanel(final MinecraftClient client) {
         super(Axis.VERTICAL);
         this.setInsets(Insets.ROOT_PANEL);
         this.setHorizontalAlignment(HorizontalAlignment.LEFT);
@@ -52,10 +55,20 @@ public class ConfigPanel extends WBox {
 
         self.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, innerWidth / 2, isEvent));
 
+        WButton saveButton = new WButton(Text.translatable("gui.music_control.button.save"));
+        saveButton.setOnClick(() -> {
+            ResourcePackUtils.writeConfig();
+            client.reloadResources();
+        });
+        WBox buttonBox = new WBox(Axis.HORIZONTAL);
+        buttonBox.setHorizontalAlignment(HorizontalAlignment.RIGHT);
+        buttonBox.add(saveButton, 100, 20);
+
         this.add(
-            self, 
-            outerWidth, 
-            ModConfig.get().height - 20
+                self,
+                outerWidth,
+                ModConfig.get().height - 20
         );
+        this.add(buttonBox, outerWidth, 20);
     }
 }

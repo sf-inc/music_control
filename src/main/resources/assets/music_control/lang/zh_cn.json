@@ -55,7 +55,6 @@
     "gui.music_control.panel.play": "播放",
     "gui.music_control.panel.list": "列表",
     "gui.music_control.panel.config": "配置",
-    "gui.music_control.panel.option": "选项",
     "gui.music_control.label.selected": "已选择：%s",
     "gui.music_control.toggle.removeAdd": "移除 / 添加",
     "gui.music_control.toggle.musicEvent": "音乐 / 事件",
