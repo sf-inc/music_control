@@ -11,8 +11,12 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.Tooltip(count = 2)
-    @ConfigEntry.BoundedDiscrete(min = 1, max = 300)
-    public int timer = 15;
+    public boolean randomTimer = true;
+
+    @ConfigEntry.Category("general")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 1800)
+    public int timer = 300;
 
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.Tooltip(count = 4)

@@ -45,7 +45,6 @@ public abstract class MusicTrackerMixin {
     private void playMusic(MusicSound type, CallbackInfo ci) {
 
         final Identifier id = type != null ? type.getSound().value().getId() : null;
-        final ModConfig config = ModConfig.get();
 
         MusicControlClient.inCustomTracking = false;
 
@@ -57,8 +56,7 @@ public abstract class MusicTrackerMixin {
         // reset the pending time if it should not play
         if (!MusicControlClient.shouldPlay) {
             MusicControlClient.shouldPlay = true;
-
-            this.timeUntilNextSong = config.timer * 20;
+            this.timeUntilNextSong = Utils.getTimer(this.random);
             ci.cancel();
             return;
         }
@@ -89,7 +87,7 @@ public abstract class MusicTrackerMixin {
                 // this means the current event corresponds to
                 // an event with no music.
                 MusicControlClient.currentMusic = EMPTY_MUSIC_ID;
-                this.timeUntilNextSong = config.timer * 20;
+                this.timeUntilNextSong = Utils.getTimer(this.random);
                 ci.cancel();
                 return;
             } else {
@@ -109,7 +107,7 @@ public abstract class MusicTrackerMixin {
 
         displayMusic();
 
-        this.timeUntilNextSong = config.timer * 20;
+        this.timeUntilNextSong = Utils.getTimer(this.random);
         ci.cancel();
     }
 

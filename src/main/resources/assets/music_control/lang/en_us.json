@@ -13,6 +13,10 @@
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
 
+    "text.autoconfig.music_control.option.randomTimer": "Enable random delay",
+    "text.autoconfig.music_control.option.randomTimer.@Tooltip[0]": "If off, delay will be fixed to maximum.",
+    "text.autoconfig.music_control.option.randomTimer.@Tooltip[1]": "Otherwise, it's picked in [max/2 ; max] range.",
+
     "text.autoconfig.music_control.option.timer": "Maximum delay between musics [s]",
     "text.autoconfig.music_control.option.timer.@Tooltip[0]": "This setting defines how many seconds",
     "text.autoconfig.music_control.option.timer.@Tooltip[1]": "at most there will be a delay between music.",
