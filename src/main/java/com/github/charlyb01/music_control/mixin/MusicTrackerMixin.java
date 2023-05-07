@@ -12,6 +12,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,70 +22,118 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
 
+import static com.github.charlyb01.music_control.categories.Music.EMPTY_MUSIC;
+import static com.github.charlyb01.music_control.categories.Music.EMPTY_MUSIC_ID;
+
 @Mixin(MusicTracker.class)
 public abstract class MusicTrackerMixin {
-    @Shadow @Final private MinecraftClient client;
-    @Shadow @Final private Random random;
-    @Shadow private int timeUntilNextSong;
-    @Shadow private SoundInstance current;
+    @Shadow
+    @Final
+    private MinecraftClient client;
+    @Shadow
+    @Final
+    private Random random;
+    @Shadow
+    private int timeUntilNextSong;
+    @Shadow
+    private SoundInstance current;
 
-    @Shadow public abstract void play(MusicSound type);
+    @Shadow
+    public abstract void play(MusicSound type);
 
     @Inject(method = "play", at = @At("HEAD"), cancellable = true)
     private void playMusic(MusicSound type, CallbackInfo ci) {
+
+        final Identifier id = type != null ? type.getSound().value().getId() : null;
+
+        MusicControlClient.inCustomTracking = false;
+
+        // do nothing if world is not loaded or controller is not enabled
+        if (!MusicControlClient.init || this.client.world == null) {
+            return;
+        }
+
+        // reset the pending time if it should not play
         if (!MusicControlClient.shouldPlay) {
             MusicControlClient.shouldPlay = true;
-            this.timeUntilNextSong = ModConfig.get().timer * 20;
+            this.timeUntilNextSong = Utils.getTimer(this.random);
             ci.cancel();
             return;
         }
 
-        if (MusicControlClient.init && this.client.world != null) {
-            this.client.getSoundManager().stop(this.current);
+        // stop current music
+        this.client.getSoundManager().stop(this.current);
 
-            if (!MusicControlClient.loopMusic) {
-                if (MusicControlClient.previousMusic) {
-                    MusicControlClient.previousMusic = false;
-                    Identifier music = MusicCategories.PLAYED_MUSICS.peekLast();
-                    if (music != null) {
-                        MusicControlClient.currentMusic = music;
-                    }
-                } else if (MusicControlClient.musicSelected != null) {
-                    MusicControlClient.currentMusic = MusicControlClient.musicSelected;
-                    MusicControlClient.musicSelected = null;
-                } else if (type != null
-                        && MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
-                        && Music.MUSIC_BY_EVENT.containsKey(type.getSound().value().getId())) {
-                    ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(type.getSound().value().getId()));
-                    if (musics.isEmpty()) {
-                        musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().value().getId()));
-                    }
-                    MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(musics, this.random);
-                } else {
-                    MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
-                }
+        if (MusicControlClient.musicSelected != null) {
+            // a new music is selected from the menu
+            MusicControlClient.currentMusic = MusicControlClient.musicSelected;
+            MusicControlClient.musicSelected = null;
+        } else if (MusicControlClient.previousMusic) {
+            // previous music is assigned
+            MusicControlClient.previousMusic = false;
+            Identifier music = MusicCategories.PLAYED_MUSICS.peekLast();
+            if (music != null) {
+                MusicControlClient.currentMusic = music;
             }
-
-            this.current = PositionedSoundInstance.music(SoundEvent.of(MusicControlClient.currentMusic));
-            if (this.current.getSound() != SoundManager.MISSING_SOUND) {
-                this.client.getSoundManager().play(this.current);
+        } else if (MusicControlClient.loopMusic) {
+            // loop mode is on
+            // do nothing, use the same music
+        } else if (id != null
+                && MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
+                && Music.MUSIC_BY_EVENT.containsKey(id)) {
+            // normal procedure
+            final ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(id));
+            if (musics.isEmpty()) {
+                // this means the current event corresponds to
+                // an event with no music.
+                MusicControlClient.currentMusic = EMPTY_MUSIC_ID;
+                this.timeUntilNextSong = Utils.getTimer(this.random);
+                ci.cancel();
+                return;
+            } else {
+                MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(musics, this.random);
             }
-
-            postPlay();
-            ci.cancel();
+        } else {
+            // just randomly pick one
+            // from current category
+            MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
         }
+
+        this.current = PositionedSoundInstance.music(SoundEvent.of(MusicControlClient.currentMusic));
+        if (this.current.getSound() != SoundManager.MISSING_SOUND) {
+            this.client.getSoundManager().play(this.current);
+            MusicControlClient.inCustomTracking = true;
+        }
+
+        displayMusic();
+
+        this.timeUntilNextSong = Utils.getTimer(this.random);
+        ci.cancel();
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void handleMusic(CallbackInfo ci) {
         handlePreviousMusicKey();
         handleNextMusicKey();
         handleResumePauseKey();
         handleChangeCategoryKey();
         handleDisplayMusicKey();
+
+        if (MusicControlClient.inCustomTracking) {
+            if (this.client == null // no client
+                    || !MusicControlClient.init || this.client.world == null // not in game
+                    || this.current == null || !this.client.getSoundManager().isPlaying(this.current)) { // current stopped
+                MusicControlClient.inCustomTracking = false;
+            } else {
+                // The music in playing could be forcedly replaced by the original tracker
+                // if `this.client.getMusicType().shouldReplaceCurrentMusic()` is true.
+                // This causes the absence of custom music in some cases (like in the end).
+                ci.cancel();
+            }
+        }
     }
 
-    private void postPlay() {
+    private void displayMusic() {
         if (ModConfig.get().displayAtStart || MusicControlClient.categoryChanged) {
             printMusic();
         }
@@ -92,27 +141,34 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.categoryChanged) {
             MusicControlClient.categoryChanged = false;
         }
-
-        this.timeUntilNextSong = ModConfig.get().timer * 20;
     }
 
     private void printMusic() {
-        if (this.current == null || this.client.world == null)
+        if (this.client.world == null)
             return;
 
+        final String currentMusic = this.current != null ? this.current.getSound().getIdentifier().toString()
+                : EMPTY_MUSIC;
         if (MusicControlClient.isPaused) {
             Utils.print(this.client, Text.translatable("music.paused"));
 
-        } else if (MusicControlClient.categoryChanged) {
-            String category = MusicControlClient.currentCategory.toUpperCase().replace('_', ' ') + ": %s";
-            Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
-            Utils.print(this.client, Text.translatable(category, title));
-
+        } else if (currentMusic.equals(EMPTY_MUSIC)) {
+            if (ModConfig.get().displayRemainingSeconds) {
+                double remaining = this.timeUntilNextSong / 20.0;
+                Utils.print(this.client, Text.translatable("music.no_playing_with_time", String.valueOf(remaining)));
+            } else {
+                Utils.print(this.client, Text.translatable("music.no_playing"));
+            }
         } else {
-            Text title = Text.translatable(this.current.getSound().getIdentifier().toString());
-            Utils.print(this.client, Text.translatable("record.nowPlaying", title));
+            String categoryText = MusicControlClient.categoryChanged
+                    ? MusicControlClient.currentCategory.toUpperCase().replace('_', ' ') + ": %s"
+                    : "record.nowPlaying";
+            Text title = Text.translatable(currentMusic);
+            Utils.print(this.client, Text.translatable(categoryText, title));
         }
     }
+
+    // key pressed event handlers
 
     private void handlePreviousMusicKey() {
         if (MusicControlClient.previousMusic) {

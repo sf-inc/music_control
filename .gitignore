@@ -1,5 +1,9 @@
+# minecraft related
+bin/
+
 # User-specific stuff
 .idea/
+.vscode/
 
 *.iml
 *.ipr

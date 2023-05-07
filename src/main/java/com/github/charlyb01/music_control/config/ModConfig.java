@@ -8,10 +8,15 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = "music_control")
 public class ModConfig implements ConfigData {
+
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.Tooltip(count = 2)
-    @ConfigEntry.BoundedDiscrete(min = 1, max = 300)
-    public int timer = 15;
+    public boolean randomTimer = true;
+
+    @ConfigEntry.Category("general")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 1800)
+    public int timer = 300;
 
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.Tooltip(count = 4)
@@ -28,6 +33,10 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Category("display")
     @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean displayRemainingSeconds = false;
+
+    @ConfigEntry.Category("display")
+    @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public DisplayType displayType = DisplayType.JUKEBOX;
 
@@ -41,12 +50,12 @@ public class ModConfig implements ConfigData {
     public boolean allowHighVolume = false;
 
     @ConfigEntry.Category("gui")
-    @ConfigEntry.BoundedDiscrete(min = 100, max = 200)
+    @ConfigEntry.BoundedDiscrete(min = 100, max = 250)
     public int height = 150;
 
     @ConfigEntry.Category("gui")
-    @ConfigEntry.BoundedDiscrete(min = 150, max = 400)
-    public int width = 300;
+    @ConfigEntry.BoundedDiscrete(min = 150, max = 450)
+    public int width = 320;
 
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();

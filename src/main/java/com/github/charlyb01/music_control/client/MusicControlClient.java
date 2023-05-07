@@ -17,6 +17,7 @@ public class MusicControlClient implements ClientModInitializer {
     public static final String MOD_ID = "music_control";
 
     public static boolean init = false;
+    public static boolean inCustomTracking = false;
     public static boolean isPaused = false;
     public static boolean shouldPlay = true;
     public static boolean categoryChanged = false;

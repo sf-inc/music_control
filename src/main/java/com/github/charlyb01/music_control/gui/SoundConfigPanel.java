@@ -2,6 +2,8 @@ package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.config.ModConfig;
+
+import io.github.cottonmc.cotton.gui.GuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WCardPanel;
@@ -16,6 +18,10 @@ import java.util.function.BiConsumer;
 import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class SoundConfigPanel extends WBox {
+
+    final ButtonListPanel addListPanel;
+    final ButtonListPanel removeListPanel;
+
     public SoundConfigPanel(final Identifier sound, final boolean isEvent, final int width) {
         super(Axis.VERTICAL);
 
@@ -30,7 +36,11 @@ public class SoundConfigPanel extends WBox {
             }
         } else {
             Music music = Music.getMusicFromIdentifier(sound);
-            if (music == null) return;
+            if (music == null) {
+                addListPanel = null;
+                removeListPanel = null;
+                return;
+            }
 
             soundToRemove.addAll(music.getEvents());
             for (Identifier event : EVENTS) {
@@ -73,8 +83,8 @@ public class SoundConfigPanel extends WBox {
             }
         };
 
-        ButtonListPanel addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().height - 20);
-        ButtonListPanel removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().height - 20);
+        addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().height - 20, true);
+        removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().height - 20, true);
         WCardPanel listPanel = new WCardPanel();
         listPanel.add(removeListPanel);
         listPanel.add(addListPanel);
@@ -92,5 +102,14 @@ public class SoundConfigPanel extends WBox {
 
         this.add(toggleButton);
         this.add(listPanel);
+    }
+
+    @Override
+    public void setHost(GuiDescription host) {
+        super.setHost(host);
+        if (addListPanel != null)
+            addListPanel.setHost(host);
+        if (removeListPanel != null)
+            removeListPanel.setHost(host);
     }
 }

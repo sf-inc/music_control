@@ -13,9 +13,13 @@
 
     "text.autoconfig.music_control.title": "Music Control Configuration",
 
-    "text.autoconfig.music_control.option.timer": "Delay between musics",
+    "text.autoconfig.music_control.option.randomTimer": "Enable random delay",
+    "text.autoconfig.music_control.option.randomTimer.@Tooltip[0]": "If off, delay will be fixed to maximum.",
+    "text.autoconfig.music_control.option.randomTimer.@Tooltip[1]": "Otherwise, it's picked in [max/2 ; max] range.",
+
+    "text.autoconfig.music_control.option.timer": "Maximum delay between musics [s]",
     "text.autoconfig.music_control.option.timer.@Tooltip[0]": "This setting defines how many seconds",
-    "text.autoconfig.music_control.option.timer.@Tooltip[1]": "there will be a delay between music.",
+    "text.autoconfig.music_control.option.timer.@Tooltip[1]": "at most there will be a delay between music.",
 
     "text.autoconfig.music_control.option.musicQueue": "Number of musics to keep in history",
     "text.autoconfig.music_control.option.musicQueue.@Tooltip[0]": "This setting defines how many",
@@ -26,6 +30,8 @@
     "text.autoconfig.music_control.option.displayAtStart": "Display text when music is played",
     "text.autoconfig.music_control.option.displayAtStart.@Tooltip[0]": "This setting defines if there will be text",
     "text.autoconfig.music_control.option.displayAtStart.@Tooltip[1]": "displayed when a new music is played.",
+
+    "text.autoconfig.music_control.option.displayRemainingSeconds": "Display remaining time until the next music",
 
     "text.autoconfig.music_control.option.displayType": "Display type",
     "text.autoconfig.music_control.option.displayType.@Tooltip[0]": "This setting defines where text will be",
@@ -57,15 +63,18 @@
     "music.play": "PLAY",
     "music.pause": "PAUSE",
     "music.paused": "PAUSED",
+    "music.no_playing": "No music playing",
+    "music.no_playing_with_time": "No music playing (Next selection after %ss)",
     "music.loop.on": "Loop: ON",
     "music.loop.off": "Loop: OFF",
     "music.volume": "Volume: %s%%",
     "music.none": "None",
 
+    "gui.component.filter.placeholder": "Input Keywords",
+
     "gui.music_control.panel.play": "Play",
     "gui.music_control.panel.list": "List",
     "gui.music_control.panel.config": "Config",
-    "gui.music_control.panel.option": "Option",
     "gui.music_control.label.selected": "Selected: %s",
     "gui.music_control.toggle.removeAdd": "Remove / Add",
     "gui.music_control.toggle.musicEvent": "Music / Event",
@@ -190,11 +199,13 @@
     "minecraft:music.overworld.windswept_hills": "Windswept Hills",
     "minecraft:music.overworld.windswept_savanna": "Windswept Savanna",
     "minecraft:music.overworld.wooded_badlands": "Wooded Badlands",
+
     "minecraft:music.nether.basalt_deltas": "Basalt Deltas",
     "minecraft:music.nether.crimson_forest": "Crimson Forest",
     "minecraft:music.nether.nether_wastes": "Nether Wastes",
     "minecraft:music.nether.soul_sand_valley": "Soul Sand Valley",
     "minecraft:music.nether.warped_forest": "Warped Forest",
+
     "minecraft:music.creative": "Creative",
     "minecraft:music.credits": "Credits",
     "minecraft:music.dragon": "Dragon",
@@ -202,6 +213,7 @@
     "minecraft:music.game": "Game",
     "minecraft:music.menu": "Menu",
     "minecraft:music.under_water": "Under Water",
+    
     "minecraft:music_disc.blocks": "Blocks Disc",
     "minecraft:music_disc.cat": "Cat Disc",
     "minecraft:music_disc.chirp": "Chirp Disc",
