@@ -27,6 +27,10 @@
     "text.autoconfig.music_control.option.musicQueue.@Tooltip[2]": "so that random music player",
     "text.autoconfig.music_control.option.musicQueue.@Tooltip[3]": "won't pick them again.",
 
+    "text.autoconfig.music_control.option.musicFallback": "Enable game music fallback",
+    "text.autoconfig.music_control.option.musicFallback.@Tooltip[0]": "This setting defines whether to play",
+    "text.autoconfig.music_control.option.musicFallback.@Tooltip[1]": "\"game\" music when playing an empty event",
+
     "text.autoconfig.music_control.option.displayAtStart": "Display text when music is played",
     "text.autoconfig.music_control.option.displayAtStart.@Tooltip[0]": "This setting defines if there will be text",
     "text.autoconfig.music_control.option.displayAtStart.@Tooltip[1]": "displayed when a new music is played.",

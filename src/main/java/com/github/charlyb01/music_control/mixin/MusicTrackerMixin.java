@@ -83,14 +83,22 @@ public abstract class MusicTrackerMixin {
                 && Music.MUSIC_BY_EVENT.containsKey(id)) {
             // normal procedure
             final ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(id));
+            final ArrayList<Music> gameMusics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().value().getId()));
             if (musics.isEmpty()) {
                 // this means the current event corresponds to
                 // an event with no music.
-                MusicControlClient.currentMusic = EMPTY_MUSIC_ID;
-                this.timeUntilNextSong = Utils.getTimer(this.random);
-                ci.cancel();
-                return;
+                if (ModConfig.get().musicFallback && !gameMusics.isEmpty()) {
+                    // we should fallback on default game music
+                    MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(gameMusics, this.random);
+                } else {
+                    // don't play music
+                    MusicControlClient.currentMusic = EMPTY_MUSIC_ID;
+                    this.timeUntilNextSong = Utils.getTimer(this.random);
+                    ci.cancel();
+                    return;
+                }
             } else {
+                // play a music from current event
                 MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(musics, this.random);
             }
         } else {
