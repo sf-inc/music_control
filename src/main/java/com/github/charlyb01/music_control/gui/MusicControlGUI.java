@@ -10,7 +10,7 @@ public class MusicControlGUI extends LightweightGuiDescription {
     public MusicControlGUI(final MinecraftClient client) {
         WTabPanel tabs = new WTabPanel();
         tabs.add(new PlayPanel(), tab -> tab.title(Text.translatable("gui.music_control.panel.play")));
-        tabs.add(new MusicListPanel(), tab -> tab.title(Text.translatable("gui.music_control.panel.list")));
+        tabs.add(new HistoryPanel(), tab -> tab.title(Text.translatable("gui.music_control.panel.history")));
         tabs.add(new ConfigPanel(client), tab -> tab.title(Text.translatable("gui.music_control.panel.config")));
         tabs.setHost(this);
         this.setRootPanel(tabs);

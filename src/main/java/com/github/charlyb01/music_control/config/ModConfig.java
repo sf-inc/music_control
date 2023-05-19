@@ -14,12 +14,11 @@ public class ModConfig implements ConfigData {
     public boolean randomTimer = true;
 
     @ConfigEntry.Category("general")
-    @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.BoundedDiscrete(min = 1, max = 1800)
     public int timer = 300;
 
     @ConfigEntry.Category("general")
-    @ConfigEntry.Gui.Tooltip(count = 4)
+    @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.BoundedDiscrete(min = 1, max = 25)
     public int musicQueue = 10;
 
@@ -28,29 +27,26 @@ public class ModConfig implements ConfigData {
     public boolean musicFallback = true;
 
     @ConfigEntry.Category("general")
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.Tooltip(count = 5)
     public String musicCategoryStart = Music.DEFAULT_MUSICS;
 
     @ConfigEntry.Category("display")
-    @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean displayAtStart = true;
 
     @ConfigEntry.Category("display")
-    @ConfigEntry.Gui.Tooltip(count = 2)
-    public boolean displayRemainingSeconds = false;
-
-    @ConfigEntry.Category("display")
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.Tooltip()
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public DisplayType displayType = DisplayType.JUKEBOX;
 
+    @ConfigEntry.Category("display")
+    public boolean displayRemainingSeconds = false;
+
     @ConfigEntry.Category("volume")
-    @ConfigEntry.Gui.Tooltip(count = 4)
+    @ConfigEntry.Gui.Tooltip()
     @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
     public int volumeIncrement = 5;
 
     @ConfigEntry.Category("volume")
-    @ConfigEntry.Gui.Tooltip(count = 3)
     public boolean allowHighVolume = false;
 
     @ConfigEntry.Category("gui")

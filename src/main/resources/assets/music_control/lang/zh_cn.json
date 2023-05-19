@@ -12,33 +12,26 @@
     "key.music_control.openMenu": "打开音乐控制菜单",
 
     "text.autoconfig.music_control.title": "音乐控制器设置",
-
-    "text.autoconfig.music_control.option.timer": "最大音乐间隔[秒]",
-    "text.autoconfig.music_control.option.timer.@Tooltip[0]": "该选项指示两首音乐间最大会有多少秒的间隔。",
-
-    "text.autoconfig.music_control.option.musicQueue": "音乐历史长度",
-    "text.autoconfig.music_control.option.musicQueue.@Tooltip[0]": "该选项决定了一首音乐被随机选择器重复选择的",
-    "text.autoconfig.music_control.option.musicQueue.@Tooltip[1]": "最短音乐数量间隔。",
-
-    "text.autoconfig.music_control.option.displayAtStart": "显示当前播放的音乐名称",
-
-    "text.autoconfig.music_control.option.displayRemainingSeconds": "未播放音乐时显示下次选曲剩余时间",
-
-    "text.autoconfig.music_control.option.displayType": "音乐名称显示位置",
-
-    "text.autoconfig.music_control.option.musicCategoryStart": "默认音乐类别",
-
-    "text.autoconfig.music_control.option.volumeIncrement": "音量调整步长",
-
-    "text.autoconfig.music_control.option.allowHighVolume": "允许将音量上限设为 200%",
-
-    "text.autoconfig.music_control.option.height": "音乐屏幕宽度",
-    "text.autoconfig.music_control.option.width": "音乐屏幕高度",
-
     "text.autoconfig.music_control.category.general": "通用",
     "text.autoconfig.music_control.category.display": "显示",
     "text.autoconfig.music_control.category.volume": "音量",
     "text.autoconfig.music_control.category.gui": "GUI",
+
+    "text.autoconfig.music_control.option.timer": "最大音乐间隔[秒]",
+    "text.autoconfig.music_control.option.musicQueue": "音乐历史长度",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[0]": "该选项决定了一首音乐被随机选择器重复选择的",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[1]": "最短音乐数量间隔。",
+    "text.autoconfig.music_control.option.musicCategoryStart": "默认音乐类别",
+
+    "text.autoconfig.music_control.option.displayAtStart": "显示当前播放的音乐名称",
+    "text.autoconfig.music_control.option.displayType": "音乐名称显示位置",
+    "text.autoconfig.music_control.option.displayRemainingSeconds": "未播放音乐时显示下次选曲剩余时间",
+
+    "text.autoconfig.music_control.option.volumeIncrement": "音量调整步长",
+    "text.autoconfig.music_control.option.allowHighVolume": "允许将音量上限设为 200%",
+
+    "text.autoconfig.music_control.option.height": "音乐屏幕宽度",
+    "text.autoconfig.music_control.option.width": "音乐屏幕高度",
 
     "music.play": "播放",
     "music.pause": "暂停",
@@ -53,13 +46,12 @@
     "gui.component.filter.placeholder": "键入关键字",
 
     "gui.music_control.panel.play": "播放",
-    "gui.music_control.panel.list": "列表",
+    "gui.music_control.panel.history": "列表",
     "gui.music_control.panel.config": "配置",
     "gui.music_control.label.selected": "已选择：%s",
     "gui.music_control.toggle.removeAdd": "移除 / 添加",
     "gui.music_control.toggle.musicEvent": "音乐 / 事件",
     "gui.music_control.button.save": "将更改保存为资源包",
-    "gui.music_control.text.played_music": "上次播放的音乐列表",
 
     "music_control.metadata.description": "音乐控制器 - 内建资源包",
 
