@@ -4,6 +4,30 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.6.1: beta
+
+Big thanks to [@BillStark001](https://github.com/BillStark001).
+
+* Update to 1.19.4
+* Filter music/event by identifiers (translated by default).
+  Some flags can be added to enhance searching.
+  * \<str1> \<str2> will search for ids having strings \<str1> or \<str2> etc.
+  * /and \<str1> \<str2> will search for ids having strings \<str1> and \<str2> etc.
+  * @\<str> will search for ids that contains \<str> in their namespace (useful for datapacks)
+  * #\<str> will search for ids that contains \<str> in their path
+  * $\<str> will search for raw ids instead of translated ids (\<raw> = \<namespace>:\<path>)
+  * !\<str> will search for ids having string \<str> case-sensitive.
+* Change description when no music is playing
+* Added possibility to print remaining time before next music
+* Fixed GUI panels warnings
+* Fixed music being overridden, causing no music in the end
+* Remove option panel and moved save button to config panel
+* Added random music delay option
+  * If Off, delay between music is fixed to your configuration X
+  * If On, it is random between [X / 2 ; X]
+* Added option to not fallback on default game music.
+  If you want creepy biomes without music, you now can.
+
 ## v1.6: beta
 
 * Previous music works with last played music list, meaning we can go back further
@@ -21,7 +45,9 @@
 * Display correct music name for disc events, as we can add several musics to a disc
 * Custom gui dimensions are configurable
 
-## v1.5.4 ([@naturecodevoid](https://github.com/naturecodevoid))
+## v1.5.4
+
+Thanks to [@naturecodevoid](https://github.com/naturecodevoid).
 
 * Added volume increment setting
 * Added setting that allows user to increment the music volume up to 200% (disabled by default)
