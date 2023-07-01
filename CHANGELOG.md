@@ -4,6 +4,11 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.6.2: beta
+
+* Update to 1.20.1
+* Increased text length on text fields for filtering
+
 ## v1.6.1: beta
 
 Big thanks to [@BillStark001](https://github.com/BillStark001).
