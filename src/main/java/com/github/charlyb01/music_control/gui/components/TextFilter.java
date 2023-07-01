@@ -37,6 +37,7 @@ public class TextFilter extends WBox {
 
         this.textField = new WTextField(DEFAULT_PLACEHOLDER);
         this.textField.setEditable(true);
+        this.textField.setMaxLength(42);
         this.textField.setText("");
         this.textField.setChangedListener((s) -> runOnChange());
         
