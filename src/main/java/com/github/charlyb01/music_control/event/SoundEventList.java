@@ -22,23 +22,16 @@ public abstract class SoundEventList {
 
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_PLAINS = registerReference("music.overworld.plains");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_SUNFLOWER_PLAINS = registerReference("music.overworld.sunflower_plains");
-    public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_FOREST = registerReference("music.overworld.forest");
-    public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_FLOWER_FOREST = registerReference("music.overworld.flower_forest");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_BIRCH_FOREST = registerReference("music.overworld.birch_forest");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_OLD_GROWTH_BIRCH_FOREST = registerReference("music.overworld.old_growth_birch_forest");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_DARK_FOREST = registerReference("music.overworld.dark_forest");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_MANGROVE_SWAMP = registerReference("music.overworld.mangrove_swamp");
-    public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_JUNGLE = registerReference("music.overworld.jungle");
-    public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_SPARSE_JUNGLE = registerReference("music.overworld.sparse_jungle");
-    public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_BAMBOO_JUNGLE = registerReference("music.overworld.bamboo_jungle");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_BEACH = registerReference("music.overworld.beach");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_MUSHROOM_FIELDS = registerReference("music.overworld.mushroom_fields");
 
-    public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_DESERT = registerReference("music.overworld.desert");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_SAVANNA = registerReference("music.overworld.savanna");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_SAVANNA_PLATEAU = registerReference("music.overworld.savanna_plateau");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_WINDSWEPT_SAVANNA = registerReference("music.overworld.windswept_savanna");
-    public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_BADLANDS = registerReference("music.overworld.badlands");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_WOODED_BADLANDS = registerReference("music.overworld.wooded_badlands");
     public static final RegistryEntry.Reference<SoundEvent> MUSIC_OVERWORLD_ERODED_BADLANDS = registerReference("music.overworld.eroded_badlands");
 
