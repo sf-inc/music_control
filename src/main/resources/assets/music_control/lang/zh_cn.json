@@ -2,7 +2,7 @@
     "category.music_control.title": "音乐控制器",
     "key.music_control.previousMusic":  "上一首",
     "key.music_control.nextMusic":  "下一首",
-    "key.music_control.pause":  "暂停/播放",
+    "key.music_control.pause":  "暂停 / 播放",
     "key.music_control.loop":  "单曲循环",
     "key.music_control.previousCategory": "上一个类别",
     "key.music_control.nextCategory": "下一个类别",
@@ -53,7 +53,7 @@
     "gui.component.filter.placeholder": "键入关键字",
 
     "gui.music_control.panel.play": "播放",
-    "gui.music_control.panel.history": "列表",
+    "gui.music_control.panel.history": "播放历史",
     "gui.music_control.panel.config": "配置",
     "gui.music_control.label.selected": "已选择：%s",
     "gui.music_control.toggle.removeAdd": "移除 / 添加",

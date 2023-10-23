@@ -1,0 +1,90 @@
+{
+    "key.music_control.previousMusic":  "前の曲",
+    "key.music_control.nextMusic":  "次の曲",
+    "key.music_control.pause":  "一時停止 / 再生",
+    "key.music_control.loop":  "繰り返し再生",
+    "key.music_control.previousCategory": "前のカテゴリ",
+    "key.music_control.nextCategory": "次のカテゴリ",
+    "key.music_control.print": "現在の音楽名を表示する",
+    "key.music_control.volumeUp": "音量を上げる",
+    "key.music_control.volumeDown": "音量を下げる",
+    "key.music_control.openMenu": "メニューを表示する",
+
+    "text.autoconfig.music_control.title": "Music Control 設定",
+    "text.autoconfig.music_control.category.general": "一般",
+    "text.autoconfig.music_control.category.display": "ディスプレイ",
+    "text.autoconfig.music_control.category.volume": "音量",
+    "text.autoconfig.music_control.category.gui": "GUI",
+
+    "text.autoconfig.music_control.option.timer": "最大音楽間隔[秒]",
+    "text.autoconfig.music_control.option.musicQueue": "再生履歴数",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[0]": "このオプションは、ランダムセレクターに",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[1]": "よって繰り返し選択される曲の最小曲間数を",
+    "text.autoconfig.music_control.option.musicQueue.@Tooltip[2]": "決定します。",
+    "text.autoconfig.music_control.option.musicCategoryStart": "デフォルト・カテゴリ",
+
+    "text.autoconfig.music_control.option.displayAtStart": "再生中の音楽名を表示する",
+    "text.autoconfig.music_control.option.displayType": "音楽名表示位置",
+    "text.autoconfig.music_control.option.displayRemainingSeconds": "音楽未再生時、次の再生までの残り時間を表示する",
+
+    "text.autoconfig.music_control.option.volumeIncrement": "音量調整ステップ",
+    "text.autoconfig.music_control.option.allowHighVolume": "最大音量を 200% に設定できる",
+
+    "text.autoconfig.music_control.option.height": "音楽画面の横幅",
+    "text.autoconfig.music_control.option.width": "音楽画面の縦幅",
+
+    "music.play": "再生",
+    "music.pause": "一時停止",
+    "music.paused": "一時停止中",
+    "music.no_playing": "ただいま音楽を再生しておりません",
+    "music.no_playing_with_time": "ただいま音楽を再生しておりません（次の音楽：%s秒后）",
+    "music.loop.on": "ループ：オン",
+    "music.loop.off": "ループ：オフ",
+    "music.volume": "音量: %s%%",
+    "music.none": "なし",
+
+    "music.category.all": "全ての音楽",
+    "music.category.default": "デフォルト",
+    "music.category.disc": "レコード",
+
+    "music.format.biome": "バイオーム：%s",
+
+    "gui.component.filter.placeholder": "キーワードをご入力ください",
+
+    "gui.music_control.panel.play": "再生",
+    "gui.music_control.panel.history": "再生履歴",
+    "gui.music_control.panel.config": "設定",
+    "gui.music_control.label.selected": "選択済み：%s",
+    "gui.music_control.toggle.removeAdd": "削除 / 追加",
+    "gui.music_control.toggle.musicEvent": "音楽 / イベント",
+    "gui.music_control.button.save": "変更をリソースパックに書き込む",
+
+    "minecraft:music.game": "ゲーム内一般 BGM",
+    "minecraft:music.under_water": "水中 BGM",
+    "minecraft:music.end": "ジ・エンド BGM",
+    "minecraft:music.creative": "クリエイティブモード BGM",
+
+    "minecraft:music.dragon": "エンダードラゴン戦闘 BGM",
+
+    "minecraft:music.menu": "メインメニュー",
+    "minecraft:music.credits": "プロデューサー一覧画面",
+
+    "minecraft:music_disc.blocks": "レコード再生：Blocks",
+    "minecraft:music_disc.cat": "レコード再生：Cat",
+    "minecraft:music_disc.chirp": "レコード再生：Chirp",
+    "minecraft:music_disc.far": "レコード再生：Far",
+    "minecraft:music_disc.mall": "レコード再生：Mall",
+    "minecraft:music_disc.mellohi": "レコード再生：Mellohi",
+    "minecraft:music_disc.otherside": "レコード再生：Otherside",
+    "minecraft:music_disc.pigstep": "レコード再生：Pigstep",
+    "minecraft:music_disc.stal": "レコード再生：Stal",
+    "minecraft:music_disc.strad": "レコード再生：Strad",
+    "minecraft:music_disc.wait": "レコード再生：Wait",
+    "minecraft:music_disc.ward": "レコード再生：Ward",
+    "minecraft:music_disc.11": "レコード再生：11",
+    "minecraft:music_disc.13": "レコード再生：13",
+    "minecraft:music_disc.5": "レコード再生：5",
+    "minecraft:music_disc.relic": "レコード再生：Relic",
+
+    "minecraft:empty": "空白の音楽"
+}
