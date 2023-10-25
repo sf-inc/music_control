@@ -1,7 +1,10 @@
 package com.github.charlyb01.music_control.categories;
 
 import net.minecraft.client.sound.SoundManager;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Language;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,11 +15,16 @@ public class Music implements Comparable<Music> {
     public final static String ALL_MUSICS = "all";
     public final static String ALL_MUSIC_DISCS = "disc";
     public final static String DEFAULT_MUSICS = "default";
-    public static final Identifier EMPTY_MUSIC_ID = SoundManager.MISSING_SOUND.getIdentifier();
-    public static final String EMPTY_MUSIC = EMPTY_MUSIC_ID.toString();
+
+    public final static Identifier EMPTY_MUSIC_ID = SoundManager.MISSING_SOUND.getIdentifier();
+    public final static String EMPTY_MUSIC = EMPTY_MUSIC_ID.toString();
+
     public final static HashMap<String, ArrayList<Music>> MUSIC_BY_NAMESPACE = new HashMap<>();
     public final static ArrayList<Identifier> EVENTS = new ArrayList<>();
     public final static HashMap<Identifier, HashSet<Music>> MUSIC_BY_EVENT = new HashMap<>();
+    public final static HashMap<Identifier, Text> TRANSLATION_CACHE = new HashMap<>();
+
+    private static Language LAST_LANG_INSTANCE = Language.getInstance();
 
     private final Identifier identifier;
     private final HashSet<Identifier> events;
@@ -61,5 +69,27 @@ public class Music implements Comparable<Music> {
     @Override
     public int compareTo(@NotNull Music music) {
         return this.identifier.compareTo(music.identifier);
+    }
+
+    public static Text getTranslatedText(Identifier identifier) {
+        if (LAST_LANG_INSTANCE != Language.getInstance()) {
+            TRANSLATION_CACHE.clear();
+            LAST_LANG_INSTANCE = Language.getInstance();
+        }
+
+        if (TRANSLATION_CACHE.containsKey(identifier)) {
+            return TRANSLATION_CACHE.get(identifier);
+        }
+
+        final String id = identifier.toString();
+        if (LAST_LANG_INSTANCE.hasTranslation(id)) {
+            TRANSLATION_CACHE.put(identifier, Text.translatable(id));
+
+        // Get official biome translation for biomes' music
+        } else if (id.startsWith("minecraft:music.overworld") || id.startsWith("minecraft:music.nether")) {
+            TRANSLATION_CACHE.put(identifier, Text.translatable("biome.minecraft." + id.split("\\.", 3)[2])
+            );
+        }
+        return TRANSLATION_CACHE.getOrDefault(identifier, Text.translatable(id));
     }
 }

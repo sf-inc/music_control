@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.gui;
 
+import com.github.charlyb01.music_control.categories.Music;
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
@@ -27,7 +28,7 @@ public class ButtonListPanel extends WBox {
         super(Axis.VERTICAL);
 
         BiConsumer<Identifier, WButton> configurator = (Identifier identifier, WButton button) -> {
-            button.setLabel(Text.of(Text.translatable(identifier.toString()).asTruncatedString(width / 7)));
+            button.setLabel(Text.of(Music.getTranslatedText(identifier).asTruncatedString(width / 7)));
             button.setOnClick(() -> onClicked.accept(identifier, button));
         };
         this.items = new WFilterListPanel<>(data, WButton::new, configurator);
@@ -51,7 +52,7 @@ public class ButtonListPanel extends WBox {
         String[] wordsRaw = s.split(" ");
         ArrayList<String> words = new ArrayList<>();
         for (String word : wordsRaw) {
-            if (word.length() > 0) {
+            if (!word.isEmpty()) {
                 words.add(word);
             }
         }

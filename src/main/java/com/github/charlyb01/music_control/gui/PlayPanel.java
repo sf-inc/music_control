@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.gui;
 
+import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import io.github.cottonmc.cotton.gui.widget.*;
@@ -34,7 +35,7 @@ public class PlayPanel extends WBox {
             } else {
                 MusicControlClient.nextMusic = true;
                 MusicControlClient.musicSelected = identifier;
-                selected.setText(Text.translatable(SELECTED_KEY, Text.translatable(identifier.toString())));
+                selected.setText(Text.translatable(SELECTED_KEY, Music.getTranslatedText(identifier)));
             }
 
             if (hoveredButton != null) {
