@@ -43,6 +43,9 @@
     "music.volume": "音量: %s%%",
     "music.none": "无",
 
+    "music.format.biome": "生物群系：%s",
+    "music.format.disc": "播放唱片：%s",
+
     "gui.component.filter.placeholder": "键入关键字",
 
     "gui.music_control.panel.play": "播放",
@@ -55,12 +58,6 @@
 
     "music_control.metadata.description": "音乐控制器 - 内建资源包",
 
-    "minecraft:music.nether.basalt_deltas": "玄武岩三角洲背景音乐",
-    "minecraft:music.nether.crimson_forest": "绯红森林背景音乐",
-    "minecraft:music.nether.nether_wastes": "下界荒地背景音乐",
-    "minecraft:music.nether.soul_sand_valley": "灵魂沙峡谷背景音乐",
-    "minecraft:music.nether.warped_forest": "诡异森林背景音乐",
-
     "minecraft:music.game": "游戏内通用背景音乐",
     "minecraft:music.under_water": "水下背景音乐",
     "minecraft:music.end": "末地背景音乐",
@@ -71,19 +68,5 @@
     "minecraft:music.menu": "主菜单音乐",
     "minecraft:music.credits": "制作人名单",
 
-    "minecraft:music_disc.blocks": "唱片 - Blocks",
-    "minecraft:music_disc.cat": "唱片 - Cat",
-    "minecraft:music_disc.chirp": "唱片 - Chirp",
-    "minecraft:music_disc.far": "唱片 - Far",
-    "minecraft:music_disc.mall": "唱片 - Mall",
-    "minecraft:music_disc.mellohi": "唱片 - Mellohi",
-    "minecraft:music_disc.otherside": "唱片 - Otherside",
-    "minecraft:music_disc.pigstep": "唱片 - Pigstep",
-    "minecraft:music_disc.stal": "唱片 - Stal",
-    "minecraft:music_disc.strad": "唱片 - Strad",
-    "minecraft:music_disc.wait": "唱片 - Wait",
-    "minecraft:music_disc.ward": "唱片 - Ward",
-    "minecraft:music_disc.11": "唱片 - 11",
-    "minecraft:music_disc.13": "唱片 - 13",
-    "minecraft:music_disc.5": "唱片 - 5"
+    "minecraft:empty": "空白音乐"
 }

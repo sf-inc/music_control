@@ -81,15 +81,23 @@ public class Music implements Comparable<Music> {
             return TRANSLATION_CACHE.get(identifier);
         }
 
-        final String id = identifier.toString();
-        if (LAST_LANG_INSTANCE.hasTranslation(id)) {
-            TRANSLATION_CACHE.put(identifier, Text.translatable(id));
+        final String idString = identifier.toString();
+        final String path = identifier.getPath();
+        if (LAST_LANG_INSTANCE.hasTranslation(idString)) {
+            TRANSLATION_CACHE.put(identifier, Text.translatable(idString));
 
         // Get official biome translation for biomes' music
-        } else if (id.startsWith("minecraft:music.overworld") || id.startsWith("minecraft:music.nether")) {
-            TRANSLATION_CACHE.put(identifier, Text.translatable("biome.minecraft." + id.split("\\.", 3)[2])
-            );
+        // And format it
+        } else if (path.startsWith("music.overworld") || path.startsWith("music.nether")) {
+            TRANSLATION_CACHE.put(identifier, Text.translatable(
+                    "music.format.biome", Text.translatable(
+                            "biome.minecraft." + path.split("\\.", 3)[2])));
+        // Format disc
+        } else if (path.startsWith("music_disc")) {
+            TRANSLATION_CACHE.put(identifier, Text.translatable(
+                    "music.format.disc", Text.translatable(path)));
         }
-        return TRANSLATION_CACHE.getOrDefault(identifier, Text.translatable(id));
+
+        return TRANSLATION_CACHE.getOrDefault(identifier, Text.translatable(idString));
     }
 }

@@ -56,6 +56,9 @@
     "music.volume": "Volume: %s%%",
     "music.none": "None",
 
+    "music.format.biome": "Biome: %s",
+    "music.format.disc": "Disc: %s",
+
     "gui.component.filter.placeholder": "Input Keywords",
 
     "gui.music_control.panel.play": "Play",
@@ -149,22 +152,22 @@
     "minecraft:music.menu": "Menu",
     "minecraft:music.under_water": "Under Water",
 
-    "minecraft:music_disc.blocks": "Blocks Disc",
-    "minecraft:music_disc.cat": "Cat Disc",
-    "minecraft:music_disc.chirp": "Chirp Disc",
-    "minecraft:music_disc.far": "Far Disc",
-    "minecraft:music_disc.mall": "Mall Disc",
-    "minecraft:music_disc.mellohi": "Mellohi Disc",
-    "minecraft:music_disc.otherside": "Otherside Disc",
-    "minecraft:music_disc.pigstep": "Pigstep Disc",
-    "minecraft:music_disc.stal": "Stal Disc",
-    "minecraft:music_disc.strad": "Strad Disc",
-    "minecraft:music_disc.wait": "Wait Disc",
-    "minecraft:music_disc.ward": "Ward Disc",
-    "minecraft:music_disc.11": "11 Disc",
-    "minecraft:music_disc.13": "13 Disc",
-    "minecraft:music_disc.5": "5 Disc",
-    "minecraft:music_disc.relic": "Relic Disc",
+    "music_disc.blocks": "Blocks",
+    "music_disc.cat": "Cat",
+    "music_disc.chirp": "Chirp",
+    "music_disc.far": "Far",
+    "music_disc.mall": "Mall",
+    "music_disc.mellohi": "Mellohi",
+    "music_disc.otherside": "Otherside",
+    "music_disc.pigstep": "Pigstep",
+    "music_disc.relic": "Relic",
+    "music_disc.stal": "Stal",
+    "music_disc.strad": "Strad",
+    "music_disc.wait": "Wait",
+    "music_disc.ward": "Ward",
+    "music_disc.11": "11",
+    "music_disc.13": "13",
+    "music_disc.5": "5",
 
     "minecraft:empty": "Empty music"
 }

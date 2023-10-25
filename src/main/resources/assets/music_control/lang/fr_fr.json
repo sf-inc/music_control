@@ -56,6 +56,9 @@
     "music.volume": "Volume: %s%%",
     "music.none": "Rien",
 
+    "music.format.biome": "Biome: %s",
+    "music.format.disc": "Disque: %s",
+
     "gui.component.filter.placeholder": "Mots clés",
 
     "gui.music_control.panel.play": "Jouer",
