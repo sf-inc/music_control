@@ -56,6 +56,11 @@
     "music.volume": "Volume: %s%%",
     "music.none": "None",
 
+    "music.category.all": "All",
+    "music.category.default": "Default",
+    "music.category.disc": "Discs",
+
+    "music.format.category": "%s / %s",
     "music.format.biome": "Biome: %s",
     "music.format.disc": "Disc: %s",
 

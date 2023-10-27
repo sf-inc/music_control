@@ -168,11 +168,13 @@ public abstract class MusicTrackerMixin {
                 Utils.print(this.client, Text.translatable("music.no_playing"));
             }
         } else {
-            String categoryText = MusicControlClient.categoryChanged
-                    ? MusicControlClient.currentCategory.toUpperCase().replace('_', ' ') + ": %s"
-                    : "record.nowPlaying";
-            Text title = Text.translatable(currentMusic);
-            Utils.print(this.client, Text.translatable(categoryText, title));
+            Text category = Text.translatableWithFallback("music.category." + MusicControlClient.currentCategory,
+                    MusicControlClient.currentCategory.toUpperCase().replace('_', ' '));
+            Text music = Text.translatable(currentMusic);
+            Text content = MusicControlClient.categoryChanged
+                ? Text.translatable("music.format.category", category, music)
+                : music;
+            Utils.print(this.client, Text.translatable("record.nowPlaying", content));
         }
     }
 

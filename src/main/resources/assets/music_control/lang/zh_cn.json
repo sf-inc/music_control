@@ -43,6 +43,10 @@
     "music.volume": "音量: %s%%",
     "music.none": "无",
 
+    "music.category.all": "所有音乐",
+    "music.category.default": "默认",
+    "music.category.disc": "唱片",
+
     "music.format.biome": "生物群系：%s",
     "music.format.disc": "播放唱片：%s",
 
