@@ -7,9 +7,7 @@ import net.minecraft.util.Language;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Music implements Comparable<Music> {
     public final static String ALL_MUSICS = "all";
@@ -21,6 +19,7 @@ public class Music implements Comparable<Music> {
 
     public final static HashMap<String, ArrayList<Music>> MUSIC_BY_NAMESPACE = new HashMap<>();
     public final static ArrayList<Identifier> EVENTS = new ArrayList<>();
+    public final static ArrayList<Identifier> BLACK_LISTED_EVENTS = new ArrayList<>(List.of(new Identifier("music.overworld.old_growth_taiga")));
     public final static HashMap<Identifier, HashSet<Music>> MUSIC_BY_EVENT = new HashMap<>();
     public final static HashMap<Identifier, Text> TRANSLATION_CACHE = new HashMap<>();
 

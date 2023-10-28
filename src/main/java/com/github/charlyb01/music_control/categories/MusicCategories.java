@@ -42,7 +42,7 @@ public class MusicCategories {
 
         for (SoundEvent soundEvent : Registries.SOUND_EVENT) {
             Identifier event = soundEvent.getId();
-            if (event.getPath().contains("music") && !EVENTS.contains(event)) {
+            if (event.getPath().contains("music") && !EVENTS.contains(event) && !BLACK_LISTED_EVENTS.contains(event)) {
                 EVENTS.add(event);
                 MUSIC_BY_EVENT.put(event, new HashSet<>());
             }
