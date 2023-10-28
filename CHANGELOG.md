@@ -4,6 +4,15 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.6.3: beta
+
+* Biome names are fetched from minecraft lang file
+* Improve event formatting with prefixes (eg. "Biome: ", "Disc: ")
+* Improve category formatting with translated names
+* Add japanese translation
+* Fixed music name typo ("Subwoofer Lullaby")
+* Fixed crash caused by badly registered music
+
 ## v1.6.2: beta
 
 * Update to 1.20.1
