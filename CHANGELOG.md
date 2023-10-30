@@ -4,6 +4,10 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.6.4: beta
+
+* Update to 1.20.2
+
 ## v1.6.3: beta
 
 * Biome names are fetched from minecraft lang file
