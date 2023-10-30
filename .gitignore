@@ -1,5 +1,6 @@
 # minecraft related
 bin/
+remappedSrc/
 
 # User-specific stuff
 .idea/
