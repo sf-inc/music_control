@@ -5,6 +5,7 @@ import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
+import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.*;
 import net.minecraft.sound.MusicSound;
@@ -217,14 +218,14 @@ public abstract class MusicTrackerMixin {
 
             if (MusicControlClient.isPaused) {
                 MusicControlClient.isPaused = false;
-                this.client.getSoundManager().resumeAll();
+                ((PauseResumeIMixin) this.client.getSoundManager()).resumeMusic();
 
                 if (this.client.player != null) {
                     Utils.print(this.client, Text.translatable("music.play"));
                 }
             } else {
                 MusicControlClient.isPaused = true;
-                this.client.getSoundManager().pauseAll();
+                ((PauseResumeIMixin) this.client.getSoundManager()).pauseMusic();
 
                 if (this.client.player != null) {
                     Utils.print(this.client, Text.translatable("music.pause"));

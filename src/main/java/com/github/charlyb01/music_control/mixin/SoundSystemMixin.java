@@ -1,12 +1,11 @@
 package com.github.charlyb01.music_control.mixin;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
+import com.google.common.collect.Multimap;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.sound.Sound;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.client.sound.SoundSystem;
-import net.minecraft.client.sound.WeightedSoundSet;
+import net.minecraft.client.sound.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -18,9 +17,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Map;
+
 @Mixin(SoundSystem.class)
-public class SoundSystemMixin {
+public class SoundSystemMixin implements PauseResumeIMixin {
     @Shadow @Final private GameOptions settings;
+
+    @Shadow private boolean started;
+
+    @Shadow @Final private Map<SoundInstance, Channel.SourceManager> sources;
+
+    @Shadow @Final private Multimap<SoundCategory, SoundInstance> sounds;
 
     @Inject(method = "tick()V", at = @At("HEAD"))
     private void delayIfNoSound(CallbackInfo ci) {
@@ -37,5 +44,33 @@ public class SoundSystemMixin {
             final MinecraftClient client = MinecraftClient.getInstance();
             client.inGameHud.setRecordPlayingOverlay(Text.translatable(record.toString()));
         }
+    }
+
+    @Override
+    public void pauseMusic() {
+        if (!this.started) {
+            return;
+        }
+
+        this.sounds.get(SoundCategory.MUSIC).forEach(soundInstance -> {
+            Channel.SourceManager sourceManager = this.sources.get(soundInstance);
+            if (sourceManager != null) {
+                sourceManager.run(Source::pause);
+            }
+        });
+    }
+
+    @Override
+    public void resumeMusic() {
+        if (!this.started) {
+            return;
+        }
+
+        this.sounds.get(SoundCategory.MUSIC).forEach(soundInstance -> {
+            Channel.SourceManager sourceManager = this.sources.get(soundInstance);
+            if (sourceManager != null) {
+                sourceManager.run(Source::resume);
+            }
+        });
     }
 }
