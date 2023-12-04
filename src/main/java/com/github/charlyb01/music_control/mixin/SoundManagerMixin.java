@@ -1,6 +1,7 @@
 package com.github.charlyb01.music_control.mixin;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.event.SoundLoadedEvent;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
 import net.fabricmc.api.EnvType;
@@ -22,6 +23,13 @@ public class SoundManagerMixin implements PauseResumeIMixin {
     @Inject(method = "apply*", at = @At("TAIL"))
     private void onStart(CallbackInfo ci) {
         SoundLoadedEvent.SOUNDS_LOADED.invoker().onSoundsLoaded((SoundManager) (Object) this);
+    }
+
+    @Inject(method = "pauseAll", at = @At("TAIL"))
+    private void dontPauseMusic(CallbackInfo ci) {
+        if (ModConfig.get().musicDontPause && !MusicControlClient.isPaused) {
+            this.resumeMusic();
+        }
     }
 
     @Inject(method = "resumeAll", at = @At("TAIL"))

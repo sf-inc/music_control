@@ -18,6 +18,9 @@ public class ModConfig implements ConfigData {
     public int timer = 300;
 
     @ConfigEntry.Category("general")
+    public boolean musicDontPause = true;
+
+    @ConfigEntry.Category("general")
     @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.BoundedDiscrete(min = 1, max = 25)
     public int musicQueue = 10;
