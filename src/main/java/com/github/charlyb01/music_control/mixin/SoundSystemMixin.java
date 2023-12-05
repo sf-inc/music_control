@@ -1,6 +1,7 @@
 package com.github.charlyb01.music_control.mixin;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.MinecraftClient;
@@ -20,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.Map;
 
 @Mixin(SoundSystem.class)
-public class SoundSystemMixin implements PauseResumeIMixin {
+public abstract class SoundSystemMixin implements PauseResumeIMixin {
     @Shadow @Final private GameOptions settings;
 
     @Shadow private boolean started;
@@ -29,11 +30,20 @@ public class SoundSystemMixin implements PauseResumeIMixin {
 
     @Shadow @Final private Multimap<SoundCategory, SoundInstance> sounds;
 
+    @Shadow protected abstract void tick();
+
     @Inject(method = "tick()V", at = @At("HEAD"))
     private void delayIfNoSound(CallbackInfo ci) {
         if (this.settings.getSoundVolume(SoundCategory.MASTER) <= 0.0F
                 || this.settings.getSoundVolume(SoundCategory.MUSIC) <= 0.0F) {
             MusicControlClient.shouldPlay = false;
+        }
+    }
+
+    @Inject(method = "tick(Z)V", at = @At("HEAD"))
+    private void alwaysTick(boolean paused, CallbackInfo ci) {
+        if (ModConfig.get().musicDontPause && paused) {
+            this.tick();
         }
     }
 
