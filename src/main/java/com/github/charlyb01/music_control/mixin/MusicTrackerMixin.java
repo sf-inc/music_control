@@ -83,14 +83,27 @@ public abstract class MusicTrackerMixin {
                 && MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
                 && Music.MUSIC_BY_EVENT.containsKey(id)) {
             // normal procedure
+            boolean creative = this.client.player != null && this.client.player.isCreative();
             final ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(id));
-            final ArrayList<Music> gameMusics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().value().getId()));
-            if (musics.isEmpty()) {
+            final ArrayList<Music> creativeMusics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.CREATIVE.getSound().value().getId()));
+
+            if (!ModConfig.get().creativeFallback && creative) {
+                MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(creativeMusics, this.random);
+            } else if (musics.isEmpty()) {
                 // this means the current event corresponds to
                 // an event with no music.
-                if (ModConfig.get().musicFallback && !gameMusics.isEmpty()) {
-                    // we should fallback on default game music
-                    MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(gameMusics, this.random);
+                if (ModConfig.get().musicFallback) {
+                    // we should fallback on default game/creative music
+                    if (creative) {
+                        MusicControlClient.currentMusic = creativeMusics.isEmpty()
+                                ? EMPTY_MUSIC_ID
+                                : MusicCategories.getRandomMusicIdentifier(creativeMusics, this.random);
+                    } else {
+                        final ArrayList<Music> gameMusics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().value().getId()));
+                        MusicControlClient.currentMusic = gameMusics.isEmpty()
+                                ? EMPTY_MUSIC_ID
+                                : MusicCategories.getRandomMusicIdentifier(gameMusics, this.random);
+                    }
                 } else {
                     // don't play music
                     MusicControlClient.currentMusic = EMPTY_MUSIC_ID;

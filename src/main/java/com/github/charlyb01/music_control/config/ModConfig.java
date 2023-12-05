@@ -30,6 +30,10 @@ public class ModConfig implements ConfigData {
     public boolean musicFallback = true;
 
     @ConfigEntry.Category("general")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean creativeFallback = true;
+
+    @ConfigEntry.Category("general")
     @ConfigEntry.Gui.Tooltip(count = 5)
     public String musicCategoryStart = Music.DEFAULT_MUSICS;
 
