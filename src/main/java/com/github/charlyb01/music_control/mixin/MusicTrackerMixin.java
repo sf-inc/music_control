@@ -146,6 +146,13 @@ public abstract class MusicTrackerMixin {
                 ci.cancel();
             }
         }
+
+        // Stop decrementing if music paused
+        if (MusicControlClient.isPaused &&
+                (this.current == null
+                || (this.client != null && !this.client.getSoundManager().isPlaying(this.current)))) {
+            this.timeUntilNextSong++;
+        }
     }
 
     private void displayMusic() {
