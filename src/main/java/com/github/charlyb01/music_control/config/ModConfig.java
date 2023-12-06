@@ -30,7 +30,7 @@ public class ModConfig implements ConfigData {
     public boolean musicFallback = true;
 
     @ConfigEntry.Category("general")
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.Tooltip(count = 3)
     public boolean creativeFallback = true;
 
     @ConfigEntry.Category("general")
