@@ -2,14 +2,12 @@ package com.github.charlyb01.music_control.client;
 
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.config.ModConfig;
-import com.github.charlyb01.music_control.event.SoundEventBiome;
-import com.github.charlyb01.music_control.event.SoundLoadedEvent;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -38,7 +36,7 @@ public class MusicControlClient implements ClientModInitializer {
     public void onInitializeClient() {
         AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
         SoundEventBiome.init();
-        SoundLoadedEvent.SOUNDS_LOADED.register(soundManager -> MusicCategories.init(MinecraftClient.getInstance()));
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> MusicCategories.init(client));
 
         currentCategory = ModConfig.get().musicCategoryStart;
 

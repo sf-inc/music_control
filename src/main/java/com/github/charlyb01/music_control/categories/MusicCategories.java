@@ -3,14 +3,17 @@ package com.github.charlyb01.music_control.categories;
 import com.github.charlyb01.music_control.ResourcePackUtils;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
+import com.github.charlyb01.music_control.client.SoundEventBiome;
 import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundContainer;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.biome.Biome;
 
 import java.util.*;
 
@@ -30,6 +33,9 @@ public class MusicCategories {
             MUSIC_BY_NAMESPACE.clear();
             MUSIC_BY_EVENT.clear();
             EVENTS.clear();
+
+            SoundEventBiome.BIOME_MUSIC_MAP.clear();
+            SoundEventBiome.NAME_BIOME_MAP.clear();
         } else {
             MusicControlClient.init = true;
         }
@@ -42,9 +48,19 @@ public class MusicCategories {
 
         for (SoundEvent soundEvent : Registries.SOUND_EVENT) {
             Identifier event = soundEvent.getId();
-            if (event.getPath().contains("music") && !EVENTS.contains(event) && !BLACK_LISTED_EVENTS.contains(event)) {
-                EVENTS.add(event);
-                MUSIC_BY_EVENT.put(event, new HashSet<>());
+            if (event.getPath().contains("music")) {
+                if (!EVENTS.contains(event) && !BLACK_LISTED_EVENTS.contains(event)) {
+                    EVENTS.add(event);
+                    MUSIC_BY_EVENT.put(event, new HashSet<>());
+                }
+
+                String[] split = event.getPath().split("\\.");
+                RegistryKey<Biome> biomeRegistryKey;
+                if (split.length > 0
+                        && (biomeRegistryKey = SoundEventBiome.NAME_BIOME_MAP.get(
+                                new Identifier(event.getNamespace(), split[split.length-1]))) != null) {
+                    SoundEventBiome.BIOME_MUSIC_MAP.put(biomeRegistryKey, soundEvent);
+                }
             }
         }
 
