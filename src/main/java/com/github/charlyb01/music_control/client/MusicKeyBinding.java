@@ -25,7 +25,12 @@ public class MusicKeyBinding {
     private static KeyBinding volumeDown;
     private static KeyBinding openMenu;
 
-    public static void init() {
+    public static void register() {
+        registerKeys();
+        registerEvents();
+    }
+
+    private static void registerKeys() {
         previousMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.previousMusic",
                 InputUtil.Type.KEYSYM,
@@ -97,7 +102,7 @@ public class MusicKeyBinding {
         ));
     }
 
-    public static void register() {
+    private static void registerEvents() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (previousMusic.wasPressed()) {
                 MusicControlClient.previousMusic = true;

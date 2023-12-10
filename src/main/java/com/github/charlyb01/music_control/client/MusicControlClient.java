@@ -35,12 +35,10 @@ public class MusicControlClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+        MusicKeyBinding.register();
         SoundEventBiome.init();
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> MusicCategories.init(client));
 
         currentCategory = ModConfig.get().musicCategoryStart;
-
-        MusicKeyBinding.init();
-        MusicKeyBinding.register();
     }
 }
