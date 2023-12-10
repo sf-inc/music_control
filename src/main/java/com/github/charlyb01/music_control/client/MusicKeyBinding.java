@@ -1,7 +1,7 @@
 package com.github.charlyb01.music_control.client;
 
 import com.github.charlyb01.music_control.Utils;
-import com.github.charlyb01.music_control.access.GameOptionsAccess;
+import com.github.charlyb01.music_control.imixin.GameOptionsAccess;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.gui.MusicControlGUI;
 import com.github.charlyb01.music_control.gui.MusicControlScreen;

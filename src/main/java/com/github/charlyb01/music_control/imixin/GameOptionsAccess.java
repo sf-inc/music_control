@@ -1,4 +1,4 @@
-package com.github.charlyb01.music_control.access;
+package com.github.charlyb01.music_control.imixin;
 
 import net.minecraft.sound.SoundCategory;
 

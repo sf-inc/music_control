@@ -1,6 +1,6 @@
 package com.github.charlyb01.music_control.mixin;
 
-import com.github.charlyb01.music_control.access.GameOptionsAccess;
+import com.github.charlyb01.music_control.imixin.GameOptionsAccess;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.sound.SoundCategory;
