@@ -8,6 +8,7 @@ import com.github.charlyb01.music_control.client.MusicControlClient;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.SharedConstants;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -27,104 +28,14 @@ import static com.github.charlyb01.music_control.categories.MusicCategories.NAME
 public class ResourcePackUtils {
     private ResourcePackUtils() {}
 
-    protected static final Path GAME_DIRECTORY = FabricLoader.getInstance().getGameDir().toAbsolutePath().normalize();
-    protected static final Path RESOURCEPACK = GAME_DIRECTORY.resolve("resourcepacks").resolve(MusicControlClient.MOD_ID);
-    protected static final Path ASSETS = RESOURCEPACK.resolve("assets");
-    protected static final String SOUNDS_FILE = "sounds.json";
+    protected static final String RESOURCEPACK_PROFILE_NAME = "file/" + MusicControlClient.MOD_ID;
+    protected static final Path RESOURCEPACK_PATH = MinecraftClient.getInstance().getResourcePackDir().resolve(MusicControlClient.MOD_ID);
+    protected static final Path ASSETS_PATH = RESOURCEPACK_PATH.resolve("assets");
 
-    public static Path getSoundPath(final String namespace) {
-        Path path = ASSETS.resolve(namespace).resolve(SOUNDS_FILE);
-
-        if (!Files.exists(path)) {
-            try {
-                Files.createFile(path);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return path;
-    }
-
-    public static void createResourcePack() {
-        try {
-            Files.createDirectories(RESOURCEPACK);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        createMetaFile();
-        createIcon();
-
-        try {
-            Files.createDirectories(ASSETS);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        for (String namespace : NAMESPACES) {
-            final Path namespacePath = ASSETS.resolve(namespace);
-            try {
-                Files.createDirectories(namespacePath);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-    }
-
-    static protected void createMetaFile() {
-        Path path = RESOURCEPACK.resolve("pack.mcmeta");
-        if (!Files.exists(path)) {
-            try {
-                Files.createFile(path);
-
-                JsonObject data = new JsonObject();
-                JsonObject pack = new JsonObject();
-                pack.put("pack_format", JsonPrimitive.of(Long.valueOf(SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES))));
-                pack.put("description", JsonPrimitive.of(Text.translatable("music_control.metadata.description").getString()));
-                data.put("pack", pack);
-
-                try (PrintWriter out = new PrintWriter(new FileWriter(path.toFile()))) {
-                    out.write(data.toJson(false, true));
-                    out.flush();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    static protected void createIcon() {
-        Path targetPath = RESOURCEPACK.resolve("pack.png");
-        Path sourcePath;
-
-        Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(MusicControlClient.MOD_ID);
-        if (modContainer.isPresent()) {
-            Optional<String> iconPath = modContainer.get().getMetadata().getIconPath(400);
-            if (iconPath.isPresent()) {
-                sourcePath = Path.of(iconPath.get());
-            } else {
-                return;
-            }
-        } else {
-            return;
-        }
-
-        if (Files.exists(sourcePath) && !Files.exists(targetPath)) {
-            try {
-                Files.copy(sourcePath, targetPath);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public static void writeConfig() {
+        MinecraftClient.getInstance().getResourcePackManager().enable(RESOURCEPACK_PROFILE_NAME);
+
         HashMap<String, FileWriter> fileWriters = new HashMap<>();
         HashMap<String, JsonObject> jsonObjects = new HashMap<>();
         for (String namespace : NAMESPACES) {
@@ -162,5 +73,103 @@ public class ResourcePackUtils {
                 e.printStackTrace();
             }
         });
+    }
+
+    public static void createResourcePack() {
+        try {
+            Files.createDirectories(RESOURCEPACK_PATH);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        createMetaFile();
+        createIcon();
+
+        try {
+            Files.createDirectories(ASSETS_PATH);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        for (String namespace : NAMESPACES) {
+            final Path namespacePath = ASSETS_PATH.resolve(namespace);
+            try {
+                Files.createDirectories(namespacePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+    }
+
+    private static void createMetaFile() {
+        Path path = RESOURCEPACK_PATH.resolve("pack.mcmeta");
+        if (!Files.exists(path)) {
+            try {
+                Files.createFile(path);
+
+                JsonObject data = new JsonObject();
+                JsonObject pack = new JsonObject();
+                pack.put("pack_format", JsonPrimitive.of(Long.valueOf(SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES))));
+                pack.put("description", JsonPrimitive.of(Text.translatable("music_control.metadata.description").getString()));
+                data.put("pack", pack);
+
+                try (PrintWriter out = new PrintWriter(new FileWriter(path.toFile()))) {
+                    out.write(data.toJson(false, true));
+                    out.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void createIcon() {
+        Path targetPath = RESOURCEPACK_PATH.resolve("pack.png");
+        if (Files.exists(targetPath)) {
+            return;
+        }
+
+        Path sourcePath;
+        Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(MusicControlClient.MOD_ID);
+        if (modContainer.isPresent()) {
+            Optional<String> iconPath = modContainer.get().getMetadata().getIconPath(400);
+            if (iconPath.isPresent()) {
+                sourcePath = Path.of(iconPath.get());
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
+
+        if (!Files.exists(sourcePath)) {
+            return;
+        }
+
+        try {
+            Files.copy(sourcePath, targetPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Path getSoundPath(final String namespace) {
+        Path path = ASSETS_PATH.resolve(namespace).resolve("sounds.json");
+        if (Files.exists(path)) {
+            return path;
+        }
+
+        try {
+            return Files.createFile(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
