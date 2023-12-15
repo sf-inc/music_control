@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.mixin;
 
+import com.github.charlyb01.music_control.ResourcePackUtils;
 import com.github.charlyb01.music_control.client.SoundEventBiome;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
@@ -51,7 +52,9 @@ public class MinecraftClientMixin {
     private MusicSound getMusicFromMap() {
         RegistryEntry<Biome> registryEntry = this.player.getWorld().getBiome(this.player.getBlockPos());
         RegistryKey<Biome> registryKey = registryEntry.getKey().orElse(null);
-        if (registryKey != null && SoundEventBiome.BIOME_MUSIC_MAP.containsKey(registryKey)) {
+        if (ResourcePackUtils.isEnabled()
+                && registryKey != null
+                && SoundEventBiome.BIOME_MUSIC_MAP.containsKey(registryKey)) {
             return MusicType.createIngameMusic(RegistryEntry.of(SoundEventBiome.BIOME_MUSIC_MAP.get(registryKey)));
         }
 

@@ -32,6 +32,9 @@ public class ResourcePackUtils {
     protected static final Path RESOURCEPACK_PATH = MinecraftClient.getInstance().getResourcePackDir().resolve(MusicControlClient.MOD_ID);
     protected static final Path ASSETS_PATH = RESOURCEPACK_PATH.resolve("assets");
 
+    public static boolean isEnabled() {
+        return MinecraftClient.getInstance().getResourcePackManager().getEnabledNames().contains(RESOURCEPACK_PROFILE_NAME);
+    }
 
     public static void writeConfig() {
         MinecraftClient.getInstance().getResourcePackManager().enable(RESOURCEPACK_PROFILE_NAME);
