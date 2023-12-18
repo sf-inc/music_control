@@ -63,7 +63,7 @@ public abstract class SoundSystemMixin implements PauseResumeIMixin {
     }
 
     @Override
-    public void pauseMusic() {
+    public void music_control$pauseMusic() {
         if (!this.started) {
             return;
         }
@@ -77,7 +77,7 @@ public abstract class SoundSystemMixin implements PauseResumeIMixin {
     }
 
     @Override
-    public void resumeMusic() {
+    public void music_control$resumeMusic() {
         if (!this.started) {
             return;
         }

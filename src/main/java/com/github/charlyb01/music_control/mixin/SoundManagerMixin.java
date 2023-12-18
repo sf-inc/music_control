@@ -22,24 +22,24 @@ public class SoundManagerMixin implements PauseResumeIMixin {
     @Inject(method = "pauseAll", at = @At("TAIL"))
     private void dontPauseMusic(CallbackInfo ci) {
         if (ModConfig.get().musicDontPause && !MusicControlClient.isPaused) {
-            this.resumeMusic();
+            this.music_control$resumeMusic();
         }
     }
 
     @Inject(method = "resumeAll", at = @At("TAIL"))
     private void dontResumeIfPaused(CallbackInfo ci) {
         if (MusicControlClient.isPaused) {
-            this.pauseMusic();
+            this.music_control$pauseMusic();
         }
     }
 
     @Override
-    public void pauseMusic() {
-        ((PauseResumeIMixin) this.soundSystem).pauseMusic();
+    public void music_control$pauseMusic() {
+        ((PauseResumeIMixin) this.soundSystem).music_control$pauseMusic();
     }
 
     @Override
-    public void resumeMusic() {
-        ((PauseResumeIMixin) this.soundSystem).resumeMusic();
+    public void music_control$resumeMusic() {
+        ((PauseResumeIMixin) this.soundSystem).music_control$resumeMusic();
     }
 }

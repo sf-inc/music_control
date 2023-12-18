@@ -140,7 +140,7 @@ public class MusicKeyBinding {
             while (volumeUp.wasPressed()) {
                 int volume = Math.round(client.options.getSoundVolume(SoundCategory.MUSIC) * 100.F);
                 volume = Math.min(volume + ModConfig.get().volumeIncrement, ModConfig.get().allowHighVolume ? 200 : 100);
-                ((GameOptionsAccess) client.options).setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.0);
+                ((GameOptionsAccess) client.options).music_control$setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.0);
                 client.options.write();
                 Utils.print(client, Text.translatable("music.volume", volume));
             }
@@ -148,7 +148,7 @@ public class MusicKeyBinding {
             while (volumeDown.wasPressed()) {
                 int volume = Math.round(client.options.getSoundVolume(SoundCategory.MUSIC) * 100.F);
                 volume = Math.max(volume - ModConfig.get().volumeIncrement, 0);
-                ((GameOptionsAccess) client.options).setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.0);
+                ((GameOptionsAccess) client.options).music_control$setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.0);
                 client.options.write();
                 Utils.print(client, Text.translatable("music.volume", volume));
             }

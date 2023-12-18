@@ -168,6 +168,7 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    @Unique
     private void displayMusic() {
         if (ModConfig.get().displayAtStart || MusicControlClient.categoryChanged) {
             printMusic();
@@ -178,10 +179,12 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    @Unique
     private void printPaused() {
         Utils.print(this.client, Text.translatable("music.paused"));
     }
 
+    @Unique
     private void printMusic() {
         if (this.client.world == null)
             return;
@@ -214,6 +217,7 @@ public abstract class MusicTrackerMixin {
 
     // key pressed event handlers
 
+    @Unique
     private void handlePreviousMusicKey() {
         if (MusicControlClient.previousMusic) {
             if (MusicControlClient.isPaused) {
@@ -227,6 +231,7 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    @Unique
     private void handleNextMusicKey() {
         if (MusicControlClient.nextMusic) {
             MusicControlClient.nextMusic = false;
@@ -241,20 +246,21 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    @Unique
     private void handleResumePauseKey() {
         if (MusicControlClient.pauseResume) {
             MusicControlClient.pauseResume = false;
 
             if (MusicControlClient.isPaused) {
                 MusicControlClient.isPaused = false;
-                ((PauseResumeIMixin) this.client.getSoundManager()).resumeMusic();
+                ((PauseResumeIMixin) this.client.getSoundManager()).music_control$resumeMusic();
 
                 if (this.client.player != null) {
                     Utils.print(this.client, Text.translatable("music.play"));
                 }
             } else {
                 MusicControlClient.isPaused = true;
-                ((PauseResumeIMixin) this.client.getSoundManager()).pauseMusic();
+                ((PauseResumeIMixin) this.client.getSoundManager()).music_control$pauseMusic();
 
                 if (this.client.player != null) {
                     Utils.print(this.client, Text.translatable("music.pause"));
@@ -263,6 +269,7 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    @Unique
     private void handleChangeCategoryKey() {
         if (MusicControlClient.nextCategory || MusicControlClient.previousCategory) {
             if (MusicControlClient.isPaused) {
@@ -281,6 +288,7 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    @Unique
     private void handleDisplayMusicKey() {
         if (MusicControlClient.printMusic) {
             MusicControlClient.printMusic = false;

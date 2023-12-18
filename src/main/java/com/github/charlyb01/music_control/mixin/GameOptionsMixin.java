@@ -15,7 +15,7 @@ public class GameOptionsMixin implements GameOptionsAccess {
     @Shadow @Final private Map<SoundCategory, SimpleOption<Double>> soundVolumeLevels;
 
     @Override
-    public void setSoundCategoryVolume(final SoundCategory soundCategory, final double volume) {
+    public void music_control$setSoundCategoryVolume(final SoundCategory soundCategory, final double volume) {
         SimpleOption<Double> simpleOption = this.soundVolumeLevels.get(soundCategory);
         if (simpleOption != null) {
             simpleOption.setValue(volume);
