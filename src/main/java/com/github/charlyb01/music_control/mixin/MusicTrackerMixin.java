@@ -67,6 +67,7 @@ public abstract class MusicTrackerMixin {
         }
 
         // stop current music
+        boolean wasPlaying = this.client.getSoundManager().isPlaying(this.current);
         this.client.getSoundManager().stop(this.current);
 
         if (MusicControlClient.musicSelected != null) {
@@ -76,6 +77,9 @@ public abstract class MusicTrackerMixin {
         } else if (MusicControlClient.previousMusic) {
             // previous music is assigned
             MusicControlClient.previousMusic = false;
+            if (wasPlaying) {
+                MusicCategories.PLAYED_MUSICS.pollLast();
+            }
             Identifier music = MusicCategories.PLAYED_MUSICS.peekLast();
             if (music != null) {
                 MusicControlClient.currentMusic = music;
@@ -224,7 +228,6 @@ public abstract class MusicTrackerMixin {
                 MusicControlClient.previousMusic = false;
                 printPaused();
             } else {
-                MusicCategories.PLAYED_MUSICS.pollLast();
                 this.displayPrompted = ModConfig.get().displayAtStart;
                 this.play(null);
             }
