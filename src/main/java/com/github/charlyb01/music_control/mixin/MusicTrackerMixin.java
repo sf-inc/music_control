@@ -177,8 +177,9 @@ public abstract class MusicTrackerMixin {
         if (this.client.world == null)
             return;
 
-        final String currentMusic = this.current != null ? this.current.getSound().getIdentifier().toString()
-                : EMPTY_MUSIC;
+        final String currentMusic = this.current == null || this.current.getSound() == null
+                ? EMPTY_MUSIC
+                : this.current.getSound().getIdentifier().toString();
         if (MusicControlClient.isPaused) {
             Utils.print(this.client, Text.translatable("music.paused"));
 
