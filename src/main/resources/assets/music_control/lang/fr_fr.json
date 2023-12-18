@@ -73,9 +73,12 @@
     "gui.music_control.panel.play": "Jouer",
     "gui.music_control.panel.history": "Historique",
     "gui.music_control.panel.config": "Configurer",
+    "gui.music_control.label.resourcePack": "Aucun pack de ressources intégré activé",
     "gui.music_control.label.selected": "Selectionné: %s",
     "gui.music_control.toggle.removeAdd": "Supprimer / Ajouter",
     "gui.music_control.toggle.musicEvent": "Musique / Event",
+    "gui.music_control.button.create": "En créer un nouveau",
+    "gui.music_control.button.enable": "En activer un",
     "gui.music_control.button.save": "Sauvegarder",
 
     "minecraft:empty":"Musique vide"
