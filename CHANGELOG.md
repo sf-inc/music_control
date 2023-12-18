@@ -4,6 +4,19 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.7
+
+* Pause only music sounds when pressing pause key
+* Add an option to not pause music when opening game menu
+* When pressing pause key while no music is playing, pause music player to not be able to play music when in pause
+* When pressing previous music key while no music is playing, replay last played music instead of the one before
+* Add an option to be able to play biome-specific music in creative
+* Fix biome-specific music not playing for new biome events when playing on a server
+* Music display tweaks
+* Fix crash when playing a music
+* Add a new panel in the config panel menu that displays instead of the current one
+  when no built-in resource pack was enabled. It allows resource pack creation or enabling.
+
 ## v1.6.4: beta
 
 * Update to 1.20.2
