@@ -29,15 +29,26 @@ public class ResourcePackUtils {
     private ResourcePackUtils() {}
 
     protected static final String RESOURCEPACK_PROFILE_NAME = "file/" + MusicControlClient.MOD_ID;
-    protected static final Path RESOURCEPACK_PATH = MinecraftClient.getInstance().getResourcePackDir().resolve(MusicControlClient.MOD_ID);
-    protected static final Path ASSETS_PATH = RESOURCEPACK_PATH.resolve("assets");
+    protected static Path RESOURCEPACK_PATH = null;
+    protected static Path ASSETS_PATH = null;
+    protected static boolean WAS_CREATED = false;
 
-    public static boolean isEnabled() {
-        return MinecraftClient.getInstance().getResourcePackManager().getEnabledNames().contains(RESOURCEPACK_PROFILE_NAME);
+    public static boolean exists() {
+        return MinecraftClient.getInstance().getResourcePackManager().getNames().stream().anyMatch(
+                name -> name.startsWith(RESOURCEPACK_PROFILE_NAME));
+    }
+
+    public static boolean wasCreatedOrIsEnabled() {
+        return WAS_CREATED || MinecraftClient.getInstance().getResourcePackManager().getEnabledNames().stream().anyMatch(
+                name -> name.startsWith(RESOURCEPACK_PROFILE_NAME));
     }
 
     public static void writeConfig() {
-        MinecraftClient.getInstance().getResourcePackManager().enable(RESOURCEPACK_PROFILE_NAME);
+        if (WAS_CREATED) {
+            WAS_CREATED = false;
+        } else if (RESOURCEPACK_PATH == null) {
+            setPaths();
+        }
 
         HashMap<String, FileWriter> fileWriters = new HashMap<>();
         HashMap<String, JsonObject> jsonObjects = new HashMap<>();
@@ -79,6 +90,8 @@ public class ResourcePackUtils {
     }
 
     public static void createResourcePack() {
+        String resourcePackProfileName = findNextAvailablePath();
+
         try {
             Files.createDirectories(RESOURCEPACK_PATH);
         } catch (IOException e) {
@@ -105,6 +118,35 @@ public class ResourcePackUtils {
                 return;
             }
         }
+
+        WAS_CREATED = true;
+        MinecraftClient.getInstance().getResourcePackManager().scanPacks();
+        MinecraftClient.getInstance().getResourcePackManager().enable(resourcePackProfileName);
+    }
+
+    private static String findNextAvailablePath() {
+        String resourcePackName = MusicControlClient.MOD_ID;
+        int i = 0;
+
+        final Path resourcePackDir = MinecraftClient.getInstance().getResourcePackDir();
+        RESOURCEPACK_PATH = resourcePackDir.resolve(resourcePackName);
+
+        while (Files.exists(RESOURCEPACK_PATH)) {
+            resourcePackName = MusicControlClient.MOD_ID + "_" + ++i;
+            RESOURCEPACK_PATH = resourcePackDir.resolve(resourcePackName);
+        }
+
+        ASSETS_PATH = RESOURCEPACK_PATH.resolve("assets");
+        return "file/" + resourcePackName;
+    }
+
+    private static void setPaths() {
+        Optional<String> selectedResourcePack = MinecraftClient.getInstance().getResourcePackManager().getEnabledNames().stream()
+                .filter(name -> name.startsWith(RESOURCEPACK_PROFILE_NAME)).findFirst();
+        selectedResourcePack.ifPresent(name -> {
+            RESOURCEPACK_PATH = MinecraftClient.getInstance().getResourcePackDir().resolve(name.substring(5));
+            ASSETS_PATH = RESOURCEPACK_PATH.resolve("assets");
+        });
     }
 
     private static void createMetaFile() {

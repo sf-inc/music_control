@@ -74,9 +74,12 @@
     "gui.music_control.panel.play": "Play",
     "gui.music_control.panel.history": "History",
     "gui.music_control.panel.config": "Configure",
+    "gui.music_control.label.resourcePack": "No Built-in Resource Pack enabled",
     "gui.music_control.label.selected": "Selected: %s",
     "gui.music_control.toggle.removeAdd": "Remove / Add",
     "gui.music_control.toggle.musicEvent": "Music / Event",
+    "gui.music_control.button.create": "Create a new one",
+    "gui.music_control.button.enable": "Enable one",
     "gui.music_control.button.save": "Save",
 
     "music_control.metadata.description": "Music Control - Built-in Resource Pack",
