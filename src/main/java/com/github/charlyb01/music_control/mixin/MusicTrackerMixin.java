@@ -17,6 +17,7 @@ import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -38,6 +39,9 @@ public abstract class MusicTrackerMixin {
     private int timeUntilNextSong;
     @Shadow
     private SoundInstance current;
+
+    @Unique
+    private boolean displayPrompted = false;
 
     @Shadow
     public abstract void play(MusicSound type);
@@ -123,7 +127,8 @@ public abstract class MusicTrackerMixin {
         this.current = PositionedSoundInstance.music(MusicControlClient.currentMusic == null && type != null
                 ? type.getSound().value()
                 : SoundEvent.of(MusicControlClient.currentMusic));
-        if (this.current.getSound() != SoundManager.MISSING_SOUND) {
+
+        if (!this.current.getId().equals(SoundManager.MISSING_SOUND.getIdentifier())) {
             this.client.getSoundManager().play(this.current);
             MusicControlClient.inCustomTracking = true;
         }
@@ -173,6 +178,10 @@ public abstract class MusicTrackerMixin {
         }
     }
 
+    private void printPaused() {
+        Utils.print(this.client, Text.translatable("music.paused"));
+    }
+
     private void printMusic() {
         if (this.client.world == null)
             return;
@@ -180,10 +189,12 @@ public abstract class MusicTrackerMixin {
         final String currentMusic = this.current == null || this.current.getSound() == null
                 ? EMPTY_MUSIC
                 : this.current.getSound().getIdentifier().toString();
-        if (MusicControlClient.isPaused) {
-            Utils.print(this.client, Text.translatable("music.paused"));
+        if (currentMusic.equals(EMPTY_MUSIC)) {
+            if (!this.displayPrompted) {
+                return;
+            }
+            this.displayPrompted = false;
 
-        } else if (currentMusic.equals(EMPTY_MUSIC)) {
             if (ModConfig.get().displayRemainingSeconds) {
                 double remaining = this.timeUntilNextSong / 20.0;
                 Utils.print(this.client, Text.translatable("music.no_playing_with_time", String.valueOf(remaining)));
@@ -207,9 +218,10 @@ public abstract class MusicTrackerMixin {
         if (MusicControlClient.previousMusic) {
             if (MusicControlClient.isPaused) {
                 MusicControlClient.previousMusic = false;
-                printMusic();
+                printPaused();
             } else {
                 MusicCategories.PLAYED_MUSICS.pollLast();
+                this.displayPrompted = ModConfig.get().displayAtStart;
                 this.play(null);
             }
         }
@@ -221,8 +233,9 @@ public abstract class MusicTrackerMixin {
             MusicControlClient.loopMusic = false;
 
             if (MusicControlClient.isPaused) {
-                printMusic();
+                printPaused();
             } else {
+                this.displayPrompted = ModConfig.get().displayAtStart;
                 this.play(this.client.getMusicType());
             }
         }
@@ -252,22 +265,26 @@ public abstract class MusicTrackerMixin {
 
     private void handleChangeCategoryKey() {
         if (MusicControlClient.nextCategory || MusicControlClient.previousCategory) {
-            MusicControlClient.categoryChanged = true;
-            MusicCategories.changeCategory(MusicControlClient.nextCategory);
+            if (MusicControlClient.isPaused) {
+                printPaused();
+            } else {
+                MusicControlClient.categoryChanged = true;
+                MusicCategories.changeCategory(MusicControlClient.nextCategory);
+                this.play(this.client.getMusicType());
+            }
 
             if (MusicControlClient.nextCategory) {
                 MusicControlClient.nextCategory = false;
             } else {
                 MusicControlClient.previousCategory = false;
             }
-
-            this.play(this.client.getMusicType());
         }
     }
 
     private void handleDisplayMusicKey() {
         if (MusicControlClient.printMusic) {
             MusicControlClient.printMusic = false;
+            this.displayPrompted = true;
 
             printMusic();
         }
