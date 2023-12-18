@@ -35,7 +35,6 @@ public class MusicCategories {
             EVENTS.clear();
 
             SoundEventBiome.BIOME_MUSIC_MAP.clear();
-            SoundEventBiome.NAME_BIOME_MAP.clear();
         } else {
             MusicControlClient.init = true;
         }

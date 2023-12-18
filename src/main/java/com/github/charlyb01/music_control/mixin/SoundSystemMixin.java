@@ -1,5 +1,6 @@
 package com.github.charlyb01.music_control.mixin;
 
+import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
@@ -31,6 +32,11 @@ public abstract class SoundSystemMixin implements PauseResumeIMixin {
     @Shadow @Final private Multimap<SoundCategory, SoundInstance> sounds;
 
     @Shadow protected abstract void tick();
+
+    @Inject(method = "reloadSounds", at = @At("TAIL"))
+    private void reinitializeMusicCategories(CallbackInfo ci) {
+        MusicCategories.init(MinecraftClient.getInstance());
+    }
 
     @Inject(method = "tick()V", at = @At("HEAD"))
     private void delayIfNoSound(CallbackInfo ci) {
