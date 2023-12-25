@@ -4,6 +4,10 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.7.1
+* Port to 1.20.4
+* Refine Chinese & Japanese translations
+
 ## v1.7
 
 * Pause only music sounds when pressing pause key
