@@ -57,7 +57,7 @@ public class ButtonListPanel extends WBox {
             }
         }
 
-        final boolean andFlag = words.get(0).equalsIgnoreCase("/and");
+        final boolean andFlag = !words.isEmpty() && words.get(0).equalsIgnoreCase("/and");
         if (andFlag) {
             words.remove(0);
         }
