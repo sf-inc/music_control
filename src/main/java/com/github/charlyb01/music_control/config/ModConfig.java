@@ -64,6 +64,10 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 150, max = 450)
     public int width = 320;
 
+    @ConfigEntry.Category("gui")
+    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    public ScrollSpeed scrollSpeed = ScrollSpeed.NORMAL;
+
     public static ModConfig get() {
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     }

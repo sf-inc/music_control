@@ -1,5 +1,7 @@
 package com.github.charlyb01.music_control.gui.components;
 
+import com.github.charlyb01.music_control.config.ModConfig;
+import com.github.charlyb01.music_control.config.ScrollSpeed;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import net.minecraft.text.Text;
 
@@ -27,7 +29,10 @@ public class LongTextButton extends WButton {
     @Override
     public void tick() {
         super.tick();
-        if (!this.shouldUpdate || ++this.tickCount % 3 != 0) return;
+        if (!this.shouldUpdate || ModConfig.get().scrollSpeed.equals(ScrollSpeed.DISABLED)
+                || ++this.tickCount % ModConfig.get().scrollSpeed.tick != 0) {
+            return;
+        }
 
         if (!this.isHovered() && this.offset != 0) {
             this.offset = 0;
