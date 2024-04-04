@@ -29,18 +29,25 @@ public class LongTextButton extends WButton {
     @Override
     public void tick() {
         super.tick();
-        if (!this.shouldUpdate || ModConfig.get().scrollSpeed.equals(ScrollSpeed.DISABLED)
-                || ++this.tickCount % ModConfig.get().scrollSpeed.tick != 0) {
+        if (!this.shouldUpdate || ModConfig.get().scrollSpeed.equals(ScrollSpeed.DISABLED)) {
             return;
         }
 
-        if (!this.isHovered() && this.offset != 0) {
-            this.offset = 0;
-            this.setLabel(Text.of(this.text.substring(0, this.maxLength)));
-
-        } else if (this.isHovered()) {
-            this.offset = (this.offset + 1) % this.length;
-            this.setLabel(Text.of(this.text.substring(this.offset, this.maxLength + this.offset)));
+        if (!this.isHovered() || this.offset == this.length) {
+            if (this.offset != 0) {
+                this.offset = 0;
+                this.tickCount = 0;
+                this.setLabel(Text.of(this.text.substring(0, this.maxLength)));
+            }
+            return;
         }
+
+        if (++this.tickCount < ModConfig.get().scrollSpeed.delay
+                || this.tickCount % ModConfig.get().scrollSpeed.tick != 0) {
+            return;
+        }
+
+        ++this.offset;
+        this.setLabel(Text.of(this.text.substring(this.offset, this.maxLength + this.offset)));
     }
 }
