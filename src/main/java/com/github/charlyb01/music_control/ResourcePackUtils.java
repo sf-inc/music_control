@@ -3,6 +3,7 @@ package com.github.charlyb01.music_control;
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.google.gson.*;
+import com.terraformersmc.modmenu.util.mod.fabric.FabricIconHandler;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.SharedConstants;
@@ -178,12 +179,12 @@ public class ResourcePackUtils {
             return;
         }
 
-        Path sourcePath;
+        Optional<Path> sourcePath;
         Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(MusicControlClient.MOD_ID);
         if (modContainer.isPresent()) {
             Optional<String> iconPath = modContainer.get().getMetadata().getIconPath(400);
             if (iconPath.isPresent()) {
-                sourcePath = Path.of(iconPath.get());
+                sourcePath = modContainer.get().findPath(iconPath.get());
             } else {
                 return;
             }
@@ -191,12 +192,12 @@ public class ResourcePackUtils {
             return;
         }
 
-        if (!Files.exists(sourcePath)) {
+        if (sourcePath.isEmpty()) {
             return;
         }
 
         try {
-            Files.copy(sourcePath, targetPath);
+            Files.copy(sourcePath.get(), targetPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
