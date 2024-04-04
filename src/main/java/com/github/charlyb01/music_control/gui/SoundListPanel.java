@@ -2,7 +2,10 @@ package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.config.ModConfig;
-import io.github.cottonmc.cotton.gui.widget.*;
+import com.github.charlyb01.music_control.gui.components.LongTextButton;
+import io.github.cottonmc.cotton.gui.widget.WBox;
+import io.github.cottonmc.cotton.gui.widget.WCardPanel;
+import io.github.cottonmc.cotton.gui.widget.WToggleButton;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -14,8 +17,8 @@ import java.util.function.Consumer;
 import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class SoundListPanel extends WBox {
-    public SoundListPanel(final BiConsumer<Identifier, WButton> onMusicClicked,
-                          final BiConsumer<Identifier, WButton> onEventClicked,
+    public SoundListPanel(final BiConsumer<Identifier, LongTextButton> onMusicClicked,
+                          final BiConsumer<Identifier, LongTextButton> onEventClicked,
                           final Consumer<Boolean> onToggle,
                           final int width, final boolean isToggled) {
         super(Axis.VERTICAL);

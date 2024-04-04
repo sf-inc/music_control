@@ -2,10 +2,9 @@ package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.config.ModConfig;
-
+import com.github.charlyb01.music_control.gui.components.LongTextButton;
 import io.github.cottonmc.cotton.gui.GuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WBox;
-import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WCardPanel;
 import io.github.cottonmc.cotton.gui.widget.WToggleButton;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
@@ -50,7 +49,7 @@ public class SoundConfigPanel extends WBox {
             }
         }
 
-        BiConsumer<Identifier, WButton> onAdded = (Identifier soundClicked, WButton button) -> {
+        BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
             button.setEnabled(false);
             soundToAdd.remove(soundClicked);
             soundToRemove.add(soundClicked);
@@ -66,7 +65,7 @@ public class SoundConfigPanel extends WBox {
                 }
             }
         };
-        BiConsumer<Identifier, WButton> onRemoved = (Identifier soundClicked, WButton button) -> {
+        BiConsumer<Identifier, LongTextButton> onRemoved = (Identifier soundClicked, LongTextButton button) -> {
             button.setEnabled(false);
             soundToRemove.remove(soundClicked);
             soundToAdd.add(soundClicked);

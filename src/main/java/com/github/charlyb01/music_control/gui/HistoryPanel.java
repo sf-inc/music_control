@@ -1,8 +1,8 @@
 package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.config.ModConfig;
+import com.github.charlyb01.music_control.gui.components.LongTextButton;
 import io.github.cottonmc.cotton.gui.widget.WBox;
-import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import net.minecraft.util.Identifier;
@@ -21,7 +21,7 @@ public class HistoryPanel extends WBox {
         ArrayList<Identifier> musics = new ArrayList<>(PLAYED_MUSICS);
         Collections.reverse(musics);
 
-        BiConsumer<Identifier, WButton> onMusicClicked = (Identifier identifier, WButton button) -> {
+        BiConsumer<Identifier, LongTextButton> onMusicClicked = (Identifier identifier, LongTextButton button) -> {
             PLAYED_MUSICS.remove(identifier);
             musics.remove(identifier);
         };

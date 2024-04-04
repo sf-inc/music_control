@@ -1,8 +1,10 @@
 package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.categories.Music;
+import com.github.charlyb01.music_control.gui.components.LongTextButton;
+import com.github.charlyb01.music_control.gui.components.TextFilter;
+import com.github.charlyb01.music_control.gui.components.WFilterListPanel;
 import io.github.cottonmc.cotton.gui.widget.WBox;
-import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -11,27 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import com.github.charlyb01.music_control.gui.components.TextFilter;
-import com.github.charlyb01.music_control.gui.components.WFilterListPanel;
-
 public class ButtonListPanel extends WBox {
 
-    private final WFilterListPanel<Identifier, WButton> items;
+    private final WFilterListPanel<Identifier, LongTextButton> items;
     private final static int FILTER_HEIGHT = 20;
 
     public ButtonListPanel(
             final List<Identifier> data,
-            final BiConsumer<Identifier, WButton> onClicked,
+            final BiConsumer<Identifier, LongTextButton> onClicked,
             final int width,
             final int height,
             final boolean withFilter) {
         super(Axis.VERTICAL);
 
-        BiConsumer<Identifier, WButton> configurator = (Identifier identifier, WButton button) -> {
-            button.setLabel(Text.of(Music.getTranslatedText(identifier).asTruncatedString(width / 7)));
+        BiConsumer<Identifier, LongTextButton> configurator = (Identifier identifier, LongTextButton button) -> {
+            button.setText(Music.getTranslatedText(identifier).getString());
             button.setOnClick(() -> onClicked.accept(identifier, button));
         };
-        this.items = new WFilterListPanel<>(data, WButton::new, configurator);
+        this.items = new WFilterListPanel<>(data, () -> new LongTextButton(width), configurator);
 
         if (withFilter && height > FILTER_HEIGHT) {
             TextFilter filter = new TextFilter(this::runFilter, width, FILTER_HEIGHT);
