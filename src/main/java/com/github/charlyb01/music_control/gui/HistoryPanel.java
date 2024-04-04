@@ -29,8 +29,8 @@ public class HistoryPanel extends WBox {
         ButtonListPanel playedListPanel = new ButtonListPanel(
                 musics,
                 onMusicClicked,
-                ModConfig.get().width,
-                ModConfig.get().height,
+                ModConfig.get().cosmetics.gui.width,
+                ModConfig.get().cosmetics.gui.height,
                 true);
 
         this.add(playedListPanel);

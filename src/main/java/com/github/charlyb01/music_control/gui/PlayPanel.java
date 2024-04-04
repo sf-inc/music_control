@@ -61,7 +61,7 @@ public class PlayPanel extends WBox {
             }
         };
 
-        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().width, PlayPanel.isEvent));
-        this.add(selected, ModConfig.get().width, 20);
+        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().cosmetics.gui.width, PlayPanel.isEvent));
+        this.add(selected, ModConfig.get().cosmetics.gui.width, 20);
     }
 }

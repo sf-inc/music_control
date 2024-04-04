@@ -11,13 +11,13 @@ public class Utils {
 
     public static int getTimer(final Random random) {
         ModConfig config = ModConfig.get();
-        return config.randomTimer
-                ? MathHelper.nextInt(random, config.timer * 10, config.timer * 20)
-                : config.timer * 20;
+        return config.general.timer.randomDelay
+                ? MathHelper.nextInt(random, config.general.timer.maxDelay * 10, config.general.timer.maxDelay * 20)
+                : config.general.timer.maxDelay * 20;
     }
 
     public static void print(final MinecraftClient client, final Text text) {
-        switch (ModConfig.get().displayType) {
+        switch (ModConfig.get().cosmetics.display.type) {
             case JUKEBOX -> client.inGameHud.setOverlayMessage(text, true);
             case ACTION_BAR -> client.inGameHud.setOverlayMessage(text, false);
             case CHAT -> {

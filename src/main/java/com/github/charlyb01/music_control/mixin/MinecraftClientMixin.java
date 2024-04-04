@@ -31,14 +31,14 @@ public class MinecraftClientMixin {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/SoundManager;tick(Z)V"))
     private void musicTrackerAlwaysTick(CallbackInfo ci) {
-        if (ModConfig.get().musicDontPause && this.paused) {
+        if (ModConfig.get().general.misc.musicDontPause && this.paused) {
             this.musicTracker.tick();
         }
     }
 
     @Inject(method = "getMusicType", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getAbilities()Lnet/minecraft/entity/player/PlayerAbilities;"), cancellable = true)
     private void cancelCreativeBeforeBiome(CallbackInfoReturnable<MusicSound> cir) {
-        if (ModConfig.get().creativeFallback) {
+        if (ModConfig.get().general.fallback.creative) {
             cir.setReturnValue(getMusicFromMap());
         }
     }

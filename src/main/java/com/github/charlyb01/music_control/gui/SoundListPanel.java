@@ -28,8 +28,8 @@ public class SoundListPanel extends WBox {
             musics.add(music.getIdentifier());
         }
 
-        ButtonListPanel musicListPanel = new ButtonListPanel(musics, onMusicClicked, width, ModConfig.get().height - 20, true);
-        ButtonListPanel eventListPanel = new ButtonListPanel(EVENTS, onEventClicked, width, ModConfig.get().height - 20, true);
+        ButtonListPanel musicListPanel = new ButtonListPanel(musics, onMusicClicked, width, ModConfig.get().cosmetics.gui.height - 20, true);
+        ButtonListPanel eventListPanel = new ButtonListPanel(EVENTS, onEventClicked, width, ModConfig.get().cosmetics.gui.height - 20, true);
         WCardPanel listPanel = new WCardPanel();
         listPanel.add(musicListPanel);
         listPanel.add(eventListPanel);

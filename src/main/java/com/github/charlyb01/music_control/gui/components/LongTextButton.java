@@ -29,7 +29,7 @@ public class LongTextButton extends WButton {
     @Override
     public void tick() {
         super.tick();
-        if (!this.shouldUpdate || ModConfig.get().scrollSpeed.equals(ScrollSpeed.DISABLED)) {
+        if (!this.shouldUpdate || ModConfig.get().cosmetics.gui.scrollSpeed.equals(ScrollSpeed.DISABLED)) {
             return;
         }
 
@@ -42,8 +42,8 @@ public class LongTextButton extends WButton {
             return;
         }
 
-        if (++this.tickCount < ModConfig.get().scrollSpeed.delay
-                || this.tickCount % ModConfig.get().scrollSpeed.tick != 0) {
+        if (++this.tickCount < ModConfig.get().cosmetics.gui.scrollSpeed.delay
+                || this.tickCount % ModConfig.get().cosmetics.gui.scrollSpeed.tick != 0) {
             return;
         }
 

@@ -21,7 +21,7 @@ public class SoundManagerMixin implements PauseResumeIMixin {
 
     @Inject(method = "pauseAll", at = @At("TAIL"))
     private void dontPauseMusic(CallbackInfo ci) {
-        if (ModConfig.get().musicDontPause && !MusicControlClient.isPaused) {
+        if (ModConfig.get().general.misc.musicDontPause && !MusicControlClient.isPaused) {
             this.music_control$resumeMusic();
         }
     }

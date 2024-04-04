@@ -48,7 +48,7 @@ public abstract class SoundSystemMixin implements PauseResumeIMixin {
 
     @Inject(method = "tick(Z)V", at = @At("HEAD"))
     private void alwaysTick(boolean paused, CallbackInfo ci) {
-        if (ModConfig.get().musicDontPause && paused) {
+        if (ModConfig.get().general.misc.musicDontPause && paused) {
             this.tick();
         }
     }

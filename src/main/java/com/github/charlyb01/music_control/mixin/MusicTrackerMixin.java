@@ -95,12 +95,12 @@ public abstract class MusicTrackerMixin {
             final ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(id));
             final ArrayList<Music> creativeMusics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.CREATIVE.getSound().value().getId()));
 
-            if (!ModConfig.get().creativeFallback && creative) {
+            if (!ModConfig.get().general.fallback.creative && creative) {
                 MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(creativeMusics, this.random);
             } else if (musics.isEmpty()) {
                 // this means the current event corresponds to
                 // an event with no music.
-                if (ModConfig.get().musicFallback) {
+                if (ModConfig.get().general.fallback.enabled) {
                     // we should fallback on default game/creative music
                     if (creative) {
                         MusicControlClient.currentMusic = creativeMusics.isEmpty()
@@ -174,7 +174,7 @@ public abstract class MusicTrackerMixin {
 
     @Unique
     private void displayMusic() {
-        if (ModConfig.get().displayAtStart || MusicControlClient.categoryChanged) {
+        if (ModConfig.get().cosmetics.display.atMusicStart || MusicControlClient.categoryChanged) {
             printMusic();
         }
 
@@ -202,7 +202,7 @@ public abstract class MusicTrackerMixin {
             }
             this.displayPrompted = false;
 
-            if (ModConfig.get().displayRemainingSeconds) {
+            if (ModConfig.get().cosmetics.display.remainingSeconds) {
                 double remaining = this.timeUntilNextSong / 20.0;
                 Utils.print(this.client, Text.translatable("music.no_playing_with_time", String.valueOf(remaining)));
             } else {
@@ -228,7 +228,7 @@ public abstract class MusicTrackerMixin {
                 MusicControlClient.previousMusic = false;
                 printPaused();
             } else {
-                this.displayPrompted = ModConfig.get().displayAtStart;
+                this.displayPrompted = ModConfig.get().cosmetics.display.atMusicStart;
                 this.play(null);
             }
         }
@@ -243,7 +243,7 @@ public abstract class MusicTrackerMixin {
             if (MusicControlClient.isPaused) {
                 printPaused();
             } else {
-                this.displayPrompted = ModConfig.get().displayAtStart;
+                this.displayPrompted = ModConfig.get().cosmetics.display.atMusicStart;
                 this.play(this.client.getMusicType());
             }
         }

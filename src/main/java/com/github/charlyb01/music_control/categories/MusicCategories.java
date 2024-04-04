@@ -128,7 +128,7 @@ public class MusicCategories {
         Identifier music;
         int size = musics.size();
 
-        while (MusicCategories.PLAYED_MUSICS.size() >= Math.min(ModConfig.get().musicQueue, size)) {
+        while (MusicCategories.PLAYED_MUSICS.size() >= Math.min(ModConfig.get().general.misc.musicQueue, size)) {
             MusicCategories.PLAYED_MUSICS.poll();
         }
 

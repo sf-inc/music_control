@@ -1,10 +1,8 @@
 package com.github.charlyb01.music_control;
 
-import blue.endless.jankson.JsonArray;
-import blue.endless.jankson.JsonObject;
-import blue.endless.jankson.JsonPrimitive;
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.SharedConstants;
@@ -32,6 +30,7 @@ public class ResourcePackUtils {
     protected static Path RESOURCEPACK_PATH = null;
     protected static Path ASSETS_PATH = null;
     protected static boolean WAS_CREATED = false;
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static boolean exists() {
         return MinecraftClient.getInstance().getResourcePackManager().getNames().stream().anyMatch(
@@ -65,23 +64,23 @@ public class ResourcePackUtils {
             JsonArray soundsJson = new JsonArray();
             for (Music music : musics) {
                 JsonObject musicJson = new JsonObject();
-                musicJson.put("name", JsonPrimitive.of(music.getIdentifier().toString()));
-                musicJson.put("stream", JsonPrimitive.of(true));
+                musicJson.addProperty("name", music.getIdentifier().toString());
+                musicJson.addProperty("stream", true);
 
                 soundsJson.add(musicJson);
             }
 
             JsonObject soundEventJson = new JsonObject();
-            soundEventJson.put("category", JsonPrimitive.of("music"));
-            soundEventJson.put("replace", JsonPrimitive.of(true));
-            soundEventJson.put("sounds", soundsJson);
+            soundEventJson.addProperty("category", "music");
+            soundEventJson.addProperty("replace", true);
+            soundEventJson.add("sounds", soundsJson);
 
-            jsonObjects.get(event.getNamespace()).put(event.getPath(), soundEventJson);
+            jsonObjects.get(event.getNamespace()).add(event.getPath(), soundEventJson);
         });
 
         fileWriters.forEach((String namespace, FileWriter fileWriter) -> {
             try (PrintWriter out = new PrintWriter(fileWriter)) {
-                out.write(jsonObjects.get(namespace).toJson(false, true));
+                out.write(GSON.toJson(jsonObjects.get(namespace)));
                 out.flush();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -157,12 +156,12 @@ public class ResourcePackUtils {
 
                 JsonObject data = new JsonObject();
                 JsonObject pack = new JsonObject();
-                pack.put("pack_format", JsonPrimitive.of(Long.valueOf(SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES))));
-                pack.put("description", JsonPrimitive.of(Text.translatable("music_control.metadata.description").getString()));
-                data.put("pack", pack);
+                pack.addProperty("pack_format", SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES));
+                pack.addProperty("description", Text.translatable("music_control.metadata.description").getString());
+                data.add("pack", pack);
 
                 try (PrintWriter out = new PrintWriter(new FileWriter(path.toFile()))) {
-                    out.write(data.toJson(false, true));
+                    out.write(GSON.toJson(data));
                     out.flush();
                 } catch (Exception e) {
                     e.printStackTrace();

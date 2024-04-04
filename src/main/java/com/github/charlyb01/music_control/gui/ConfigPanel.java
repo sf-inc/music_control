@@ -90,14 +90,14 @@ public class ConfigPanel extends WBox {
         buttonsBox.add(enableButton, 100, 20);
         buttonsBox.add(createButton, 100, 20);
 
-        this.resourcePackCard.add(text, ModConfig.get().width, 20);
-        this.resourcePackCard.add(buttonsBox, ModConfig.get().width, 20);
+        this.resourcePackCard.add(text, ModConfig.get().cosmetics.gui.width, 20);
+        this.resourcePackCard.add(buttonsBox, ModConfig.get().cosmetics.gui.width, 20);
     }
 
     private void setupConfigMusicPanel() {
         final WBox listsBox = new WBox(Axis.HORIZONTAL);
-        final int outerWidth = ModConfig.get().width;
-        final int innerWidth = ModConfig.get().width - 4;
+        final int outerWidth = ModConfig.get().cosmetics.gui.width;
+        final int innerWidth = ModConfig.get().cosmetics.gui.width - 4;
 
         BiConsumer<Identifier, LongTextButton> onSoundClicked = (Identifier identifier, LongTextButton button) -> {
             if (hoveredButton != null) {
@@ -138,7 +138,7 @@ public class ConfigPanel extends WBox {
         this.musicConfigCard.add(
                 listsBox,
                 outerWidth,
-                ModConfig.get().height - 20
+                ModConfig.get().cosmetics.gui.height - 20
         );
         this.musicConfigCard.add(buttonBox, outerWidth, 20);
     }
