@@ -6,7 +6,6 @@ import com.github.charlyb01.music_control.gui.components.TextFilter;
 import com.github.charlyb01.music_control.gui.components.WFilterListPanel;
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class ButtonListPanel extends WBox {
 
         this.items.runFilter((id) -> {
             String raw = id.toString();
-            String evaluated = Text.translatable(raw).getString();
+            String evaluated = Music.getTranslatedText(id).getString();
             String evaluatedLower = evaluated.toLowerCase();
             String path = id.getPath();
             String namespace = id.getNamespace();
