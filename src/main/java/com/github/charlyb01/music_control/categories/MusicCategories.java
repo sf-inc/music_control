@@ -1,8 +1,8 @@
 package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
-import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.client.SoundEventBiome;
+import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.Sound;
@@ -64,15 +64,14 @@ public class MusicCategories {
 
         for (Identifier eventIdentifier : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(eventIdentifier) != null) {
-
                 List<SoundContainer<Sound>> sounds = ((SoundSetAccessor) client.getSoundManager().get(eventIdentifier)).getSounds();
                 String namespace = eventIdentifier.getNamespace();
                 String path = eventIdentifier.getPath();
 
-                if (!path.contains("music"))
-                    continue;
+                if (!path.contains("music")) continue;
 
                 for (SoundContainer<Sound> soundContainer : sounds) {
+                    if (!(soundContainer instanceof Sound)) continue;
 
                     Identifier musicIdentifier = soundContainer.getSound(random).getIdentifier();
                     Music music = new Music(musicIdentifier);
