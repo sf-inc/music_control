@@ -1,34 +1,20 @@
 package com.github.charlyb01.music_control.client;
 
-import net.fabricmc.fabric.impl.biome.modification.BuiltInRegistryKeys;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 public class SoundEventBiome {
     public static final HashMap<RegistryKey<Biome>, SoundEvent> BIOME_MUSIC_MAP = new HashMap<>();
     public static final HashMap<Identifier, RegistryKey<Biome>> NAME_BIOME_MAP = new HashMap<>();
 
     public static void init() {
-        initNameBiomeMap();
         registerMissingBiomeSoundEvents();
-    }
-
-    private static void initNameBiomeMap() {
-        RegistryWrapper<Biome> biomeRegistryWrapper = (RegistryWrapper<Biome>) BuiltInRegistryKeys.biomeRegistryWrapper();
-        if (biomeRegistryWrapper != null) {
-            biomeRegistryWrapper.streamEntries().forEach(biomeReference -> {
-                Optional<RegistryKey<Biome>> registryKey = biomeReference.getKey();
-                registryKey.ifPresent(biomeRegistryKey -> NAME_BIOME_MAP.put(biomeRegistryKey.getValue(), biomeRegistryKey));
-            });
-        }
     }
 
     private static void registerMissingBiomeSoundEvents() {
