@@ -3,17 +3,21 @@ package com.github.charlyb01.music_control.mixin;
 import com.github.charlyb01.music_control.Utils;
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.categories.MusicCategories;
+import com.github.charlyb01.music_control.categories.MusicIdentifier;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.*;
+import net.minecraft.client.sound.MusicTracker;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.sound.SoundInstance;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -49,7 +53,7 @@ public abstract class MusicTrackerMixin {
     @Inject(method = "play", at = @At("HEAD"), cancellable = true)
     private void playMusic(MusicSound type, CallbackInfo ci) {
 
-        final Identifier id = type != null ? type.getSound().value().getId() : null;
+        final Identifier eventId = type != null ? type.getSound().value().getId() : null;
 
         MusicControlClient.inCustomTracking = false;
 
@@ -87,16 +91,16 @@ public abstract class MusicTrackerMixin {
         } else if (MusicControlClient.loopMusic) {
             // loop mode is on
             // do nothing, use the same music
-        } else if (id != null
+        } else if (eventId != null
                 && MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
-                && Music.MUSIC_BY_EVENT.containsKey(id)) {
+                && Music.MUSIC_BY_EVENT.containsKey(eventId)) {
             // normal procedure
             boolean creative = this.client.player != null && this.client.player.isCreative();
-            final ArrayList<Music> musics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(id));
-            final ArrayList<Music> creativeMusics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.CREATIVE.getSound().value().getId()));
+            final ArrayList<Music> musics = MusicIdentifier.getListFromEvent(eventId);
+            final ArrayList<Music> creativeMusics = MusicIdentifier.getListFromEvent(SoundEvents.MUSIC_CREATIVE.value().getId());
 
             if (!ModConfig.get().general.fallback.creative && creative) {
-                MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(creativeMusics, this.random);
+                MusicControlClient.currentMusic = MusicIdentifier.getFromList(creativeMusics, this.random);
             } else if (musics.isEmpty()) {
                 // this means the current event corresponds to
                 // an event with no music.
@@ -105,12 +109,12 @@ public abstract class MusicTrackerMixin {
                     if (creative) {
                         MusicControlClient.currentMusic = creativeMusics.isEmpty()
                                 ? EMPTY_MUSIC_ID
-                                : MusicCategories.getRandomMusicIdentifier(creativeMusics, this.random);
+                                : MusicIdentifier.getFromList(creativeMusics, this.random);
                     } else {
-                        final ArrayList<Music> gameMusics = new ArrayList<>(Music.MUSIC_BY_EVENT.get(MusicType.GAME.getSound().value().getId()));
+                        final ArrayList<Music> gameMusics = MusicIdentifier.getListFromEvent(SoundEvents.MUSIC_GAME.value().getId());
                         MusicControlClient.currentMusic = gameMusics.isEmpty()
                                 ? EMPTY_MUSIC_ID
-                                : MusicCategories.getRandomMusicIdentifier(gameMusics, this.random);
+                                : MusicIdentifier.getFromList(gameMusics, this.random);
                     }
                 } else {
                     // don't play music
@@ -118,12 +122,12 @@ public abstract class MusicTrackerMixin {
                 }
             } else {
                 // play a music from current event
-                MusicControlClient.currentMusic = MusicCategories.getRandomMusicIdentifier(musics, this.random);
+                MusicControlClient.currentMusic = MusicIdentifier.getFromList(musics, this.random);
             }
         } else {
             // just randomly pick one
             // from current category
-            MusicControlClient.currentMusic = MusicCategories.getMusicIdentifier(this.random);
+            MusicControlClient.currentMusic = MusicIdentifier.getFromCategory(this.random);
         }
 
         // music in no event and no/default namespace

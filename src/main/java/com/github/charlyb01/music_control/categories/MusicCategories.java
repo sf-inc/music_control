@@ -2,7 +2,6 @@ package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.client.SoundEventBiome;
-import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.Sound;
@@ -119,32 +118,5 @@ public class MusicCategories {
         }
 
         MusicControlClient.currentCategory = CATEGORIES.get(index);
-    }
-
-    public static Identifier getRandomMusicIdentifier(final ArrayList<Music> musics, final Random random) {
-        if (musics.isEmpty()) return null;
-
-        Identifier music;
-        int size = musics.size();
-
-        while (MusicCategories.PLAYED_MUSICS.size() >= Math.min(ModConfig.get().general.misc.musicQueue, size)) {
-            MusicCategories.PLAYED_MUSICS.poll();
-        }
-
-        do {
-            music = musics.get(random.nextInt(size)).getIdentifier();
-        } while (MusicCategories.PLAYED_MUSICS.contains(music) && size > MusicCategories.PLAYED_MUSICS.size());
-
-        MusicCategories.PLAYED_MUSICS.add(music);
-        return music;
-    }
-
-    public static Identifier getMusicIdentifier(final Random random) {
-        if (MUSIC_BY_NAMESPACE.containsKey(MusicControlClient.currentCategory)) {
-            ArrayList<Music> musics = MUSIC_BY_NAMESPACE.get(MusicControlClient.currentCategory);
-            return getRandomMusicIdentifier(musics, random);
-        } else {
-            return null;
-        }
     }
 }
