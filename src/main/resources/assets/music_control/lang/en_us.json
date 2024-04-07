@@ -168,8 +168,9 @@
     "minecraft:music.creative": "Creative",
     "minecraft:music.credits": "Credits",
     "minecraft:music.dragon": "Dragon",
+    "minecraft:music.game": "Overworld",
+    "minecraft:music.nether": "Nether",
     "minecraft:music.end": "End",
-    "minecraft:music.game": "Game",
     "minecraft:music.menu": "Menu",
     "minecraft:music.under_water": "Under Water",
 

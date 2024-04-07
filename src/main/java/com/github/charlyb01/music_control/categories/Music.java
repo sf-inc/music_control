@@ -88,12 +88,12 @@ public class Music implements Comparable<Music> {
 
         // Get official biome translation for biomes' music
         // And format it
-        } else if (path.startsWith("music.overworld") || path.startsWith("music.nether")) {
+        } else if (MusicIdentifier.isBiome(identifier)) {
             TRANSLATION_CACHE.put(identifier, Text.translatable(
                     "music.format.biome", Text.translatable(
                             "biome.minecraft." + path.split("\\.", 3)[2])));
         // Format disc
-        } else if (path.startsWith("music_disc")) {
+        } else if (MusicIdentifier.isDisc(identifier)) {
             TRANSLATION_CACHE.put(identifier, Text.translatable(
                     "music.format.disc", Text.translatable(path)));
         }

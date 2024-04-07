@@ -58,4 +58,15 @@ public class MusicIdentifier {
             return null;
         }
     }
+
+    public static boolean isBiome(final Identifier identifier) {
+        String path = identifier.getPath();
+        return path.startsWith("music.overworld.")
+                || path.startsWith("music.nether.")
+                || path.startsWith("music.end.");
+    }
+
+    public static boolean isDisc(final Identifier identifier) {
+        return identifier.getPath().startsWith("music_disc");
+    }
 }

@@ -56,6 +56,14 @@ public class SoundEventBiome {
         registerReference("music.overworld.deep_cold_ocean");
         registerReference("music.overworld.frozen_ocean");
         registerReference("music.overworld.deep_frozen_ocean");
+
+        registerReference("music.nether");
+
+        registerReference("music.end.the_end");
+        registerReference("music.end.end_highlands");
+        registerReference("music.end.end_midlands");
+        registerReference("music.end.small_end_islands");
+        registerReference("music.end.end_barrens");
     }
 
     private static void registerReference(final String id) {
