@@ -22,9 +22,9 @@
     "text.autoconfig.music_control.option.general.timer.maxDelay": "Maximum delay between music [s]",
 
     "text.autoconfig.music_control.option.general.fallback": "Music Fallback",
-    "text.autoconfig.music_control.option.general.fallback.enabled": "Enable game music fallback",
-    "text.autoconfig.music_control.option.general.fallback.enabled.@Tooltip[0]": "Shall we try to play \"game\" music",
-    "text.autoconfig.music_control.option.general.fallback.enabled.@Tooltip[1]": "when trying to play an empty event",
+    "text.autoconfig.music_control.option.general.fallback.dimension": "Enable dimension music fallback",
+    "text.autoconfig.music_control.option.general.fallback.dimension.@Tooltip[0]": "Shall we try to play dimension music",
+    "text.autoconfig.music_control.option.general.fallback.dimension.@Tooltip[1]": "when trying to play an empty event",
     "text.autoconfig.music_control.option.general.fallback.creative": "Creative music is played on fallback",
     "text.autoconfig.music_control.option.general.fallback.creative.@Tooltip[0]": "Shall we try to play \"creative\" music",
     "text.autoconfig.music_control.option.general.fallback.creative.@Tooltip[1]": "when trying to play an empty event in creative",

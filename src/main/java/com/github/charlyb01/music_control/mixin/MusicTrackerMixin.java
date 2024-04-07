@@ -14,7 +14,6 @@ import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
@@ -29,7 +28,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 
 import static com.github.charlyb01.music_control.categories.Music.EMPTY_MUSIC;
-import static com.github.charlyb01.music_control.categories.Music.EMPTY_MUSIC_ID;
 
 @Mixin(MusicTracker.class)
 public abstract class MusicTrackerMixin {
@@ -97,29 +95,12 @@ public abstract class MusicTrackerMixin {
             // normal procedure
             boolean creative = this.client.player != null && this.client.player.isCreative();
             final ArrayList<Music> musics = MusicIdentifier.getListFromEvent(eventId);
-            final ArrayList<Music> creativeMusics = MusicIdentifier.getListFromEvent(SoundEvents.MUSIC_CREATIVE.value().getId());
 
-            if (!ModConfig.get().general.fallback.creative && creative) {
-                MusicControlClient.currentMusic = MusicIdentifier.getFromList(creativeMusics, this.random);
-            } else if (musics.isEmpty()) {
+            if (musics.isEmpty()) {
                 // this means the current event corresponds to
                 // an event with no music.
-                if (ModConfig.get().general.fallback.enabled) {
-                    // we should fallback on default game/creative music
-                    if (creative) {
-                        MusicControlClient.currentMusic = creativeMusics.isEmpty()
-                                ? EMPTY_MUSIC_ID
-                                : MusicIdentifier.getFromList(creativeMusics, this.random);
-                    } else {
-                        final ArrayList<Music> gameMusics = MusicIdentifier.getListFromEvent(SoundEvents.MUSIC_GAME.value().getId());
-                        MusicControlClient.currentMusic = gameMusics.isEmpty()
-                                ? EMPTY_MUSIC_ID
-                                : MusicIdentifier.getFromList(gameMusics, this.random);
-                    }
-                } else {
-                    // don't play music
-                    MusicControlClient.currentMusic = EMPTY_MUSIC_ID;
-                }
+                MusicControlClient.currentMusic = MusicIdentifier.getFallback(
+                        this.client.world.getRegistryKey(), creative, this.random);
             } else {
                 // play a music from current event
                 MusicControlClient.currentMusic = MusicIdentifier.getFromList(musics, this.random);

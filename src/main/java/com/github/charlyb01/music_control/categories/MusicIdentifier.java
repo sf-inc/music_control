@@ -2,8 +2,11 @@ package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -57,6 +60,31 @@ public class MusicIdentifier {
         } else {
             return null;
         }
+    }
+
+    public static Identifier getFallback(final RegistryKey<World> world, final boolean creative, final Random random) {
+        ArrayList<Music> musics = null;
+        if (ModConfig.get().general.fallback.dimension) {
+            Identifier eventId;
+            if (world.equals(World.NETHER)) {
+                eventId = new Identifier("music.nether");
+            } else if (world.equals(World.END)) {
+                eventId = SoundEvents.MUSIC_END.value().getId();
+            } else {
+                eventId = SoundEvents.MUSIC_GAME.value().getId();
+            }
+            musics = getListFromEvent(eventId);
+        }
+
+        if ((musics == null || musics.isEmpty())
+                && ModConfig.get().general.fallback.creative
+                && creative) {
+            musics = getListFromEvent(SoundEvents.MUSIC_CREATIVE.value().getId());
+        }
+
+        return musics == null || musics.isEmpty()
+                ? EMPTY_MUSIC_ID
+                : MusicIdentifier.getFromList(musics, random);
     }
 
     public static boolean isBiome(final Identifier identifier) {

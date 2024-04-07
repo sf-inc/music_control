@@ -22,7 +22,7 @@ public class GeneralConfig implements ConfigData {
 
     public static class Fallback {
         @ConfigEntry.Gui.Tooltip(count = 2)
-        public boolean enabled = true;
+        public boolean dimension = true;
         @ConfigEntry.Gui.Tooltip(count = 3)
         public boolean creative = true;
     }
