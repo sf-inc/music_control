@@ -92,10 +92,14 @@ public class Music implements Comparable<Music> {
             TRANSLATION_CACHE.put(identifier, Text.translatable(
                     "music.format.biome", Text.translatable(
                             "biome.minecraft." + path.split("\\.", 3)[2])));
+        // Format dimension
+        } else if (MusicIdentifier.isDimension(identifier)) {
+            TRANSLATION_CACHE.put(identifier, Text.translatable(
+                    "music.format.dimension", Text.translatable(path)));
         // Format disc
         } else if (MusicIdentifier.isDisc(identifier)) {
             TRANSLATION_CACHE.put(identifier, Text.translatable(
-                    "music.format.disc", Text.translatable(path)));
+                "music.format.disc", Text.translatable(path)));
         }
 
         return TRANSLATION_CACHE.getOrDefault(identifier, Text.translatable(idString));

@@ -73,6 +73,7 @@
     "music.category.disc": "Discs",
 
     "music.format.category": "%s / %s",
+    "music.format.dimension": "Dimension: %s",
     "music.format.biome": "Biome: %s",
     "music.format.disc": "Disc: %s",
 
@@ -168,11 +169,12 @@
     "minecraft:music.creative": "Creative",
     "minecraft:music.credits": "Credits",
     "minecraft:music.dragon": "Dragon",
-    "minecraft:music.game": "Overworld",
-    "minecraft:music.nether": "Nether",
-    "minecraft:music.end": "End",
     "minecraft:music.menu": "Menu",
     "minecraft:music.under_water": "Under Water",
+
+    "music.game": "Overworld",
+    "music.nether": "Nether",
+    "music.end": "End",
 
     "music_disc.blocks": "Blocks",
     "music_disc.cat": "Cat",

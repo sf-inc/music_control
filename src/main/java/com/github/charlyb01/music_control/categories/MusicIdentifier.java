@@ -87,6 +87,13 @@ public class MusicIdentifier {
                 : MusicIdentifier.getFromList(musics, random);
     }
 
+    public static boolean isDimension(final Identifier identifier) {
+        String path = identifier.getPath();
+        return path.contentEquals("music.game")
+                || path.contentEquals("music.nether")
+                || path.contentEquals("music.end");
+    }
+
     public static boolean isBiome(final Identifier identifier) {
         String path = identifier.getPath();
         return path.startsWith("music.overworld.")
