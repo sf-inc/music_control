@@ -2,8 +2,10 @@ package com.github.charlyb01.music_control;
 
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
-import com.google.gson.*;
-import com.terraformersmc.modmenu.util.mod.fabric.FabricIconHandler;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.SharedConstants;
@@ -21,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 
+import static com.github.charlyb01.music_control.categories.Music.EVENTS_OF_EVENT;
 import static com.github.charlyb01.music_control.categories.Music.MUSIC_BY_EVENT;
 import static com.github.charlyb01.music_control.categories.MusicCategories.NAMESPACES;
 
@@ -61,22 +64,32 @@ public class ResourcePackUtils {
             }
         }
 
-        MUSIC_BY_EVENT.forEach((Identifier event, HashSet<Music> musics) -> {
-            JsonArray soundsJson = new JsonArray();
+        MUSIC_BY_EVENT.forEach((Identifier eventId, HashSet<Music> musics) -> {
+            JsonArray sounds = new JsonArray();
             for (Music music : musics) {
-                JsonObject musicJson = new JsonObject();
-                musicJson.addProperty("name", music.getIdentifier().toString());
-                musicJson.addProperty("stream", true);
+                JsonObject fileSound = new JsonObject();
+                fileSound.addProperty("name", music.getIdentifier().toString());
+                fileSound.addProperty("stream", true);
 
-                soundsJson.add(musicJson);
+                sounds.add(fileSound);
+            }
+            HashSet<Identifier> events = EVENTS_OF_EVENT.get(eventId);
+            if (events != null) {
+                for (Identifier otherEventId : events) {
+                    JsonObject eventSound = new JsonObject();
+                    eventSound.addProperty("name", otherEventId.getPath());
+                    eventSound.addProperty("type", "event");
+
+                    sounds.add(eventSound);
+                }
             }
 
-            JsonObject soundEventJson = new JsonObject();
-            soundEventJson.addProperty("category", "music");
-            soundEventJson.addProperty("replace", true);
-            soundEventJson.add("sounds", soundsJson);
+            JsonObject soundEvent = new JsonObject();
+            soundEvent.addProperty("category", "music");
+            soundEvent.addProperty("replace", true);
+            soundEvent.add("sounds", sounds);
 
-            jsonObjects.get(event.getNamespace()).add(event.getPath(), soundEventJson);
+            jsonObjects.get(eventId.getNamespace()).add(eventId.getPath(), soundEvent);
         });
 
         fileWriters.forEach((String namespace, FileWriter fileWriter) -> {
