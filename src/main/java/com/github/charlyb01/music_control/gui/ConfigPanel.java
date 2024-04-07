@@ -23,9 +23,9 @@ import java.util.function.Consumer;
 public class ConfigPanel extends WBox {
     protected static boolean isMusic = false;
 
-    protected LongTextButton hoveredButton;
+    protected LongTextButton selectedButton;
     protected SoundConfigPanel soundConfigPanel;
-     protected WCardPanel cardPanel = new WCardPanel();
+    protected WCardPanel cardPanel = new WCardPanel();
     protected WBox resourcePackCard = new WBox(Axis.VERTICAL);
     protected WBox musicConfigCard = new WBox(Axis.VERTICAL);
     protected Screen previousScreen = null;
@@ -100,27 +100,30 @@ public class ConfigPanel extends WBox {
         final int innerWidth = ModConfig.get().cosmetics.gui.width - 4;
 
         BiConsumer<Identifier, LongTextButton> onSoundClicked = (Identifier identifier, LongTextButton button) -> {
-            if (hoveredButton != null) {
-                hoveredButton.setEnabled(true);
+            if (this.selectedButton != null) {
+                this.selectedButton.setEnabled(true);
             }
-            hoveredButton = button;
-            hoveredButton.setEnabled(false);
+            this.selectedButton = button;
+            this.selectedButton.setEnabled(false);
 
-            if (soundConfigPanel != null) {
-                listsBox.remove(soundConfigPanel);
+            if (this.soundConfigPanel != null) {
+                listsBox.remove(this.soundConfigPanel);
             }
-            soundConfigPanel = new SoundConfigPanel(identifier, isMusic, innerWidth / 2);
-            listsBox.add(soundConfigPanel);
-            soundConfigPanel.setHost(listsBox.getHost());
+            this.soundConfigPanel = new SoundConfigPanel(identifier, isMusic, innerWidth / 2);
+            listsBox.add(this.soundConfigPanel);
+            this.soundConfigPanel.setHost(listsBox.getHost());
             listsBox.layout();
         };
         Consumer<Boolean> onToggle = (Boolean isMusic) -> {
             ConfigPanel.isMusic = isMusic;
 
             if (soundConfigPanel != null) {
-                listsBox.remove(soundConfigPanel);
-                hoveredButton = null;
-                soundConfigPanel = null;
+                listsBox.remove(this.soundConfigPanel);
+                this.soundConfigPanel = null;
+                if (this.selectedButton != null) {
+                    this.selectedButton.setEnabled(true);
+                    this.selectedButton = null;
+                }
             }
         };
 
