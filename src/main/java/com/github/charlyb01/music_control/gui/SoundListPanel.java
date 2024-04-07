@@ -31,20 +31,20 @@ public class SoundListPanel extends WBox {
         ButtonListPanel musicListPanel = new ButtonListPanel(musics, onMusicClicked, width, ModConfig.get().cosmetics.gui.height - 20, true);
         ButtonListPanel eventListPanel = new ButtonListPanel(EVENTS, onEventClicked, width, ModConfig.get().cosmetics.gui.height - 20, true);
         WCardPanel listPanel = new WCardPanel();
-        listPanel.add(musicListPanel);
         listPanel.add(eventListPanel);
+        listPanel.add(musicListPanel);
         if (isToggled) {
-            listPanel.setSelectedCard(eventListPanel);
+            listPanel.setSelectedCard(musicListPanel);
         }
 
         WToggleButton toggleButton = new WToggleButton(Text.translatable("gui.music_control.toggle.musicEvent"));
         toggleButton.setToggle(isToggled);
-        toggleButton.setOnToggle((Boolean isEvent) -> {
-            onToggle.accept(isEvent);
-            if (isEvent) {
-                listPanel.setSelectedCard(eventListPanel);
-            } else {
+        toggleButton.setOnToggle((Boolean isMusic) -> {
+            onToggle.accept(isMusic);
+            if (isMusic) {
                 listPanel.setSelectedCard(musicListPanel);
+            } else {
+                listPanel.setSelectedCard(eventListPanel);
             }
         });
 

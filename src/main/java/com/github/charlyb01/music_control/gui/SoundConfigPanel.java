@@ -21,19 +21,12 @@ public class SoundConfigPanel extends WBox {
     final ButtonListPanel addListPanel;
     final ButtonListPanel removeListPanel;
 
-    public SoundConfigPanel(final Identifier sound, final boolean isEvent, final int width) {
+    public SoundConfigPanel(final Identifier sound, final boolean isMusic, final int width) {
         super(Axis.VERTICAL);
 
         ArrayList<Identifier> soundToAdd = new ArrayList<>();
         ArrayList<Identifier> soundToRemove = new ArrayList<>();
-        if (isEvent) {
-            MUSIC_BY_EVENT.get(sound).forEach((Music music) -> soundToRemove.add(music.getIdentifier()));
-            for (Music music : MUSIC_BY_NAMESPACE.get(ALL_MUSICS)) {
-                if (!soundToRemove.contains(music.getIdentifier())) {
-                    soundToAdd.add(music.getIdentifier());
-                }
-            }
-        } else {
+        if (isMusic) {
             Music music = Music.getMusicFromIdentifier(sound);
             if (music == null) {
                 addListPanel = null;
@@ -47,21 +40,28 @@ public class SoundConfigPanel extends WBox {
                     soundToAdd.add(event);
                 }
             }
+        } else {
+            MUSIC_BY_EVENT.get(sound).forEach((Music music) -> soundToRemove.add(music.getIdentifier()));
+            for (Music music : MUSIC_BY_NAMESPACE.get(ALL_MUSICS)) {
+                if (!soundToRemove.contains(music.getIdentifier())) {
+                    soundToAdd.add(music.getIdentifier());
+                }
+            }
         }
 
         BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
             button.setEnabled(false);
             soundToAdd.remove(soundClicked);
             soundToRemove.add(soundClicked);
-            if (isEvent) {
-                Music music = Music.getMusicFromIdentifier(soundClicked);
-                if (music != null) {
-                    music.addEvent(sound);
-                }
-            } else {
+            if (isMusic) {
                 Music music = Music.getMusicFromIdentifier(sound);
                 if (music != null) {
                     music.addEvent(soundClicked);
+                }
+            } else {
+                Music music = Music.getMusicFromIdentifier(soundClicked);
+                if (music != null) {
+                    music.addEvent(sound);
                 }
             }
         };
@@ -69,15 +69,15 @@ public class SoundConfigPanel extends WBox {
             button.setEnabled(false);
             soundToRemove.remove(soundClicked);
             soundToAdd.add(soundClicked);
-            if (isEvent) {
-                Music music = Music.getMusicFromIdentifier(soundClicked);
-                if (music != null) {
-                    music.removeEvent(sound);
-                }
-            } else {
+            if (isMusic) {
                 Music music = Music.getMusicFromIdentifier(sound);
                 if (music != null) {
                     music.removeEvent(soundClicked);
+                }
+            } else {
+                Music music = Music.getMusicFromIdentifier(soundClicked);
+                if (music != null) {
+                    music.removeEvent(sound);
                 }
             }
         };

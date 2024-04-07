@@ -18,7 +18,6 @@ import java.util.function.Consumer;
 public class PlayPanel extends WBox {
     protected final static Text NONE_TEXT = Text.translatable("music.none");
     protected final static String SELECTED_KEY = "gui.music_control.label.selected";
-    protected static boolean isEvent = false;
 
     protected LongTextButton hoveredButton;
 
@@ -54,14 +53,13 @@ public class PlayPanel extends WBox {
             }
         };
 
-        Consumer<Boolean> onToggle = (Boolean isEvent) -> {
-            PlayPanel.isEvent = isEvent;
+        Consumer<Boolean> onToggle = (Boolean isMusic) -> {
             if (hoveredButton != null) {
                 hoveredButton.requestFocus();
             }
         };
 
-        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().cosmetics.gui.width, PlayPanel.isEvent));
+        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().cosmetics.gui.width, true));
         this.add(selected, ModConfig.get().cosmetics.gui.width, 20);
     }
 }
