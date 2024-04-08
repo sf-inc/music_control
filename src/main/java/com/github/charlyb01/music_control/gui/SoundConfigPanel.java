@@ -29,8 +29,8 @@ public class SoundConfigPanel extends WBox {
         if (isMusic) {
             Music music = Music.getMusicFromIdentifier(sound);
             if (music == null) {
-                addListPanel = null;
-                removeListPanel = null;
+                this.addListPanel = null;
+                this.removeListPanel = null;
                 return;
             }
 
@@ -82,20 +82,20 @@ public class SoundConfigPanel extends WBox {
             }
         };
 
-        addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20, true);
-        removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20, true);
+        this.addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20, true);
+        this.removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20, true);
         
         WCardPanel listPanel = new WCardPanel();
-        listPanel.add(removeListPanel);
-        listPanel.add(addListPanel);
+        listPanel.add(this.removeListPanel);
+        listPanel.add(this.addListPanel);
 
         WToggleButton toggleButton = new WToggleButton(Text.translatable("gui.music_control.toggle.removeAdd"));
         toggleButton.setOnToggle((Boolean doAdd) -> {
             if (doAdd) {
-                addListPanel.layout();
+                this.addListPanel.layout();
                 listPanel.setSelectedCard(addListPanel);
             } else {
-                removeListPanel.layout();
+                this.removeListPanel.layout();
                 listPanel.setSelectedCard(removeListPanel);
             }
         });
@@ -107,9 +107,11 @@ public class SoundConfigPanel extends WBox {
     @Override
     public void setHost(GuiDescription host) {
         super.setHost(host);
-        if (addListPanel != null)
-            addListPanel.setHost(host);
-        if (removeListPanel != null)
-            removeListPanel.setHost(host);
+        if (this.addListPanel != null) {
+            this.addListPanel.setHost(host);
+        }
+        if (this.removeListPanel != null) {
+            this.removeListPanel.setHost(host);
+        }
     }
 }

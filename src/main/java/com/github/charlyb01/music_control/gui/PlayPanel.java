@@ -39,23 +39,23 @@ public class PlayPanel extends WBox {
                 selected.setText(Text.translatable(SELECTED_KEY, Music.getTranslatedText(identifier)));
             }
 
-            if (hoveredButton != null) {
-                hoveredButton.releaseFocus();
-                if (hoveredButton.equals(button)) {
-                    hoveredButton = null;
+            if (this.hoveredButton != null) {
+                this.hoveredButton.releaseFocus();
+                if (this.hoveredButton.equals(button)) {
+                    this.hoveredButton = null;
                 } else {
-                    hoveredButton = button;
-                    hoveredButton.requestFocus();
+                    this.hoveredButton = button;
+                    this.hoveredButton.requestFocus();
                 }
             } else {
-                hoveredButton = button;
-                hoveredButton.requestFocus();
+                this.hoveredButton = button;
+                this.hoveredButton.requestFocus();
             }
         };
 
         Consumer<Boolean> onToggle = (Boolean isMusic) -> {
-            if (hoveredButton != null) {
-                hoveredButton.requestFocus();
+            if (this.hoveredButton != null) {
+                this.hoveredButton.requestFocus();
             }
         };
 

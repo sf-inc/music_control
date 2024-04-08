@@ -26,7 +26,7 @@ public class WFilterListPanel<D, W extends WWidget> extends WListPanel<D, W> {
     }
 
     ArrayList<D> dataResult = new ArrayList<>();
-    for (var item : dataOrig) {
+    for (var item : this.dataOrig) {
       if (filter.apply(item)) {
         dataResult.add(item);
       }

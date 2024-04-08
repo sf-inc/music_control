@@ -44,8 +44,8 @@ public class TextFilter extends WBox {
         this.clearButton = new WButton(DEFAULT_CLEAR_TEXT);
         this.clearButton.setOnClick(() -> this.textField.setText(""));
 
-        this.add(textField);
-        this.add(clearButton);
+        this.add(this.textField);
+        this.add(this.clearButton);
 
         this.setSize(width > -1 ? width : getWidth(), height > -1 ? height : getHeight());
     }
