@@ -18,8 +18,8 @@ import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class SoundConfigPanel extends WBox {
 
-    final ButtonListPanel addListPanel;
-    final ButtonListPanel removeListPanel;
+    private ButtonListPanel addListPanel = null;
+    private ButtonListPanel removeListPanel = null;
 
     public SoundConfigPanel(final Identifier sound, final boolean isMusic, final int width) {
         super(Axis.VERTICAL);
@@ -29,8 +29,6 @@ public class SoundConfigPanel extends WBox {
         if (isMusic) {
             Music music = Music.getMusicFromIdentifier(sound);
             if (music == null) {
-                this.addListPanel = null;
-                this.removeListPanel = null;
                 return;
             }
 
@@ -50,7 +48,6 @@ public class SoundConfigPanel extends WBox {
         }
 
         BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
-            button.setEnabled(false);
             soundToAdd.remove(soundClicked);
             soundToRemove.add(soundClicked);
             if (isMusic) {
@@ -64,9 +61,10 @@ public class SoundConfigPanel extends WBox {
                     music.addEvent(sound);
                 }
             }
+            this.addListPanel.update();
+            this.layout();
         };
         BiConsumer<Identifier, LongTextButton> onRemoved = (Identifier soundClicked, LongTextButton button) -> {
-            button.setEnabled(false);
             soundToRemove.remove(soundClicked);
             soundToAdd.add(soundClicked);
             if (isMusic) {
@@ -80,6 +78,8 @@ public class SoundConfigPanel extends WBox {
                     music.removeEvent(sound);
                 }
             }
+            this.removeListPanel.update();
+            this.layout();
         };
 
         this.addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20, true);

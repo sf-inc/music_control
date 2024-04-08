@@ -17,6 +17,8 @@ public class ButtonListPanel extends WBox {
     private final WFilterListPanel<Identifier, LongTextButton> items;
     private final static int FILTER_HEIGHT = 20;
 
+    private final TextFilter filter;
+
     public ButtonListPanel(
             final List<Identifier> data,
             final BiConsumer<Identifier, LongTextButton> onClicked,
@@ -32,16 +34,23 @@ public class ButtonListPanel extends WBox {
         this.items = new WFilterListPanel<>(data, () -> new LongTextButton(width), configurator);
 
         if (withFilter && height > FILTER_HEIGHT) {
-            TextFilter filter = new TextFilter(this::runFilter, width, FILTER_HEIGHT);
-            this.add(filter, width, FILTER_HEIGHT);
+            this.filter = new TextFilter(this::runFilter, width, FILTER_HEIGHT);
+            this.add(this.filter, width, FILTER_HEIGHT);
             this.add(this.items, width, height - FILTER_HEIGHT);
             this.layout();
         } else {
+            this.filter = null;
             this.add(this.items, width, height);
         }
     }
 
-    public void runFilter(String s) {
+    public void update() {
+        if (this.filter != null) {
+            this.filter.runOnChange();
+        }
+    }
+
+    private void runFilter(String s) {
         if (s == null || s.isEmpty()) {
             this.items.runFilter(null);
             return;

@@ -17,7 +17,7 @@ public class TextFilter extends WBox {
     private final WTextField textField;
     private final WButton clearButton;
 
-    private void runOnChange() {
+    public void runOnChange() {
         var task = new Runnable() {
             @Override
             public void run() {
