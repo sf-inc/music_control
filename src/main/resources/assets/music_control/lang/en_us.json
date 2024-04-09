@@ -78,6 +78,8 @@
     "music.format.disc": "Disc: %s",
 
     "gui.component.filter.placeholder": "Input Keywords",
+    "gui.component.filter.tooltip": "/and keywords: must includes all keywords, instead of at least one",
+    "gui.component.filter.tooltip1": "@namespace #path $identifier !matchCase",
 
     "gui.music_control.panel.play": "Play",
     "gui.music_control.panel.history": "History",

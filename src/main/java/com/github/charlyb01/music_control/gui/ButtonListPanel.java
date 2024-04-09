@@ -13,10 +13,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class ButtonListPanel extends WBox {
-
     private final WFilterListPanel<Identifier, LongTextButton> items;
-    private final static int FILTER_HEIGHT = 20;
-
     private final TextFilter filter;
 
     public ButtonListPanel(
@@ -33,10 +30,10 @@ public class ButtonListPanel extends WBox {
         };
         this.items = new WFilterListPanel<>(data, () -> new LongTextButton(width), configurator);
 
-        if (withFilter && height > FILTER_HEIGHT) {
-            this.filter = new TextFilter(this::runFilter, width, FILTER_HEIGHT);
-            this.add(this.filter, width, FILTER_HEIGHT);
-            this.add(this.items, width, height - FILTER_HEIGHT);
+        if (withFilter && height > TextFilter.HEIGHT) {
+            this.filter = new TextFilter(this::runFilter, width);
+            this.add(this.filter, width, TextFilter.HEIGHT);
+            this.add(this.items, width, height - TextFilter.HEIGHT);
             this.layout();
         } else {
             this.filter = null;
