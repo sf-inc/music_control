@@ -83,18 +83,24 @@ public class ButtonListPanel extends WBox {
     }
 
     private boolean match(String word, Identifier id) {
-        char firstChar = word.charAt(0);
+        boolean inverted = word.charAt(0) == '!';
+        if (inverted && word.length() < 2) return false;
+
+        int firstCharIndex = inverted ? 1 : 0;
+        char firstChar = word.charAt(firstCharIndex);
+
+        boolean doesMatch;
         if (firstChar == '@') {
-            return id.getNamespace().contains(word.substring(1));
+            doesMatch = id.getNamespace().contains(word.substring(firstCharIndex + 1));
         } else if (firstChar == '#') {
-            return id.getPath().contains(word.substring(1));
-        } else if (firstChar == '$') {
-            return id.toString().contains(word.substring(1));
+            doesMatch = id.getPath().contains(word.substring(firstCharIndex + 1));
         } else {
             String evaluated = Music.getTranslatedText(id).getString();
-            return firstChar == '!'
-                    ? evaluated.contains(word.substring(1))
-                    : evaluated.toLowerCase().contains(word.toLowerCase());
+            doesMatch = firstChar == '$'
+                    ? evaluated.contains(word.substring(firstCharIndex + 1))
+                    : evaluated.toLowerCase().contains(word.substring(firstCharIndex).toLowerCase());
         }
+
+        return doesMatch ^ inverted;
     }
 }

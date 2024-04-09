@@ -79,7 +79,7 @@
     "music.format.disc": "Disc: %s",
 
     "gui.component.filter.placeholder": "Input Keywords",
-    "gui.component.filter.tooltip": "Try @namespace #path $identifier !matchCase",
+    "gui.component.filter.tooltip": "Try @namespace #path $matchCase !notThis",
     "gui.component.filter.tooltip1": "Put & at start to temporarily switch operator",
 
     "gui.music_control.panel.play": "Play",
