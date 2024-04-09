@@ -27,5 +27,7 @@ public class CosmeticsConfig implements ConfigData {
         public int width = 320;
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public ScrollSpeed scrollSpeed = ScrollSpeed.NORMAL;
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public FilterOperator filterOperator = FilterOperator.AND;
     }
 }

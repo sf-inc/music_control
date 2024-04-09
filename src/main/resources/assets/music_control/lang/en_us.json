@@ -57,6 +57,7 @@
     "text.autoconfig.music_control.option.cosmetics.gui.height": "Height of music screen",
     "text.autoconfig.music_control.option.cosmetics.gui.width": "Width of music screen",
     "text.autoconfig.music_control.option.cosmetics.gui.scrollSpeed": "Text scrolling speed",
+    "text.autoconfig.music_control.option.cosmetics.gui.filterOperator": "Text filter operator",
 
     "music.play": "PLAY",
     "music.pause": "PAUSE",
@@ -78,8 +79,8 @@
     "music.format.disc": "Disc: %s",
 
     "gui.component.filter.placeholder": "Input Keywords",
-    "gui.component.filter.tooltip": "/and keywords: must includes all keywords, instead of at least one",
-    "gui.component.filter.tooltip1": "@namespace #path $identifier !matchCase",
+    "gui.component.filter.tooltip": "Try @namespace #path $identifier !matchCase",
+    "gui.component.filter.tooltip1": "Put & at start to temporarily switch operator",
 
     "gui.music_control.panel.play": "Play",
     "gui.music_control.panel.history": "History",

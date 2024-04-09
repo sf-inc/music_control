@@ -1,6 +1,8 @@
 package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.categories.Music;
+import com.github.charlyb01.music_control.config.FilterOperator;
+import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.gui.components.LongTextButton;
 import com.github.charlyb01.music_control.gui.components.TextFilter;
 import com.github.charlyb01.music_control.gui.components.WFilterListPanel;
@@ -53,48 +55,46 @@ public class ButtonListPanel extends WBox {
             return;
         }
 
+        boolean operatorModifier = false;
         String[] wordsRaw = s.split(" ");
         ArrayList<String> words = new ArrayList<>();
         for (String word : wordsRaw) {
-            if (!word.isEmpty()) {
+            if (word.isEmpty()) continue;
+
+            if (word.charAt(0) == '&') {
+                operatorModifier = true;
+                if (word.length() > 1) {
+                    words.add(word.substring(1));
+                }
+            } else {
                 words.add(word);
             }
         }
 
-        final boolean andFlag = !words.isEmpty() && words.get(0).equalsIgnoreCase("/and");
-        if (andFlag) {
-            words.remove(0);
-        }
-
+        final boolean andOperator = ModConfig.get().cosmetics.gui.filterOperator.equals(FilterOperator.AND) ^ operatorModifier;
         this.items.runFilter((id) -> {
-            String raw = id.toString();
-            String evaluated = Music.getTranslatedText(id).getString();
-            String evaluatedLower = evaluated.toLowerCase();
-            String path = id.getPath();
-            String namespace = id.getNamespace();
-
             for (String word : words) {
-                boolean matches;
-                if (word.charAt(0) == '@') {
-                    matches = namespace.contains(word.substring(1));
-                } else if (word.charAt(0) == '#') {
-                    matches = path.contains(word.substring(1));
-                } else if (word.charAt(0) == '$') {
-                    matches = raw.contains(word.substring(1));
-                } else if (word.charAt(0) == '!') {
-                    matches = evaluated.contains(word.substring(1));
-                } else {
-                    matches = evaluatedLower.contains(word.toLowerCase());
-                }
-
-                if (matches && !andFlag) {
-                    return true;
-                } else if (!matches && andFlag) {
-                    return false;
-                }
+                if (andOperator && !match(word, id)) return false;
+                if (!andOperator && match(word, id)) return true;
             }
 
-            return andFlag;
+            return andOperator;
         });
+    }
+
+    private boolean match(String word, Identifier id) {
+        char firstChar = word.charAt(0);
+        if (firstChar == '@') {
+            return id.getNamespace().contains(word.substring(1));
+        } else if (firstChar == '#') {
+            return id.getPath().contains(word.substring(1));
+        } else if (firstChar == '$') {
+            return id.toString().contains(word.substring(1));
+        } else {
+            String evaluated = Music.getTranslatedText(id).getString();
+            return firstChar == '!'
+                    ? evaluated.contains(word.substring(1))
+                    : evaluated.toLowerCase().contains(word.toLowerCase());
+        }
     }
 }
