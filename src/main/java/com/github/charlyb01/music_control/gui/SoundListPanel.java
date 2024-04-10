@@ -20,7 +20,7 @@ public class SoundListPanel extends WBox {
     public SoundListPanel(final BiConsumer<Identifier, LongTextButton> onMusicClicked,
                           final BiConsumer<Identifier, LongTextButton> onEventClicked,
                           final Consumer<Boolean> onToggle,
-                          final int width, final boolean isToggled) {
+                          final int width, final boolean isEventList) {
         super(Axis.VERTICAL);
 
         ArrayList<Identifier> musics = new ArrayList<>(MUSIC_BY_NAMESPACE.get(ALL_MUSICS).size());
@@ -31,20 +31,20 @@ public class SoundListPanel extends WBox {
         ButtonListPanel musicListPanel = new ButtonListPanel(musics, onMusicClicked, width, ModConfig.get().cosmetics.gui.height - 20);
         ButtonListPanel eventListPanel = new ButtonListPanel(EVENTS, onEventClicked, width, ModConfig.get().cosmetics.gui.height - 20);
         WCardPanel listPanel = new WCardPanel();
-        listPanel.add(eventListPanel);
         listPanel.add(musicListPanel);
-        if (isToggled) {
-            listPanel.setSelectedCard(musicListPanel);
+        listPanel.add(eventListPanel);
+        if (isEventList) {
+            listPanel.setSelectedCard(eventListPanel);
         }
 
         WToggleButton toggleButton = new WToggleButton(Text.translatable("gui.music_control.toggle.musicEvent"));
-        toggleButton.setToggle(isToggled);
-        toggleButton.setOnToggle((Boolean isMusic) -> {
-            onToggle.accept(isMusic);
-            if (isMusic) {
-                listPanel.setSelectedCard(musicListPanel);
-            } else {
+        toggleButton.setToggle(isEventList);
+        toggleButton.setOnToggle((Boolean isEvent) -> {
+            onToggle.accept(isEvent);
+            if (isEvent) {
                 listPanel.setSelectedCard(eventListPanel);
+            } else {
+                listPanel.setSelectedCard(musicListPanel);
             }
         });
 

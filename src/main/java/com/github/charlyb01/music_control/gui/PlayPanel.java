@@ -53,13 +53,13 @@ public class PlayPanel extends WBox {
             }
         };
 
-        Consumer<Boolean> onToggle = (Boolean isMusic) -> {
+        Consumer<Boolean> onToggle = (Boolean isEvent) -> {
             if (this.hoveredButton != null) {
                 this.hoveredButton.requestFocus();
             }
         };
 
-        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().cosmetics.gui.width, true));
+        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().cosmetics.gui.width, false));
         this.add(selected, ModConfig.get().cosmetics.gui.width, 20);
     }
 }

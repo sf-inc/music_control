@@ -24,11 +24,11 @@ public class SoundConfigPanel extends WBox {
     private ButtonListPanel addEventListPanel;
     private ButtonListPanel removeEventListPanel;
 
-    public SoundConfigPanel(final Identifier sound, final boolean isMusic, final int width) {
+    public SoundConfigPanel(final Identifier sound, final boolean isEvent, final int width) {
         super(Axis.VERTICAL);
 
-        this.setupBar(isMusic);
-        this.setupAnyListPanel(sound, isMusic, width);
+        this.setupBar(isEvent);
+        this.setupAnyListPanel(sound, isEvent, width);
         this.setupEventListPanel(sound, width);
 
         this.cardPanel.add(this.removeAnyListPanel);
@@ -39,19 +39,19 @@ public class SoundConfigPanel extends WBox {
         this.add(this.cardPanel);
     }
 
-    private void onButtonUpdate(final boolean doAdd, final boolean isAny, final boolean isMusic, WLabel label) {
+    private void onButtonUpdate(final boolean doAdd, final boolean isEvent, final boolean fromEvent, WLabel label) {
         ButtonListPanel panel;
         if (doAdd) {
-            if (isAny) {
-                panel = this.addAnyListPanel;
-            } else {
+            if (isEvent) {
                 panel = this.addEventListPanel;
+            } else {
+                panel = this.addAnyListPanel;
             }
         } else {
-            if (isAny) {
-                panel = this.removeAnyListPanel;
-            } else {
+            if (isEvent) {
                 panel = this.removeEventListPanel;
+            } else {
+                panel = this.removeAnyListPanel;
             }
         }
 
@@ -61,13 +61,13 @@ public class SoundConfigPanel extends WBox {
         Text addText = Text.translatable(doAdd
                 ? "gui.music_control.label.add"
                 : "gui.music_control.label.remove");
-        Text anyText = Text.translatable(isAny && !isMusic
+        Text eventText = Text.translatable(!isEvent && fromEvent
                 ? "gui.music_control.label.music"
                 : "gui.music_control.label.event");
-        label.setText(Text.of(addText.getString() + anyText.getString()));
+        label.setText(Text.of(addText.getString() + eventText.getString()));
     }
 
-    private void setupBar(final boolean isMusic) {
+    private void setupBar(final boolean fromEvent) {
         WToggleButton removeAddButton = new WToggleButton() {
             @Override
             public void addTooltip(TooltipBuilder tooltip) {
@@ -84,28 +84,34 @@ public class SoundConfigPanel extends WBox {
         };
 
         Text addText = Text.translatable("gui.music_control.label.remove");
-        Text anyText = Text.translatable(isMusic
-                ? "gui.music_control.label.event"
-                : "gui.music_control.label.music");
-        WLabel label = new WLabel(Text.of(addText.getString() + anyText.getString()));
+        Text eventText = Text.translatable(fromEvent
+                ? "gui.music_control.label.music"
+                : "gui.music_control.label.event");
+        WLabel label = new WLabel(Text.of(addText.getString() + eventText.getString()));
         label.setVerticalAlignment(VerticalAlignment.CENTER);
 
-        removeAddButton.setOnToggle((Boolean doAdd) -> this.onButtonUpdate(doAdd, musicEventButton.getToggle(), isMusic, label));
-        musicEventButton.setOnToggle((Boolean isAny) -> this.onButtonUpdate(removeAddButton.getToggle(), isAny, isMusic, label));
-        musicEventButton.setToggle(true);
+        removeAddButton.setOnToggle((Boolean doAdd) -> this.onButtonUpdate(doAdd, musicEventButton.getToggle(), fromEvent, label));
+        musicEventButton.setOnToggle((Boolean isEvent) -> this.onButtonUpdate(removeAddButton.getToggle(), isEvent, fromEvent, label));
 
         WBox buttonBar = new WBox(Axis.HORIZONTAL);
         buttonBar.add(removeAddButton);
-        if (!isMusic) buttonBar.add(musicEventButton);
+        if (fromEvent) buttonBar.add(musicEventButton);
         buttonBar.add(label);
 
         this.add(buttonBar);
     }
 
-    private void setupAnyListPanel(final Identifier sound, final boolean isMusic, final int width) {
+    private void setupAnyListPanel(final Identifier sound, final boolean fromEvent, final int width) {
         ArrayList<Identifier> soundToAdd = new ArrayList<>();
         ArrayList<Identifier> soundToRemove = new ArrayList<>();
-        if (isMusic) {
+        if (fromEvent) {
+            MUSIC_BY_EVENT.get(sound).forEach((Music music) -> soundToRemove.add(music.getIdentifier()));
+            for (Music music : MUSIC_BY_NAMESPACE.get(ALL_MUSICS)) {
+                if (!soundToRemove.contains(music.getIdentifier())) {
+                    soundToAdd.add(music.getIdentifier());
+                }
+            }
+        } else {
             Music music = Music.getMusicFromIdentifier(sound);
             if (music == null) return;
 
@@ -114,13 +120,6 @@ public class SoundConfigPanel extends WBox {
             for (Identifier eventId : soundToRemove) {
                 soundToAdd.remove(eventId);
             }
-        } else {
-            MUSIC_BY_EVENT.get(sound).forEach((Music music) -> soundToRemove.add(music.getIdentifier()));
-            for (Music music : MUSIC_BY_NAMESPACE.get(ALL_MUSICS)) {
-                if (!soundToRemove.contains(music.getIdentifier())) {
-                    soundToAdd.add(music.getIdentifier());
-                }
-            }
         }
 
         BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
@@ -128,15 +127,15 @@ public class SoundConfigPanel extends WBox {
             soundToRemove.add(soundClicked);
             soundToRemove.sort(TRANSLATED_ORDER);
 
-            if (isMusic) {
-                Music music = Music.getMusicFromIdentifier(sound);
-                if (music != null) {
-                    music.addEvent(soundClicked);
-                }
-            } else {
+            if (fromEvent) {
                 Music music = Music.getMusicFromIdentifier(soundClicked);
                 if (music != null) {
                     music.addEvent(sound);
+                }
+            } else {
+                Music music = Music.getMusicFromIdentifier(sound);
+                if (music != null) {
+                    music.addEvent(soundClicked);
                 }
             }
             this.addAnyListPanel.update();
@@ -147,15 +146,15 @@ public class SoundConfigPanel extends WBox {
             soundToAdd.add(soundClicked);
             soundToAdd.sort(TRANSLATED_ORDER);
 
-            if (isMusic) {
-                Music music = Music.getMusicFromIdentifier(sound);
-                if (music != null) {
-                    music.removeEvent(soundClicked);
-                }
-            } else {
+            if (fromEvent) {
                 Music music = Music.getMusicFromIdentifier(soundClicked);
                 if (music != null) {
                     music.removeEvent(sound);
+                }
+            } else {
+                Music music = Music.getMusicFromIdentifier(sound);
+                if (music != null) {
+                    music.removeEvent(soundClicked);
                 }
             }
             this.removeAnyListPanel.update();

@@ -92,7 +92,7 @@
     "gui.music_control.label.music": "music",
     "gui.music_control.label.event": "event",
     "gui.music_control.toggle.removeAdd": "Remove / Add",
-    "gui.music_control.toggle.musicEvent": "Event / Music",
+    "gui.music_control.toggle.musicEvent": "Music / Event",
     "gui.music_control.button.create": "Create a new one",
     "gui.music_control.button.enable": "Enable one",
     "gui.music_control.button.save": "Save",

@@ -21,7 +21,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class ConfigPanel extends WBox {
-    protected static boolean isMusic = false;
+    protected static boolean isEvent = true;
 
     protected LongTextButton selectedButton;
     protected SoundConfigPanel soundConfigPanel;
@@ -109,13 +109,13 @@ public class ConfigPanel extends WBox {
             if (this.soundConfigPanel != null) {
                 listsBox.remove(this.soundConfigPanel);
             }
-            this.soundConfigPanel = new SoundConfigPanel(identifier, isMusic, innerWidth / 2);
+            this.soundConfigPanel = new SoundConfigPanel(identifier, isEvent, innerWidth / 2);
             listsBox.add(this.soundConfigPanel);
             this.soundConfigPanel.setHost(listsBox.getHost());
             listsBox.layout();
         };
-        Consumer<Boolean> onToggle = (Boolean isMusic) -> {
-            ConfigPanel.isMusic = isMusic;
+        Consumer<Boolean> onToggle = (Boolean isEvent) -> {
+            ConfigPanel.isEvent = isEvent;
 
             if (soundConfigPanel != null) {
                 listsBox.remove(this.soundConfigPanel);
@@ -127,7 +127,7 @@ public class ConfigPanel extends WBox {
             }
         };
 
-        listsBox.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, innerWidth / 2, isMusic));
+        listsBox.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, innerWidth / 2, isEvent));
 
         WButton saveButton = new WButton(Text.translatable("gui.music_control.button.save"));
         saveButton.setOnClick(() -> {
