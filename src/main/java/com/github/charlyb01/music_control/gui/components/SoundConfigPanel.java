@@ -1,8 +1,7 @@
-package com.github.charlyb01.music_control.gui;
+package com.github.charlyb01.music_control.gui.components;
 
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.config.ModConfig;
-import com.github.charlyb01.music_control.gui.components.LongTextButton;
 import io.github.cottonmc.cotton.gui.GuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
@@ -122,7 +121,7 @@ public class SoundConfigPanel extends WBox {
             }
         }
 
-        BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
+        BiConsumer<Identifier, Button> onAdded = (Identifier soundClicked, Button button) -> {
             soundToAdd.remove(soundClicked);
             soundToRemove.add(soundClicked);
             soundToRemove.sort(TRANSLATED_ORDER);
@@ -141,7 +140,7 @@ public class SoundConfigPanel extends WBox {
             this.addAnyListPanel.update();
             this.layout();
         };
-        BiConsumer<Identifier, LongTextButton> onRemoved = (Identifier soundClicked, LongTextButton button) -> {
+        BiConsumer<Identifier, Button> onRemoved = (Identifier soundClicked, Button button) -> {
             soundToRemove.remove(soundClicked);
             soundToAdd.add(soundClicked);
             soundToAdd.sort(TRANSLATED_ORDER);
@@ -176,7 +175,7 @@ public class SoundConfigPanel extends WBox {
             soundToAdd.remove(eventId);
         }
 
-        BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
+        BiConsumer<Identifier, Button> onAdded = (Identifier soundClicked, Button button) -> {
             soundToAdd.remove(soundClicked);
             soundToRemove.add(soundClicked);
             soundToRemove.sort(TRANSLATED_ORDER);
@@ -189,7 +188,7 @@ public class SoundConfigPanel extends WBox {
             this.addEventListPanel.update();
             this.layout();
         };
-        BiConsumer<Identifier, LongTextButton> onRemoved = (Identifier soundClicked, LongTextButton button) -> {
+        BiConsumer<Identifier, Button> onRemoved = (Identifier soundClicked, Button button) -> {
             soundToRemove.remove(soundClicked);
             soundToAdd.add(soundClicked);
             soundToAdd.sort(TRANSLATED_ORDER);

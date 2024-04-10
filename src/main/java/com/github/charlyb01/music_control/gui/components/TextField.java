@@ -7,13 +7,13 @@ import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 
-public class TextFieldTooltip extends WTextField {
+public class TextField extends WTextField {
     private final static int RENDER_DELAY = 20;
 
     private int tickCount = 0;
     private final ArrayList<Text> tooltips;
 
-    public TextFieldTooltip(Text suggestion, ArrayList<Text> tooltips) {
+    public TextField(Text suggestion, ArrayList<Text> tooltips) {
         super(suggestion);
         this.setMaxLength(100);
         this.tooltips = tooltips;

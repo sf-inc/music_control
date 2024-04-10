@@ -3,7 +3,8 @@ package com.github.charlyb01.music_control.gui;
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
-import com.github.charlyb01.music_control.gui.components.LongTextButton;
+import com.github.charlyb01.music_control.gui.components.Button;
+import com.github.charlyb01.music_control.gui.components.SoundListPanel;
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
@@ -19,7 +20,7 @@ public class PlayPanel extends WBox {
     protected final static Text NONE_TEXT = Text.translatable("music.none");
     protected final static String SELECTED_KEY = "gui.music_control.label.selected";
 
-    protected LongTextButton hoveredButton;
+    protected Button hoveredButton;
 
     public PlayPanel() {
         super(Axis.VERTICAL);
@@ -28,7 +29,7 @@ public class PlayPanel extends WBox {
         WLabel selected = new WLabel(Text.translatable(SELECTED_KEY, NONE_TEXT));
         selected.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
-        BiConsumer<Identifier, LongTextButton> onSoundClicked = (Identifier identifier, LongTextButton button) -> {
+        BiConsumer<Identifier, Button> onSoundClicked = (Identifier identifier, Button button) -> {
             if (identifier.equals(MusicControlClient.musicSelected)) {
                 MusicControlClient.nextMusic = false;
                 MusicControlClient.musicSelected = null;

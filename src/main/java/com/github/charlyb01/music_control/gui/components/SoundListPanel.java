@@ -1,8 +1,7 @@
-package com.github.charlyb01.music_control.gui;
+package com.github.charlyb01.music_control.gui.components;
 
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.config.ModConfig;
-import com.github.charlyb01.music_control.gui.components.LongTextButton;
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.WCardPanel;
 import io.github.cottonmc.cotton.gui.widget.WToggleButton;
@@ -17,8 +16,8 @@ import java.util.function.Consumer;
 import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class SoundListPanel extends WBox {
-    public SoundListPanel(final BiConsumer<Identifier, LongTextButton> onMusicClicked,
-                          final BiConsumer<Identifier, LongTextButton> onEventClicked,
+    public SoundListPanel(final BiConsumer<Identifier, Button> onMusicClicked,
+                          final BiConsumer<Identifier, Button> onEventClicked,
                           final Consumer<Boolean> onToggle,
                           final int width, final boolean isEventList) {
         super(Axis.VERTICAL);

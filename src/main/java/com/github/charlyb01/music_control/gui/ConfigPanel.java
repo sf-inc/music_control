@@ -2,7 +2,9 @@ package com.github.charlyb01.music_control.gui;
 
 import com.github.charlyb01.music_control.ResourcePackUtils;
 import com.github.charlyb01.music_control.config.ModConfig;
-import com.github.charlyb01.music_control.gui.components.LongTextButton;
+import com.github.charlyb01.music_control.gui.components.Button;
+import com.github.charlyb01.music_control.gui.components.SoundConfigPanel;
+import com.github.charlyb01.music_control.gui.components.SoundListPanel;
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WCardPanel;
@@ -23,7 +25,7 @@ import java.util.function.Consumer;
 public class ConfigPanel extends WBox {
     protected static boolean isEvent = true;
 
-    protected LongTextButton selectedButton;
+    protected Button selectedButton;
     protected SoundConfigPanel soundConfigPanel;
     protected WCardPanel cardPanel = new WCardPanel();
     protected WBox resourcePackCard = new WBox(Axis.VERTICAL);
@@ -99,7 +101,7 @@ public class ConfigPanel extends WBox {
         final int outerWidth = ModConfig.get().cosmetics.gui.width;
         final int innerWidth = ModConfig.get().cosmetics.gui.width - 4;
 
-        BiConsumer<Identifier, LongTextButton> onSoundClicked = (Identifier identifier, LongTextButton button) -> {
+        BiConsumer<Identifier, Button> onSoundClicked = (Identifier identifier, Button button) -> {
             if (this.selectedButton != null) {
                 this.selectedButton.setEnabled(true);
             }

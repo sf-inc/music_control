@@ -8,11 +8,11 @@ import java.util.function.Supplier;
 import io.github.cottonmc.cotton.gui.widget.WListPanel;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 
-public class WFilterListPanel<D, W extends WWidget> extends WListPanel<D, W> {
+public class FilterListPanel<D, W extends WWidget> extends WListPanel<D, W> {
 
   protected final List<D> dataOrig;
 
-  public WFilterListPanel(List<D> data, Supplier<W> supplier, BiConsumer<D, W> configurator) {
+  public FilterListPanel(List<D> data, Supplier<W> supplier, BiConsumer<D, W> configurator) {
     super(data, supplier, configurator);
     this.dataOrig = data;
   }

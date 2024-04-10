@@ -16,7 +16,7 @@ public class TextFilter extends WBox {
     private static final Text PLACEHOLDER_TEXT = Text.translatable("gui.component.filter.placeholder");
 
     private final Consumer<String> onChange;
-    private final TextFieldTooltip textField;
+    private final TextField textField;
 
     public void runOnChange() {
         var task = new Runnable() {
@@ -37,7 +37,7 @@ public class TextFilter extends WBox {
 
         ArrayList<Text> tooltips = new ArrayList<>(List.of(Text.translatable("gui.component.filter.tooltip"),
                 Text.translatable("gui.component.filter.tooltip1")));
-        this.textField = new TextFieldTooltip(PLACEHOLDER_TEXT, tooltips);
+        this.textField = new TextField(PLACEHOLDER_TEXT, tooltips);
         this.textField.setChangedListener((s) -> runOnChange());
 
         WButton clearButton = new WButton(CLEAR_TEXT);

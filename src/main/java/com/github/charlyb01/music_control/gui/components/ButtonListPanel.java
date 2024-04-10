@@ -1,11 +1,8 @@
-package com.github.charlyb01.music_control.gui;
+package com.github.charlyb01.music_control.gui.components;
 
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.config.FilterOperator;
 import com.github.charlyb01.music_control.config.ModConfig;
-import com.github.charlyb01.music_control.gui.components.LongTextButton;
-import com.github.charlyb01.music_control.gui.components.TextFilter;
-import com.github.charlyb01.music_control.gui.components.WFilterListPanel;
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import net.minecraft.util.Identifier;
@@ -15,12 +12,12 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class ButtonListPanel extends WBox {
-    private final WFilterListPanel<Identifier, LongTextButton> items;
+    private final FilterListPanel<Identifier, Button> items;
     private final TextFilter filter;
 
     public ButtonListPanel(
             final List<Identifier> data,
-            final BiConsumer<Identifier, LongTextButton> onClicked,
+            final BiConsumer<Identifier, Button> onClicked,
             final int width,
             final int height) {
         this(data, onClicked, width, height, true, true);
@@ -28,14 +25,14 @@ public class ButtonListPanel extends WBox {
 
     public ButtonListPanel(
             final List<Identifier> data,
-            final BiConsumer<Identifier, LongTextButton> onClicked,
+            final BiConsumer<Identifier, Button> onClicked,
             final int width,
             final int height,
             final boolean hasFilter,
             final boolean sortData) {
         super(Axis.VERTICAL);
 
-        BiConsumer<Identifier, LongTextButton> configurator = (Identifier identifier, LongTextButton button) -> {
+        BiConsumer<Identifier, Button> configurator = (Identifier identifier, Button button) -> {
             button.setText(Music.getTranslatedText(identifier).getString());
             button.setOnClick(() -> onClicked.accept(identifier, button));
         };
@@ -43,7 +40,7 @@ public class ButtonListPanel extends WBox {
         if (sortData) {
             data.sort(Music.TRANSLATED_ORDER);
         }
-        this.items = new WFilterListPanel<>(data, () -> new LongTextButton(width), configurator);
+        this.items = new FilterListPanel<>(data, () -> new Button(width), configurator);
 
         if (hasFilter && height > TextFilter.HEIGHT) {
             this.filter = new TextFilter(this::runFilter, width);

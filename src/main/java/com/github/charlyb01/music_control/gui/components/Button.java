@@ -5,7 +5,7 @@ import com.github.charlyb01.music_control.config.ScrollSpeed;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import net.minecraft.text.Text;
 
-public class LongTextButton extends WButton {
+public class Button extends WButton {
     private String text = null;
     private boolean shouldUpdate = false;
     private int offset = 0;
@@ -14,7 +14,7 @@ public class LongTextButton extends WButton {
     private final int maxLength;
     private final static String BLANK_SPACE = "     ";
 
-    public LongTextButton(int width) {
+    public Button(int width) {
         this.maxLength = width / 7;
     }
 
