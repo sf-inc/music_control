@@ -101,9 +101,6 @@ public class MusicCategories {
             }
         }
 
-        MUSIC_BY_NAMESPACE.forEach((String namespace, ArrayList<Music> musicList) -> Collections.sort(musicList));
-        Collections.sort(EVENTS);
-
         if (!CATEGORIES.contains(MusicControlClient.currentCategory)) {
             MusicControlClient.currentCategory = DEFAULT_MUSICS;
         }

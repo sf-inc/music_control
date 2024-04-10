@@ -22,17 +22,30 @@ public class ButtonListPanel extends WBox {
             final List<Identifier> data,
             final BiConsumer<Identifier, LongTextButton> onClicked,
             final int width,
+            final int height) {
+        this(data, onClicked, width, height, true, true);
+    }
+
+    public ButtonListPanel(
+            final List<Identifier> data,
+            final BiConsumer<Identifier, LongTextButton> onClicked,
+            final int width,
             final int height,
-            final boolean withFilter) {
+            final boolean hasFilter,
+            final boolean sortData) {
         super(Axis.VERTICAL);
 
         BiConsumer<Identifier, LongTextButton> configurator = (Identifier identifier, LongTextButton button) -> {
             button.setText(Music.getTranslatedText(identifier).getString());
             button.setOnClick(() -> onClicked.accept(identifier, button));
         };
+
+        if (sortData) {
+            data.sort(Music.TRANSLATED_ORDER);
+        }
         this.items = new WFilterListPanel<>(data, () -> new LongTextButton(width), configurator);
 
-        if (withFilter && height > TextFilter.HEIGHT) {
+        if (hasFilter && height > TextFilter.HEIGHT) {
             this.filter = new TextFilter(this::runFilter, width);
             this.add(this.filter, width, TextFilter.HEIGHT);
             this.add(this.items, width, height - TextFilter.HEIGHT);

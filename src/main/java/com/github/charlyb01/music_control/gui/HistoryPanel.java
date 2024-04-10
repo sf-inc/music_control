@@ -31,7 +31,8 @@ public class HistoryPanel extends WBox {
                 onMusicClicked,
                 ModConfig.get().cosmetics.gui.width,
                 ModConfig.get().cosmetics.gui.height,
-                true);
+                false,
+                false);
 
         this.add(playedListPanel);
     }

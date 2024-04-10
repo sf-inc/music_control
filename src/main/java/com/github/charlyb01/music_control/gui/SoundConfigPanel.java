@@ -126,6 +126,8 @@ public class SoundConfigPanel extends WBox {
         BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
             soundToAdd.remove(soundClicked);
             soundToRemove.add(soundClicked);
+            soundToRemove.sort(TRANSLATED_ORDER);
+
             if (isMusic) {
                 Music music = Music.getMusicFromIdentifier(sound);
                 if (music != null) {
@@ -143,6 +145,8 @@ public class SoundConfigPanel extends WBox {
         BiConsumer<Identifier, LongTextButton> onRemoved = (Identifier soundClicked, LongTextButton button) -> {
             soundToRemove.remove(soundClicked);
             soundToAdd.add(soundClicked);
+            soundToAdd.sort(TRANSLATED_ORDER);
+
             if (isMusic) {
                 Music music = Music.getMusicFromIdentifier(sound);
                 if (music != null) {
@@ -158,8 +162,8 @@ public class SoundConfigPanel extends WBox {
             this.layout();
         };
 
-        this.addAnyListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20, true);
-        this.removeAnyListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20, true);
+        this.addAnyListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20);
+        this.removeAnyListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20);
     }
 
     private void setupEventListPanel(final Identifier sound, final int width) {
@@ -176,6 +180,7 @@ public class SoundConfigPanel extends WBox {
         BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
             soundToAdd.remove(soundClicked);
             soundToRemove.add(soundClicked);
+            soundToRemove.sort(TRANSLATED_ORDER);
 
             if (!EVENTS_OF_EVENT.containsKey(sound)) {
                 EVENTS_OF_EVENT.put(sound, new HashSet<>());
@@ -188,6 +193,7 @@ public class SoundConfigPanel extends WBox {
         BiConsumer<Identifier, LongTextButton> onRemoved = (Identifier soundClicked, LongTextButton button) -> {
             soundToRemove.remove(soundClicked);
             soundToAdd.add(soundClicked);
+            soundToAdd.sort(TRANSLATED_ORDER);
 
             EVENTS_OF_EVENT.get(sound).remove(soundClicked);
             if (EVENTS_OF_EVENT.get(sound).isEmpty()) {
@@ -198,8 +204,8 @@ public class SoundConfigPanel extends WBox {
             this.layout();
         };
 
-        this.addEventListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20, true);
-        this.removeEventListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20, true);
+        this.addEventListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20);
+        this.removeEventListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20);
     }
 
     @Override
