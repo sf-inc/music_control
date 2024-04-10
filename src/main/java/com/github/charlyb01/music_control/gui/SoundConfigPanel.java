@@ -4,39 +4,115 @@ import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.gui.components.LongTextButton;
 import io.github.cottonmc.cotton.gui.GuiDescription;
-import io.github.cottonmc.cotton.gui.widget.WBox;
-import io.github.cottonmc.cotton.gui.widget.WCardPanel;
-import io.github.cottonmc.cotton.gui.widget.WToggleButton;
+import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
+import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.function.BiConsumer;
 
 import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class SoundConfigPanel extends WBox {
 
-    private ButtonListPanel addListPanel = null;
-    private ButtonListPanel removeListPanel = null;
+    private final WCardPanel cardPanel = new WCardPanel();
+    private ButtonListPanel addAnyListPanel;
+    private ButtonListPanel removeAnyListPanel;
+    private ButtonListPanel addEventListPanel;
+    private ButtonListPanel removeEventListPanel;
 
     public SoundConfigPanel(final Identifier sound, final boolean isMusic, final int width) {
         super(Axis.VERTICAL);
 
+        this.setupBar(isMusic);
+        this.setupAnyListPanel(sound, isMusic, width);
+        this.setupEventListPanel(sound, width);
+
+        this.cardPanel.add(this.removeAnyListPanel);
+        this.cardPanel.add(this.addAnyListPanel);
+        this.cardPanel.add(this.removeEventListPanel);
+        this.cardPanel.add(this.addEventListPanel);
+
+        this.add(this.cardPanel);
+    }
+
+    private void onButtonUpdate(final boolean doAdd, final boolean isAny, final boolean isMusic, WLabel label) {
+        ButtonListPanel panel;
+        if (doAdd) {
+            if (isAny) {
+                panel = this.addAnyListPanel;
+            } else {
+                panel = this.addEventListPanel;
+            }
+        } else {
+            if (isAny) {
+                panel = this.removeAnyListPanel;
+            } else {
+                panel = this.removeEventListPanel;
+            }
+        }
+
+        panel.layout();
+        this.cardPanel.setSelectedCard(panel);
+
+        Text addText = Text.translatable(doAdd
+                ? "gui.music_control.label.add"
+                : "gui.music_control.label.remove");
+        Text anyText = Text.translatable(isAny && !isMusic
+                ? "gui.music_control.label.music"
+                : "gui.music_control.label.event");
+        label.setText(Text.of(addText.getString() + anyText.getString()));
+    }
+
+    private void setupBar(final boolean isMusic) {
+        WToggleButton removeAddButton = new WToggleButton() {
+            @Override
+            public void addTooltip(TooltipBuilder tooltip) {
+                super.addTooltip(tooltip);
+                tooltip.add(Text.translatable("gui.music_control.toggle.removeAdd"));
+            }
+        };
+        WToggleButton musicEventButton = new WToggleButton() {
+            @Override
+            public void addTooltip(TooltipBuilder tooltip) {
+                super.addTooltip(tooltip);
+                tooltip.add(Text.translatable("gui.music_control.toggle.musicEvent"));
+            }
+        };
+
+        Text addText = Text.translatable("gui.music_control.label.remove");
+        Text anyText = Text.translatable(isMusic
+                ? "gui.music_control.label.event"
+                : "gui.music_control.label.music");
+        WLabel label = new WLabel(Text.of(addText.getString() + anyText.getString()));
+        label.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        removeAddButton.setOnToggle((Boolean doAdd) -> this.onButtonUpdate(doAdd, musicEventButton.getToggle(), isMusic, label));
+        musicEventButton.setOnToggle((Boolean isAny) -> this.onButtonUpdate(removeAddButton.getToggle(), isAny, isMusic, label));
+        musicEventButton.setToggle(true);
+
+        WBox buttonBar = new WBox(Axis.HORIZONTAL);
+        buttonBar.add(removeAddButton);
+        if (!isMusic) buttonBar.add(musicEventButton);
+        buttonBar.add(label);
+
+        this.add(buttonBar);
+    }
+
+    private void setupAnyListPanel(final Identifier sound, final boolean isMusic, final int width) {
         ArrayList<Identifier> soundToAdd = new ArrayList<>();
         ArrayList<Identifier> soundToRemove = new ArrayList<>();
         if (isMusic) {
             Music music = Music.getMusicFromIdentifier(sound);
-            if (music == null) {
-                return;
-            }
+            if (music == null) return;
 
             soundToRemove.addAll(music.getEvents());
-            for (Identifier event : EVENTS) {
-                if (!soundToRemove.contains(event)) {
-                    soundToAdd.add(event);
-                }
+            soundToAdd.addAll(EVENTS);
+            for (Identifier eventId : soundToRemove) {
+                soundToAdd.remove(eventId);
             }
         } else {
             MUSIC_BY_EVENT.get(sound).forEach((Music music) -> soundToRemove.add(music.getIdentifier()));
@@ -61,7 +137,7 @@ public class SoundConfigPanel extends WBox {
                     music.addEvent(sound);
                 }
             }
-            this.addListPanel.update();
+            this.addAnyListPanel.update();
             this.layout();
         };
         BiConsumer<Identifier, LongTextButton> onRemoved = (Identifier soundClicked, LongTextButton button) -> {
@@ -78,40 +154,60 @@ public class SoundConfigPanel extends WBox {
                     music.removeEvent(sound);
                 }
             }
-            this.removeListPanel.update();
+            this.removeAnyListPanel.update();
             this.layout();
         };
 
-        this.addListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20, true);
-        this.removeListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20, true);
-        
-        WCardPanel listPanel = new WCardPanel();
-        listPanel.add(this.removeListPanel);
-        listPanel.add(this.addListPanel);
+        this.addAnyListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20, true);
+        this.removeAnyListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20, true);
+    }
 
-        WToggleButton toggleButton = new WToggleButton(Text.translatable("gui.music_control.toggle.removeAdd"));
-        toggleButton.setOnToggle((Boolean doAdd) -> {
-            if (doAdd) {
-                this.addListPanel.layout();
-                listPanel.setSelectedCard(addListPanel);
-            } else {
-                this.removeListPanel.layout();
-                listPanel.setSelectedCard(removeListPanel);
+    private void setupEventListPanel(final Identifier sound, final int width) {
+        ArrayList<Identifier> soundToAdd = new ArrayList<>(EVENTS);
+        ArrayList<Identifier> soundToRemove = new ArrayList<>();
+
+        if (EVENTS_OF_EVENT.containsKey(sound)) {
+            soundToRemove.addAll(EVENTS_OF_EVENT.get(sound));
+        }
+        for (Identifier eventId : soundToRemove) {
+            soundToAdd.remove(eventId);
+        }
+
+        BiConsumer<Identifier, LongTextButton> onAdded = (Identifier soundClicked, LongTextButton button) -> {
+            soundToAdd.remove(soundClicked);
+            soundToRemove.add(soundClicked);
+
+            if (!EVENTS_OF_EVENT.containsKey(sound)) {
+                EVENTS_OF_EVENT.put(sound, new HashSet<>());
             }
-        });
+            EVENTS_OF_EVENT.get(sound).add(soundClicked);
 
-        this.add(toggleButton);
-        this.add(listPanel);
+            this.addEventListPanel.update();
+            this.layout();
+        };
+        BiConsumer<Identifier, LongTextButton> onRemoved = (Identifier soundClicked, LongTextButton button) -> {
+            soundToRemove.remove(soundClicked);
+            soundToAdd.add(soundClicked);
+
+            EVENTS_OF_EVENT.get(sound).remove(soundClicked);
+            if (EVENTS_OF_EVENT.get(sound).isEmpty()) {
+                EVENTS_OF_EVENT.remove(sound);
+            }
+
+            this.removeEventListPanel.update();
+            this.layout();
+        };
+
+        this.addEventListPanel = new ButtonListPanel(soundToAdd, onAdded, width, ModConfig.get().cosmetics.gui.height - 20, true);
+        this.removeEventListPanel = new ButtonListPanel(soundToRemove, onRemoved, width, ModConfig.get().cosmetics.gui.height - 20, true);
     }
 
     @Override
     public void setHost(GuiDescription host) {
         super.setHost(host);
-        if (this.addListPanel != null) {
-            this.addListPanel.setHost(host);
-        }
-        if (this.removeListPanel != null) {
-            this.removeListPanel.setHost(host);
-        }
+        this.addAnyListPanel.setHost(host);
+        this.removeAnyListPanel.setHost(host);
+        this.addEventListPanel.setHost(host);
+        this.removeEventListPanel.setHost(host);
     }
 }
