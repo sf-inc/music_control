@@ -217,13 +217,15 @@ public class ResourcePackUtils {
     }
 
     private static Path getSoundPath(final String namespace) {
-        Path path = ASSETS_PATH.resolve(namespace).resolve("sounds.json");
-        if (Files.exists(path)) {
-            return path;
+        Path dirPath = ASSETS_PATH.resolve(namespace);
+        Path filePath = dirPath.resolve("sounds.json");
+        if (Files.exists(filePath)) {
+            return filePath;
         }
 
         try {
-            return Files.createFile(path);
+            Files.createDirectories(dirPath);
+            return Files.createFile(filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
