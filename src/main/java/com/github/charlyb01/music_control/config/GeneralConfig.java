@@ -37,6 +37,9 @@ public class GeneralConfig implements ConfigData {
         public int musicQueue = 10;
         @ConfigEntry.Gui.Tooltip(count = 5)
         public String musicCategoryStart = Music.DEFAULT_MUSICS;
+        @ConfigEntry.Gui.Tooltip(count = 3)
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public MiscEventChance miscEventChance = MiscEventChance.PROPORTIONAL;
     }
 
     @ConfigEntry.Gui.CollapsibleObject

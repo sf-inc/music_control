@@ -41,6 +41,10 @@
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[2]": "all: shuffle every music (disc included),",
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[3]": "disc: shuffle every music disc,",
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[4]": "<namespace>: shuffle every music from <namespace>",
+    "text.autoconfig.music_control.option.general.misc.miscEventChance": "Misc events chance",
+    "text.autoconfig.music_control.option.general.misc.miscEventChance.@Tooltip[0]": "FULL: always play misc events",
+    "text.autoconfig.music_control.option.general.misc.miscEventChance.@Tooltip[1]": "HALF: 50% chance to play misc events",
+    "text.autoconfig.music_control.option.general.misc.miscEventChance.@Tooltip[2]": "PROPORTIONAL: play misc events proportionally to number of misc music",
 
     "text.autoconfig.music_control.option.general.volume": "Volume",
     "text.autoconfig.music_control.option.general.volume.increment": "Volume percent to increment",

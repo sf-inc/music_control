@@ -2,6 +2,7 @@ package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.client.SoundEventRegistry;
+import com.github.charlyb01.music_control.config.MiscEventChance;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.RegistryKey;
@@ -20,6 +21,11 @@ public class MusicIdentifier {
 
     public static ArrayList<Music> getListFromEvent(final Identifier eventId, final PlayerEntity player,
                                                     final World world, final Random random) {
+        if (ModConfig.get().general.misc.miscEventChance.equals(MiscEventChance.HALF)
+                && random.nextBoolean()) {
+            return getListFromEvent(eventId);
+        }
+
         boolean playerNotNull = player != null;
 
         ArrayList<Music> musics = new ArrayList<>();
@@ -29,8 +35,12 @@ public class MusicIdentifier {
         if (world.isRaining()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_RAIN));
         if (world.isThundering()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_THUNDER));
 
-        musics.addAll(getListFromEvent(eventId));
+        if (!ModConfig.get().general.misc.miscEventChance.equals(MiscEventChance.PROPORTIONAL)
+                && !musics.isEmpty()) {
+            return musics;
+        }
 
+        musics.addAll(getListFromEvent(eventId));
         return musics;
     }
 
