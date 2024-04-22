@@ -1,7 +1,7 @@
 package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
-import com.github.charlyb01.music_control.client.SoundEventBiome;
+import com.github.charlyb01.music_control.client.SoundEventRegistry;
 import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.Sound;
@@ -32,7 +32,7 @@ public class MusicCategories {
             MUSIC_BY_EVENT.clear();
             EVENTS.clear();
 
-            SoundEventBiome.BIOME_MUSIC_MAP.clear();
+            SoundEventRegistry.BIOME_MUSIC_MAP.clear();
         } else {
             MusicControlClient.init = true;
         }
@@ -54,9 +54,9 @@ public class MusicCategories {
                 String[] split = event.getPath().split("\\.");
                 RegistryKey<Biome> biomeRegistryKey;
                 if (split.length > 0
-                        && (biomeRegistryKey = SoundEventBiome.NAME_BIOME_MAP.get(
+                        && (biomeRegistryKey = SoundEventRegistry.NAME_BIOME_MAP.get(
                                 new Identifier(event.getNamespace(), split[split.length-1]))) != null) {
-                    SoundEventBiome.BIOME_MUSIC_MAP.put(biomeRegistryKey, soundEvent);
+                    SoundEventRegistry.BIOME_MUSIC_MAP.put(biomeRegistryKey, soundEvent);
                 }
             }
         }

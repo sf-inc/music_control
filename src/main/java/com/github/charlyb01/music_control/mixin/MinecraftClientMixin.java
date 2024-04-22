@@ -1,7 +1,7 @@
 package com.github.charlyb01.music_control.mixin;
 
 import com.github.charlyb01.music_control.ResourcePackUtils;
-import com.github.charlyb01.music_control.client.SoundEventBiome;
+import com.github.charlyb01.music_control.client.SoundEventRegistry;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.MinecraftClient;
@@ -61,8 +61,8 @@ public class MinecraftClientMixin {
         RegistryKey<Biome> registryKey = registryEntry.getKey().orElse(null);
         if (ResourcePackUtils.wasCreatedOrIsEnabled()
                 && registryKey != null
-                && SoundEventBiome.BIOME_MUSIC_MAP.containsKey(registryKey)) {
-            return MusicType.createIngameMusic(RegistryEntry.of(SoundEventBiome.BIOME_MUSIC_MAP.get(registryKey)));
+                && SoundEventRegistry.BIOME_MUSIC_MAP.containsKey(registryKey)) {
+            return MusicType.createIngameMusic(RegistryEntry.of(SoundEventRegistry.BIOME_MUSIC_MAP.get(registryKey)));
         }
 
         return registryEntry.value().getMusic().orElse(elseOption);

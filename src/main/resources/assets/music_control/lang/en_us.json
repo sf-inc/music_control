@@ -77,6 +77,7 @@
     "music.format.dimension": "Dimension: %s",
     "music.format.biome": "Biome: %s",
     "music.format.disc": "Disc: %s",
+    "music.format.misc": "Misc: %s",
 
     "gui.component.filter.placeholder": "Input Keywords",
     "gui.component.filter.tooltip": "Try @namespace #path $matchCase !notThis",
@@ -182,6 +183,12 @@
     "music.game": "Overworld",
     "music.nether": "Nether",
     "music.end": "End",
+
+    "music.misc.flying": "Player Flying",
+    "music.misc.riding": "Player Riding",
+    "music.misc.night": "Night Time",
+    "music.misc.rain": "Rain Weather",
+    "music.misc.thunder": "Thunder Weather",
 
     "music_disc.blocks": "Blocks",
     "music_disc.cat": "Cat",

@@ -1,7 +1,9 @@
 package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.github.charlyb01.music_control.client.SoundEventRegistry;
 import com.github.charlyb01.music_control.config.ModConfig;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -15,6 +17,22 @@ import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class MusicIdentifier {
     private MusicIdentifier() {}
+
+    public static ArrayList<Music> getListFromEvent(final Identifier eventId, final PlayerEntity player,
+                                                    final World world, final Random random) {
+        boolean playerNotNull = player != null;
+
+        ArrayList<Music> musics = new ArrayList<>();
+        if (playerNotNull && player.isFallFlying()) musics.addAll(getListFromEvent(SoundEventRegistry.PLAYER_FLYING));
+        if (playerNotNull && player.hasVehicle()) musics.addAll(getListFromEvent(SoundEventRegistry.PLAYER_RIDING));
+        if (world.isNight()) musics.addAll(getListFromEvent(SoundEventRegistry.TIME_NIGHT));
+        if (world.isRaining()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_RAIN));
+        if (world.isThundering()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_THUNDER));
+
+        musics.addAll(getListFromEvent(eventId));
+
+        return musics;
+    }
 
     public static ArrayList<Music> getListFromEvent(final Identifier eventId) {
         ArrayList<Music> musics = new ArrayList<>();
@@ -103,5 +121,9 @@ public class MusicIdentifier {
 
     public static boolean isDisc(final Identifier identifier) {
         return identifier.getPath().startsWith("music_disc");
+    }
+
+    public static boolean isMisc(final Identifier identifier) {
+        return identifier.getPath().startsWith("music.misc.");
     }
 }

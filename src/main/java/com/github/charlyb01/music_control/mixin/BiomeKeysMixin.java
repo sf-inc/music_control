@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.github.charlyb01.music_control.client.SoundEventBiome.NAME_BIOME_MAP;
+import static com.github.charlyb01.music_control.client.SoundEventRegistry.NAME_BIOME_MAP;
 
 @Mixin(BiomeKeys.class)
 public class BiomeKeysMixin {

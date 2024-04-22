@@ -94,7 +94,8 @@ public abstract class MusicTrackerMixin {
                 && Music.MUSIC_BY_EVENT.containsKey(eventId)) {
             // normal procedure
             boolean creative = this.client.player != null && this.client.player.isCreative();
-            final ArrayList<Music> musics = MusicIdentifier.getListFromEvent(eventId);
+            final ArrayList<Music> musics = MusicIdentifier.getListFromEvent(
+                    eventId, this.client.player, this.client.world, this.random);
 
             if (musics.isEmpty()) {
                 // this means the current event corresponds to

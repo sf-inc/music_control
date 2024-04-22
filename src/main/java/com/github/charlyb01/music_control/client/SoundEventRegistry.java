@@ -9,15 +9,23 @@ import net.minecraft.world.biome.Biome;
 
 import java.util.HashMap;
 
-public class SoundEventBiome {
+public class SoundEventRegistry {
     public static final HashMap<RegistryKey<Biome>, SoundEvent> BIOME_MUSIC_MAP = new HashMap<>();
     public static final HashMap<Identifier, RegistryKey<Biome>> NAME_BIOME_MAP = new HashMap<>();
 
+    public static final Identifier PLAYER_FLYING = new Identifier("music.misc.flying");
+    public static final Identifier PLAYER_RIDING = new Identifier("music.misc.riding");
+    public static final Identifier TIME_NIGHT = new Identifier("music.misc.night");
+    public static final Identifier WEATHER_RAIN = new Identifier("music.misc.rain");
+    public static final Identifier WEATHER_THUNDER = new Identifier("music.misc.thunder");
+
     public static void init() {
-        registerMissingBiomeSoundEvents();
+        registerMissingBiomes();
+        registerMissingDimensions();
+        registerMiscellaneous();
     }
 
-    private static void registerMissingBiomeSoundEvents() {
+    private static void registerMissingBiomes() {
         registerReference("music.overworld.snowy_plains");
         registerReference("music.overworld.ice_spikes");
         registerReference("music.overworld.snowy_taiga");
@@ -57,8 +65,6 @@ public class SoundEventBiome {
         registerReference("music.overworld.frozen_ocean");
         registerReference("music.overworld.deep_frozen_ocean");
 
-        registerReference("music.nether");
-
         registerReference("music.end.the_end");
         registerReference("music.end.end_highlands");
         registerReference("music.end.end_midlands");
@@ -66,8 +72,25 @@ public class SoundEventBiome {
         registerReference("music.end.end_barrens");
     }
 
-    private static void registerReference(final String id) {
-        final Identifier identifier = new Identifier(id);
-        Registry.registerReference(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
+    private static void registerMissingDimensions() {
+        // use "music.game" as overworld
+        registerReference("music.nether");
+    }
+
+    private static void registerMiscellaneous() {
+        registerReference(PLAYER_FLYING);
+        registerReference(PLAYER_RIDING);
+        registerReference(TIME_NIGHT);
+        registerReference(WEATHER_RAIN);
+        registerReference(WEATHER_THUNDER);
+    }
+
+    private static void registerReference(final String path) {
+        final Identifier id = new Identifier(path);
+        registerReference(id);
+    }
+
+    private static void registerReference(final Identifier id) {
+        Registry.registerReference(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 }
