@@ -25,6 +25,7 @@ public class HistoryPanel extends WBox {
         BiConsumer<Identifier, Button> onMusicClicked = (Identifier identifier, Button button) -> {
             PLAYED_MUSICS.remove(identifier);
             musics.remove(identifier);
+            this.layout();
         };
 
         ButtonListPanel playedListPanel = new ButtonListPanel(
