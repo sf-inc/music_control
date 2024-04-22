@@ -26,7 +26,7 @@
     "text.autoconfig.music_control.option.general.fallback.dimension.@Tooltip[0]": "Shall we try to play dimension music",
     "text.autoconfig.music_control.option.general.fallback.dimension.@Tooltip[1]": "when trying to play an empty event",
     "text.autoconfig.music_control.option.general.fallback.creative": "Creative music is played on fallback",
-    "text.autoconfig.music_control.option.general.fallback.creative.@Tooltip[0]": "Shall we try to play \"creative\" music",
+    "text.autoconfig.music_control.option.general.fallback.creative.@Tooltip[0]": "Shall we try to play \"Creative\" event",
     "text.autoconfig.music_control.option.general.fallback.creative.@Tooltip[1]": "when trying to play an empty event in creative",
     "text.autoconfig.music_control.option.general.fallback.creative.@Tooltip[2]": "instead of always playing creative music",
 
@@ -180,13 +180,13 @@
 
     "minecraft:music.creative": "Creative",
     "minecraft:music.credits": "Credits",
-    "minecraft:music.dragon": "Dragon",
+    "minecraft:music.dragon": "Dragon Fight",
     "minecraft:music.menu": "Menu",
     "minecraft:music.under_water": "Under Water",
 
-    "music.game": "Overworld",
-    "music.nether": "Nether",
-    "music.end": "End",
+    "music.game": "The Overworld",
+    "music.nether": "The Nether",
+    "music.end": "The End",
 
     "music.misc.flying": "Player Flying",
     "music.misc.riding": "Player Riding",
