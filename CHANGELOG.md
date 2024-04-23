@@ -4,6 +4,36 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.8
+### Fixes
+* Fix potential crash (#54)
+* Fix built-in resource packs not copying mod icon
+* Fix compatibility issue with Wilder Wild (#50), and maybe some others
+
+### Events
+* Properly save events contained in events
+* Add a panel to configure events of events
+* Add end biomes events
+* Add nether dimension event
+* Add misc events, such as rain and thunder
+* Add misc events config to choose the chance to play them
+
+### GUI
+* Buttons scroll the text if it's too long on hover
+* Add button scroll speed config
+* Text filter takes into account formatting, such as "Biome:"
+* Add tooltip to the text filter
+* Add filter operator config and set AND as default
+* Remove identifier character and add inverter character
+* Improve events formatting
+* GUI improvements to avoid confusion, such as instant list update
+
+### Other
+* Overall refactor of configs
+* Remove volume up to 200% config, as it's not supported anymore in Minecraft options
+* Replace game fallback with per dimension fallbacks
+* Keep discs in history when playing all/disc categories (#56)
+
 ## v1.7.1
 * Port to 1.20.4
 * Refine Chinese & Japanese translations
