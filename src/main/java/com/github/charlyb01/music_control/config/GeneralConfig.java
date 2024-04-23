@@ -40,15 +40,8 @@ public class GeneralConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip(count = 3)
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public MiscEventChance miscEventChance = MiscEventChance.PROPORTIONAL;
-    }
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public Volume volume = new Volume();
-
-    public static class Volume {
         @ConfigEntry.Gui.Tooltip()
         @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
-        public int increment = 5;
-        public boolean allowHighVolume = false;
+        public int volumeIncrement = 5;
     }
 }

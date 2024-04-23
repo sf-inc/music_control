@@ -37,11 +37,8 @@
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[2]": "all：随机播放所有音乐（包括唱片）",
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[3]": "disc：随机播放所有唱片音乐",
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[4]": "<namespace>：随机播放来自 <namespace> 的所有音乐",
-
-    "text.autoconfig.music_control.option.general.volume": "音量",
-    "text.autoconfig.music_control.option.general.volume.increment": "音量调整步长 [%%]",
-    "text.autoconfig.music_control.option.general.volume.increment.@Tooltip": "使用按键绑定时，一次调整音量的百分比",
-    "text.autoconfig.music_control.option.general.volume.allowHighVolume": "允许将音量设置为 200%",
+    "text.autoconfig.music_control.option.general.misc.volumeIncrement": "音量调整步长 [%%]",
+    "text.autoconfig.music_control.option.general.misc.volumeIncrement.@Tooltip": "使用按键绑定时，一次调整音量的百分比",
 
     "text.autoconfig.music_control.option.cosmetics.display": "显示",
     "text.autoconfig.music_control.option.cosmetics.display.atMusicStart": "播放音乐时显示名称",

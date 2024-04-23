@@ -37,11 +37,8 @@
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[2]": "all: すべての音楽をシャッフル（ディスクを含む）、",
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[3]": "disc: すべての音楽ディスクをシャッフル、",
     "text.autoconfig.music_control.option.general.misc.musicCategoryStart.@Tooltip[4]": "<namespace>: <namespace>からのすべての音楽をシャッフル",
-
-    "text.autoconfig.music_control.option.general.volume": "音量",
-    "text.autoconfig.music_control.option.general.volume.increment": "音量を増減させるパーセント",
-    "text.autoconfig.music_control.option.general.volume.increment.@Tooltip": "キーバインドを使用する場合",
-    "text.autoconfig.music_control.option.general.volume.allowHighVolume": "最大音量を200%まで設定可能にする",
+    "text.autoconfig.music_control.option.general.misc.volumeIncrement": "音量を増減させるパーセント",
+    "text.autoconfig.music_control.option.general.misc.volumeIncrement.@Tooltip": "キーバインドを使用する場合",
 
     "text.autoconfig.music_control.option.cosmetics.display": "ディスプレイ",
     "text.autoconfig.music_control.option.cosmetics.display.atMusicStart": "音楽が再生されるときにテキストを表示する",

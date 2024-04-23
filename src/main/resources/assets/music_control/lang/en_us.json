@@ -45,11 +45,8 @@
     "text.autoconfig.music_control.option.general.misc.miscEventChance.@Tooltip[0]": "FULL: always play misc events",
     "text.autoconfig.music_control.option.general.misc.miscEventChance.@Tooltip[1]": "HALF: 50% chance to play misc events",
     "text.autoconfig.music_control.option.general.misc.miscEventChance.@Tooltip[2]": "PROPORTIONAL: play misc events proportionally to number of misc music",
-
-    "text.autoconfig.music_control.option.general.volume": "Volume",
-    "text.autoconfig.music_control.option.general.volume.increment": "Volume percent to increment",
-    "text.autoconfig.music_control.option.general.volume.increment.@Tooltip": "When using keybindings",
-    "text.autoconfig.music_control.option.general.volume.allowHighVolume": "Allow setting volume up to 200%",
+    "text.autoconfig.music_control.option.general.misc.volumeIncrement": "Volume percent to increment",
+    "text.autoconfig.music_control.option.general.misc.volumeIncrement.@Tooltip": "When using keybindings",
 
     "text.autoconfig.music_control.option.cosmetics.display": "Display",
     "text.autoconfig.music_control.option.cosmetics.display.atMusicStart": "Display text when music is played",
