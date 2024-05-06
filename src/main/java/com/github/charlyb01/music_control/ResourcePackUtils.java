@@ -1,10 +1,11 @@
 package com.github.charlyb01.music_control;
 
-import blue.endless.jankson.JsonArray;
-import blue.endless.jankson.JsonObject;
-import blue.endless.jankson.JsonPrimitive;
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.SharedConstants;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 
+import static com.github.charlyb01.music_control.categories.Music.EVENTS_OF_EVENT;
 import static com.github.charlyb01.music_control.categories.Music.MUSIC_BY_EVENT;
 import static com.github.charlyb01.music_control.categories.MusicCategories.NAMESPACES;
 
@@ -32,6 +34,7 @@ public class ResourcePackUtils {
     protected static Path RESOURCEPACK_PATH = null;
     protected static Path ASSETS_PATH = null;
     protected static boolean WAS_CREATED = false;
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static boolean exists() {
         return MinecraftClient.getInstance().getResourcePackManager().getNames().stream().anyMatch(
@@ -61,27 +64,37 @@ public class ResourcePackUtils {
             }
         }
 
-        MUSIC_BY_EVENT.forEach((Identifier event, HashSet<Music> musics) -> {
-            JsonArray soundsJson = new JsonArray();
+        MUSIC_BY_EVENT.forEach((Identifier eventId, HashSet<Music> musics) -> {
+            JsonArray sounds = new JsonArray();
             for (Music music : musics) {
-                JsonObject musicJson = new JsonObject();
-                musicJson.put("name", JsonPrimitive.of(music.getIdentifier().toString()));
-                musicJson.put("stream", JsonPrimitive.of(true));
+                JsonObject fileSound = new JsonObject();
+                fileSound.addProperty("name", music.getIdentifier().toString());
+                fileSound.addProperty("stream", true);
 
-                soundsJson.add(musicJson);
+                sounds.add(fileSound);
+            }
+            HashSet<Identifier> events = EVENTS_OF_EVENT.get(eventId);
+            if (events != null) {
+                for (Identifier otherEventId : events) {
+                    JsonObject eventSound = new JsonObject();
+                    eventSound.addProperty("name", otherEventId.getPath());
+                    eventSound.addProperty("type", "event");
+
+                    sounds.add(eventSound);
+                }
             }
 
-            JsonObject soundEventJson = new JsonObject();
-            soundEventJson.put("category", JsonPrimitive.of("music"));
-            soundEventJson.put("replace", JsonPrimitive.of(true));
-            soundEventJson.put("sounds", soundsJson);
+            JsonObject soundEvent = new JsonObject();
+            soundEvent.addProperty("category", "music");
+            soundEvent.addProperty("replace", true);
+            soundEvent.add("sounds", sounds);
 
-            jsonObjects.get(event.getNamespace()).put(event.getPath(), soundEventJson);
+            jsonObjects.get(eventId.getNamespace()).add(eventId.getPath(), soundEvent);
         });
 
         fileWriters.forEach((String namespace, FileWriter fileWriter) -> {
             try (PrintWriter out = new PrintWriter(fileWriter)) {
-                out.write(jsonObjects.get(namespace).toJson(false, true));
+                out.write(GSON.toJson(jsonObjects.get(namespace)));
                 out.flush();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -157,12 +170,12 @@ public class ResourcePackUtils {
 
                 JsonObject data = new JsonObject();
                 JsonObject pack = new JsonObject();
-                pack.put("pack_format", JsonPrimitive.of(Long.valueOf(SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES))));
-                pack.put("description", JsonPrimitive.of(Text.translatable("music_control.metadata.description").getString()));
-                data.put("pack", pack);
+                pack.addProperty("pack_format", SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES));
+                pack.addProperty("description", Text.translatable("music_control.metadata.description").getString());
+                data.add("pack", pack);
 
                 try (PrintWriter out = new PrintWriter(new FileWriter(path.toFile()))) {
-                    out.write(data.toJson(false, true));
+                    out.write(GSON.toJson(data));
                     out.flush();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -179,12 +192,12 @@ public class ResourcePackUtils {
             return;
         }
 
-        Path sourcePath;
+        Optional<Path> sourcePath;
         Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(MusicControlClient.MOD_ID);
         if (modContainer.isPresent()) {
             Optional<String> iconPath = modContainer.get().getMetadata().getIconPath(400);
             if (iconPath.isPresent()) {
-                sourcePath = Path.of(iconPath.get());
+                sourcePath = modContainer.get().findPath(iconPath.get());
             } else {
                 return;
             }
@@ -192,25 +205,27 @@ public class ResourcePackUtils {
             return;
         }
 
-        if (!Files.exists(sourcePath)) {
+        if (sourcePath.isEmpty()) {
             return;
         }
 
         try {
-            Files.copy(sourcePath, targetPath);
+            Files.copy(sourcePath.get(), targetPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private static Path getSoundPath(final String namespace) {
-        Path path = ASSETS_PATH.resolve(namespace).resolve("sounds.json");
-        if (Files.exists(path)) {
-            return path;
+        Path dirPath = ASSETS_PATH.resolve(namespace);
+        Path filePath = dirPath.resolve("sounds.json");
+        if (Files.exists(filePath)) {
+            return filePath;
         }
 
         try {
-            return Files.createFile(path);
+            Files.createDirectories(dirPath);
+            return Files.createFile(filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }

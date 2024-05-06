@@ -1,8 +1,7 @@
 package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
-import com.github.charlyb01.music_control.config.ModConfig;
-import com.github.charlyb01.music_control.client.SoundEventBiome;
+import com.github.charlyb01.music_control.client.SoundEventRegistry;
 import com.github.charlyb01.music_control.mixin.SoundSetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.Sound;
@@ -33,7 +32,7 @@ public class MusicCategories {
             MUSIC_BY_EVENT.clear();
             EVENTS.clear();
 
-            SoundEventBiome.BIOME_MUSIC_MAP.clear();
+            SoundEventRegistry.BIOME_MUSIC_MAP.clear();
         } else {
             MusicControlClient.init = true;
         }
@@ -55,24 +54,23 @@ public class MusicCategories {
                 String[] split = event.getPath().split("\\.");
                 RegistryKey<Biome> biomeRegistryKey;
                 if (split.length > 0
-                        && (biomeRegistryKey = SoundEventBiome.NAME_BIOME_MAP.get(
+                        && (biomeRegistryKey = SoundEventRegistry.NAME_BIOME_MAP.get(
                                 new Identifier(event.getNamespace(), split[split.length-1]))) != null) {
-                    SoundEventBiome.BIOME_MUSIC_MAP.put(biomeRegistryKey, soundEvent);
+                    SoundEventRegistry.BIOME_MUSIC_MAP.put(biomeRegistryKey, soundEvent);
                 }
             }
         }
 
         for (Identifier eventIdentifier : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(eventIdentifier) != null) {
-
                 List<SoundContainer<Sound>> sounds = ((SoundSetAccessor) client.getSoundManager().get(eventIdentifier)).getSounds();
                 String namespace = eventIdentifier.getNamespace();
                 String path = eventIdentifier.getPath();
 
-                if (!path.contains("music"))
-                    continue;
+                if (!path.contains("music")) continue;
 
                 for (SoundContainer<Sound> soundContainer : sounds) {
+                    if (!(soundContainer instanceof Sound)) continue;
 
                     Identifier musicIdentifier = soundContainer.getSound(random).getIdentifier();
                     Music music = new Music(musicIdentifier);
@@ -103,9 +101,6 @@ public class MusicCategories {
             }
         }
 
-        MUSIC_BY_NAMESPACE.forEach((String namespace, ArrayList<Music> musicList) -> Collections.sort(musicList));
-        Collections.sort(EVENTS);
-
         if (!CATEGORIES.contains(MusicControlClient.currentCategory)) {
             MusicControlClient.currentCategory = DEFAULT_MUSICS;
         }
@@ -120,32 +115,5 @@ public class MusicCategories {
         }
 
         MusicControlClient.currentCategory = CATEGORIES.get(index);
-    }
-
-    public static Identifier getRandomMusicIdentifier(final ArrayList<Music> musics, final Random random) {
-        if (musics.isEmpty()) return null;
-
-        Identifier music;
-        int size = musics.size();
-
-        while (MusicCategories.PLAYED_MUSICS.size() >= Math.min(ModConfig.get().musicQueue, size)) {
-            MusicCategories.PLAYED_MUSICS.poll();
-        }
-
-        do {
-            music = musics.get(random.nextInt(size)).getIdentifier();
-        } while (MusicCategories.PLAYED_MUSICS.contains(music) && size > MusicCategories.PLAYED_MUSICS.size());
-
-        MusicCategories.PLAYED_MUSICS.add(music);
-        return music;
-    }
-
-    public static Identifier getMusicIdentifier(final Random random) {
-        if (MUSIC_BY_NAMESPACE.containsKey(MusicControlClient.currentCategory)) {
-            ArrayList<Music> musics = MUSIC_BY_NAMESPACE.get(MusicControlClient.currentCategory);
-            return getRandomMusicIdentifier(musics, random);
-        } else {
-            return null;
-        }
     }
 }

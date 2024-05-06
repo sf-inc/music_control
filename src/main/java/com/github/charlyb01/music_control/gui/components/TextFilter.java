@@ -1,23 +1,24 @@
 package com.github.charlyb01.music_control.gui.components;
 
-import java.util.function.Consumer;
-
 import io.github.cottonmc.cotton.gui.widget.WBox;
 import io.github.cottonmc.cotton.gui.widget.WButton;
-import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import net.minecraft.text.Text;
 
-public class TextFilter extends WBox {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
-    private static final Text DEFAULT_CLEAR_TEXT = Text.of("×");
-    private static final Text DEFAULT_PLACEHOLDER = Text.translatable("gui.component.filter.placeholder");
+public class TextFilter extends WBox {
+    public static int HEIGHT = 20;
+
+    private static final Text CLEAR_TEXT = Text.of("×");
+    private static final Text PLACEHOLDER_TEXT = Text.translatable("gui.component.filter.placeholder");
 
     private final Consumer<String> onChange;
-    private final WTextField textField;
-    private final WButton clearButton;
+    private final TextField textField;
 
-    private void runOnChange() {
+    public void runOnChange() {
         var task = new Runnable() {
             @Override
             public void run() {
@@ -29,31 +30,20 @@ public class TextFilter extends WBox {
 
     public TextFilter(
         final Consumer<String> onChange,
-        final int width, 
-        final int height
+        final int width
     ) {
         super(Axis.HORIZONTAL);
         this.onChange = onChange;
 
-        this.textField = new WTextField(DEFAULT_PLACEHOLDER);
-        this.textField.setEditable(true);
-        this.textField.setMaxLength(42);
-        this.textField.setText("");
+        ArrayList<Text> tooltips = new ArrayList<>(List.of(Text.translatable("gui.component.filter.tooltip"),
+                Text.translatable("gui.component.filter.tooltip1")));
+        this.textField = new TextField(PLACEHOLDER_TEXT, tooltips);
         this.textField.setChangedListener((s) -> runOnChange());
-        
-        this.clearButton = new WButton(DEFAULT_CLEAR_TEXT);
-        this.clearButton.setOnClick(() -> this.textField.setText(""));
 
-        this.add(textField);
-        this.add(clearButton);
+        WButton clearButton = new WButton(CLEAR_TEXT);
+        clearButton.setOnClick(() -> this.textField.setText(""));
 
-        this.setSize(width > -1 ? width : getWidth(), height > -1 ? height : getHeight());
-    }
-
-    @Override
-    public void setSize(int w, int h) {
-        super.setSize(w, h);
-        this.textField.setSize(w - this.clearButton.getWidth() - 6, h);
-        this.clearButton.setSize(this.clearButton.getWidth(), h);
+        this.add(this.textField, width - clearButton.getWidth() - 6, HEIGHT);
+        this.add(clearButton, clearButton.getWidth(), HEIGHT);
     }
 }

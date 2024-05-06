@@ -1,10 +1,12 @@
 package com.github.charlyb01.music_control.mixin;
 
+import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
 import com.google.common.collect.Multimap;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.sound.*;
@@ -48,17 +50,22 @@ public abstract class SoundSystemMixin implements PauseResumeIMixin {
 
     @Inject(method = "tick(Z)V", at = @At("HEAD"))
     private void alwaysTick(boolean paused, CallbackInfo ci) {
-        if (ModConfig.get().musicDontPause && paused) {
+        if (ModConfig.get().general.misc.musicDontPause && paused) {
             this.tick();
         }
     }
 
     @Inject(method = "play(Lnet/minecraft/client/sound/SoundInstance;)V", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/sound/SoundInstance;getSound()Lnet/minecraft/client/sound/Sound;"), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void printRecord(SoundInstance soundInstance, CallbackInfo ci, WeightedSoundSet weightedSoundSet, Identifier identifier, Sound sound) {
+    private void printRecord(SoundInstance soundInstance, CallbackInfo ci, @Local(ordinal = 0) Sound sound) {
         Identifier record = sound.getIdentifier();
-        if (identifier.getPath().contains("music_disc")) {
+        if (soundInstance.getId().getPath().contains("music_disc")) {
             final MinecraftClient client = MinecraftClient.getInstance();
             client.inGameHud.setRecordPlayingOverlay(Text.translatable(record.toString()));
+
+            if (MusicControlClient.currentCategory.equals(Music.ALL_MUSICS)
+                    || MusicControlClient.currentCategory.equals(Music.ALL_MUSIC_DISCS)) {
+                MusicCategories.PLAYED_MUSICS.add(record);
+            }
         }
     }
 

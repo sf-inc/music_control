@@ -2,7 +2,8 @@ package com.github.charlyb01.music_control.client;
 
 import com.github.charlyb01.music_control.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -32,10 +33,10 @@ public class MusicControlClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+        AutoConfig.register(ModConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));
         MusicKeyBinding.register();
-        SoundEventBiome.init();
+        SoundEventRegistry.init();
 
-        currentCategory = ModConfig.get().musicCategoryStart;
+        currentCategory = ModConfig.get().general.misc.musicCategoryStart;
     }
 }

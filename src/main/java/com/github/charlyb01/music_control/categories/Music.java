@@ -21,8 +21,11 @@ public class Music implements Comparable<Music> {
     public final static ArrayList<Identifier> EVENTS = new ArrayList<>();
     public final static ArrayList<Identifier> BLACK_LISTED_EVENTS = new ArrayList<>(List.of(new Identifier("music.overworld.old_growth_taiga")));
     public final static HashMap<Identifier, HashSet<Music>> MUSIC_BY_EVENT = new HashMap<>();
-    public final static HashMap<Identifier, Text> TRANSLATION_CACHE = new HashMap<>();
+    public final static HashMap<Identifier, HashSet<Identifier>> EVENTS_OF_EVENT = new HashMap<>();
+    public final static Comparator<Identifier> TRANSLATED_ORDER = (Identifier a, Identifier b) ->
+            String.CASE_INSENSITIVE_ORDER.compare(getTranslatedText(a).getString(), getTranslatedText(b).getString());
 
+    private final static HashMap<Identifier, Text> TRANSLATION_CACHE = new HashMap<>();
     private static Language LAST_LANG_INSTANCE = Language.getInstance();
 
     private final Identifier identifier;
@@ -86,15 +89,19 @@ public class Music implements Comparable<Music> {
             TRANSLATION_CACHE.put(identifier, Text.translatable(idString));
 
         // Get official biome translation for biomes' music
-        // And format it
-        } else if (path.startsWith("music.overworld") || path.startsWith("music.nether")) {
+        } else if (MusicIdentifier.isBiome(identifier)) {
             TRANSLATION_CACHE.put(identifier, Text.translatable(
                     "music.format.biome", Text.translatable(
                             "biome.minecraft." + path.split("\\.", 3)[2])));
-        // Format disc
-        } else if (path.startsWith("music_disc")) {
+        } else if (MusicIdentifier.isDimension(identifier)) {
             TRANSLATION_CACHE.put(identifier, Text.translatable(
-                    "music.format.disc", Text.translatable(path)));
+                    "music.format.dimension", Text.translatable(path)));
+        } else if (MusicIdentifier.isDisc(identifier)) {
+            TRANSLATION_CACHE.put(identifier, Text.translatable(
+                "music.format.disc", Text.translatable(path)));
+        } else if (MusicIdentifier.isMisc(identifier)) {
+            TRANSLATION_CACHE.put(identifier, Text.translatable(
+                    "music.format.misc", Text.translatable(path)));
         }
 
         return TRANSLATION_CACHE.getOrDefault(identifier, Text.translatable(idString));

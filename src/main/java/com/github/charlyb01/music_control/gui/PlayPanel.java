@@ -3,7 +3,10 @@ package com.github.charlyb01.music_control.gui;
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
-import io.github.cottonmc.cotton.gui.widget.*;
+import com.github.charlyb01.music_control.gui.components.Button;
+import com.github.charlyb01.music_control.gui.components.SoundListPanel;
+import io.github.cottonmc.cotton.gui.widget.WBox;
+import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
@@ -16,9 +19,8 @@ import java.util.function.Consumer;
 public class PlayPanel extends WBox {
     protected final static Text NONE_TEXT = Text.translatable("music.none");
     protected final static String SELECTED_KEY = "gui.music_control.label.selected";
-    protected static boolean isEvent = false;
 
-    protected WButton hoveredButton;
+    protected Button hoveredButton;
 
     public PlayPanel() {
         super(Axis.VERTICAL);
@@ -27,7 +29,7 @@ public class PlayPanel extends WBox {
         WLabel selected = new WLabel(Text.translatable(SELECTED_KEY, NONE_TEXT));
         selected.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
-        BiConsumer<Identifier, WButton> onSoundClicked = (Identifier identifier, WButton button) -> {
+        BiConsumer<Identifier, Button> onSoundClicked = (Identifier identifier, Button button) -> {
             if (identifier.equals(MusicControlClient.musicSelected)) {
                 MusicControlClient.nextMusic = false;
                 MusicControlClient.musicSelected = null;
@@ -38,28 +40,27 @@ public class PlayPanel extends WBox {
                 selected.setText(Text.translatable(SELECTED_KEY, Music.getTranslatedText(identifier)));
             }
 
-            if (hoveredButton != null) {
-                hoveredButton.releaseFocus();
-                if (hoveredButton.equals(button)) {
-                    hoveredButton = null;
+            if (this.hoveredButton != null) {
+                this.hoveredButton.releaseFocus();
+                if (this.hoveredButton.equals(button)) {
+                    this.hoveredButton = null;
                 } else {
-                    hoveredButton = button;
-                    hoveredButton.requestFocus();
+                    this.hoveredButton = button;
+                    this.hoveredButton.requestFocus();
                 }
             } else {
-                hoveredButton = button;
-                hoveredButton.requestFocus();
+                this.hoveredButton = button;
+                this.hoveredButton.requestFocus();
             }
         };
 
         Consumer<Boolean> onToggle = (Boolean isEvent) -> {
-            PlayPanel.isEvent = isEvent;
-            if (hoveredButton != null) {
-                hoveredButton.requestFocus();
+            if (this.hoveredButton != null) {
+                this.hoveredButton.requestFocus();
             }
         };
 
-        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().width, PlayPanel.isEvent));
-        this.add(selected, ModConfig.get().width, 20);
+        this.add(new SoundListPanel(onSoundClicked, onSoundClicked, onToggle, ModConfig.get().cosmetics.gui.width, false));
+        this.add(selected, ModConfig.get().cosmetics.gui.width, 20);
     }
 }

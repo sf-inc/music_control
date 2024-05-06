@@ -1,8 +1,10 @@
-package com.github.charlyb01.music_control.gui;
+package com.github.charlyb01.music_control.gui.components;
 
 import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.config.ModConfig;
-import io.github.cottonmc.cotton.gui.widget.*;
+import io.github.cottonmc.cotton.gui.widget.WBox;
+import io.github.cottonmc.cotton.gui.widget.WCardPanel;
+import io.github.cottonmc.cotton.gui.widget.WToggleButton;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -14,10 +16,10 @@ import java.util.function.Consumer;
 import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class SoundListPanel extends WBox {
-    public SoundListPanel(final BiConsumer<Identifier, WButton> onMusicClicked,
-                          final BiConsumer<Identifier, WButton> onEventClicked,
+    public SoundListPanel(final BiConsumer<Identifier, Button> onMusicClicked,
+                          final BiConsumer<Identifier, Button> onEventClicked,
                           final Consumer<Boolean> onToggle,
-                          final int width, final boolean isToggled) {
+                          final int width, final boolean isEventList) {
         super(Axis.VERTICAL);
 
         ArrayList<Identifier> musics = new ArrayList<>(MUSIC_BY_NAMESPACE.get(ALL_MUSICS).size());
@@ -25,17 +27,17 @@ public class SoundListPanel extends WBox {
             musics.add(music.getIdentifier());
         }
 
-        ButtonListPanel musicListPanel = new ButtonListPanel(musics, onMusicClicked, width, ModConfig.get().height - 20, true);
-        ButtonListPanel eventListPanel = new ButtonListPanel(EVENTS, onEventClicked, width, ModConfig.get().height - 20, true);
+        ButtonListPanel musicListPanel = new ButtonListPanel(musics, onMusicClicked, width, ModConfig.get().cosmetics.gui.height - 20);
+        ButtonListPanel eventListPanel = new ButtonListPanel(EVENTS, onEventClicked, width, ModConfig.get().cosmetics.gui.height - 20);
         WCardPanel listPanel = new WCardPanel();
         listPanel.add(musicListPanel);
         listPanel.add(eventListPanel);
-        if (isToggled) {
+        if (isEventList) {
             listPanel.setSelectedCard(eventListPanel);
         }
 
         WToggleButton toggleButton = new WToggleButton(Text.translatable("gui.music_control.toggle.musicEvent"));
-        toggleButton.setToggle(isToggled);
+        toggleButton.setToggle(isEventList);
         toggleButton.setOnToggle((Boolean isEvent) -> {
             onToggle.accept(isEvent);
             if (isEvent) {

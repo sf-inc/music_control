@@ -37,8 +37,6 @@ dependencies {
     }
 
     modImplementation include("io.github.cottonmc:LibGui:${project.libgui_version}")
-
-    implementation "blue.endless:jankson:${project.jankson_version}"
 }
 
 base {

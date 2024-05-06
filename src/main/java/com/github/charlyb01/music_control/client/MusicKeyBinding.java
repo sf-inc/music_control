@@ -138,17 +138,17 @@ public class MusicKeyBinding {
             }
 
             while (volumeUp.wasPressed()) {
-                int volume = Math.round(client.options.getSoundVolume(SoundCategory.MUSIC) * 100.F);
-                volume = Math.min(volume + ModConfig.get().volumeIncrement, ModConfig.get().allowHighVolume ? 200 : 100);
-                ((GameOptionsAccess) client.options).music_control$setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.0);
+                int volume = Math.round(client.options.getSoundVolume(SoundCategory.MUSIC) * 100.f);
+                volume = Math.min(volume + ModConfig.get().general.misc.volumeIncrement, 100);
+                ((GameOptionsAccess) client.options).music_control$setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.f);
                 client.options.write();
                 Utils.print(client, Text.translatable("music.volume", volume));
             }
 
             while (volumeDown.wasPressed()) {
-                int volume = Math.round(client.options.getSoundVolume(SoundCategory.MUSIC) * 100.F);
-                volume = Math.max(volume - ModConfig.get().volumeIncrement, 0);
-                ((GameOptionsAccess) client.options).music_control$setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.0);
+                int volume = Math.round(client.options.getSoundVolume(SoundCategory.MUSIC) * 100.f);
+                volume = Math.max(volume - ModConfig.get().general.misc.volumeIncrement, 0);
+                ((GameOptionsAccess) client.options).music_control$setSoundCategoryVolume(SoundCategory.MUSIC, volume / 100.f);
                 client.options.write();
                 Utils.print(client, Text.translatable("music.volume", volume));
             }
