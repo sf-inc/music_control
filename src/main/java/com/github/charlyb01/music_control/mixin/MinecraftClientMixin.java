@@ -59,9 +59,7 @@ public class MinecraftClientMixin {
     private MusicSound getMusicFromMap(final MusicSound elseOption) {
         RegistryEntry<Biome> registryEntry = this.player.getWorld().getBiome(this.player.getBlockPos());
         RegistryKey<Biome> registryKey = registryEntry.getKey().orElse(null);
-        if (ResourcePackUtils.wasCreatedOrIsEnabled()
-                && registryKey != null
-                && SoundEventRegistry.BIOME_MUSIC_MAP.containsKey(registryKey)) {
+        if (registryKey != null && SoundEventRegistry.BIOME_MUSIC_MAP.containsKey(registryKey)) {
             return MusicType.createIngameMusic(RegistryEntry.of(SoundEventRegistry.BIOME_MUSIC_MAP.get(registryKey)));
         }
 

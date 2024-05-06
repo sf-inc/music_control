@@ -112,13 +112,15 @@ public abstract class MusicTrackerMixin {
             MusicControlClient.currentMusic = MusicIdentifier.getFromCategory(this.random);
         }
 
-        // music in no event and no/default namespace
-        // should try play with default player
-        this.current = PositionedSoundInstance.music(MusicControlClient.currentMusic == null && type != null
-                ? type.getSound().value()
-                : SoundEvent.of(MusicControlClient.currentMusic));
+        if (MusicControlClient.currentMusic != null || type != null) {
+            // music in no event and no/default namespace
+            // should try play with default player
+            this.current = PositionedSoundInstance.music(MusicControlClient.currentMusic == null
+                    ? type.getSound().value()
+                    : SoundEvent.of(MusicControlClient.currentMusic));
+        }
 
-        if (!this.current.getId().equals(SoundManager.MISSING_SOUND.getIdentifier())) {
+        if (this.current.getSound() != SoundManager.MISSING_SOUND) {
             this.client.getSoundManager().play(this.current);
             MusicControlClient.inCustomTracking = true;
         }
