@@ -1,7 +1,7 @@
 package com.github.charlyb01.music_control.mixin;
 
-import com.github.charlyb01.music_control.ResourcePackUtils;
 import com.github.charlyb01.music_control.client.SoundEventRegistry;
+import com.github.charlyb01.music_control.config.DimensionEventChance;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.MinecraftClient;
@@ -38,14 +38,14 @@ public class MinecraftClientMixin {
 
     @ModifyReturnValue(method = "getMusicType", at = @At(value = "RETURN", ordinal = 2))
     private MusicSound useEndMusic(MusicSound original) {
-        return ModConfig.get().general.fallback.dimension
+        return ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.FALLBACK)
                 ? getMusicFromMap(original)
                 : original;
     }
 
     @ModifyReturnValue(method = "getMusicType", at = @At(value = "RETURN", ordinal = 4))
     private MusicSound cancelCreativeBeforeBiome(MusicSound original) {
-        return ModConfig.get().general.fallback.creative
+        return ModConfig.get().general.event.creativeEventFallback
                 ? getMusicFromMap(original)
                 : original;
     }

@@ -2,6 +2,7 @@ package com.github.charlyb01.music_control.categories;
 
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.client.SoundEventRegistry;
+import com.github.charlyb01.music_control.config.DimensionEventChance;
 import com.github.charlyb01.music_control.config.MiscEventChance;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,27 +22,47 @@ public class MusicIdentifier {
 
     public static ArrayList<Music> getListFromEvent(final Identifier eventId, final PlayerEntity player,
                                                     final World world, final Random random) {
-        if (ModConfig.get().general.misc.miscEventChance.equals(MiscEventChance.HALF)
+        ArrayList<Music> musics = new ArrayList<>();
+
+        if (ModConfig.get().general.event.miscEventChance.equals(MiscEventChance.HALF)
                 && random.nextBoolean()) {
-            return getListFromEvent(eventId);
+            musics.addAll(getListFromEvent(eventId));
+            addDimensionEvent(musics, world, random);
+            return musics;
         }
 
         boolean playerNotNull = player != null;
 
-        ArrayList<Music> musics = new ArrayList<>();
         if (playerNotNull && player.isFallFlying()) musics.addAll(getListFromEvent(SoundEventRegistry.PLAYER_FLYING));
         if (playerNotNull && player.hasVehicle()) musics.addAll(getListFromEvent(SoundEventRegistry.PLAYER_RIDING));
         if (world.isNight()) musics.addAll(getListFromEvent(SoundEventRegistry.TIME_NIGHT));
         if (world.isRaining()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_RAIN));
         if (world.isThundering()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_THUNDER));
 
-        if (!ModConfig.get().general.misc.miscEventChance.equals(MiscEventChance.PROPORTIONAL)
+        if (!ModConfig.get().general.event.miscEventChance.equals(MiscEventChance.PROPORTIONAL)
                 && !musics.isEmpty()) {
             return musics;
         }
 
         musics.addAll(getListFromEvent(eventId));
+        addDimensionEvent(musics, world, random);
         return musics;
+    }
+
+    private static void addDimensionEvent(final ArrayList<Music> musics, final World world, final Random random) {
+        if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.FALLBACK)) return;
+        if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.NEVER)) return;
+
+        ArrayList<Music> dimensionMusic = getListFromEvent(getDimension(world.getRegistryKey()));
+        if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.HALF)) {
+            if (random.nextBoolean()) {
+                return;
+            } else if (!dimensionMusic.isEmpty()){
+                musics.clear();
+            }
+        }
+
+        musics.addAll(dimensionMusic);
     }
 
     public static ArrayList<Music> getListFromEvent(final Identifier eventId) {
@@ -50,7 +71,7 @@ public class MusicIdentifier {
         ArrayList<Identifier> eventsToCheck = new ArrayList<>();
         eventsToCheck.add(eventId);
         while (!eventsToCheck.isEmpty()) {
-            Identifier event = eventsToCheck.remove(0);
+            Identifier event = eventsToCheck.removeFirst();
             if (checkedEvents.contains(event)) continue;
 
             musics.addAll(MUSIC_BY_EVENT.get(event));
@@ -90,22 +111,26 @@ public class MusicIdentifier {
         }
     }
 
+    private static Identifier getDimension(final RegistryKey<World> world) {
+        Identifier eventId;
+        if (world.equals(World.NETHER)) {
+            eventId = new Identifier("music.nether");
+        } else if (world.equals(World.END)) {
+            eventId = SoundEvents.MUSIC_END.value().getId();
+        } else {
+            eventId = SoundEvents.MUSIC_GAME.value().getId();
+        }
+        return eventId;
+    }
+
     public static Identifier getFallback(final RegistryKey<World> world, final boolean creative, final Random random) {
         ArrayList<Music> musics = null;
-        if (ModConfig.get().general.fallback.dimension) {
-            Identifier eventId;
-            if (world.equals(World.NETHER)) {
-                eventId = new Identifier("music.nether");
-            } else if (world.equals(World.END)) {
-                eventId = SoundEvents.MUSIC_END.value().getId();
-            } else {
-                eventId = SoundEvents.MUSIC_GAME.value().getId();
-            }
-            musics = getListFromEvent(eventId);
+        if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.FALLBACK)) {
+            musics = getListFromEvent(getDimension(world));
         }
 
         if ((musics == null || musics.isEmpty())
-                && ModConfig.get().general.fallback.creative
+                && ModConfig.get().general.event.creativeEventFallback
                 && creative) {
             musics = getListFromEvent(SoundEvents.MUSIC_CREATIVE.value().getId());
         }
