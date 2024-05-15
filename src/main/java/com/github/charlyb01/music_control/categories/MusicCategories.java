@@ -38,8 +38,8 @@ public class MusicCategories {
         }
 
         Random random = Random.createLocal();
-        ArrayList<Music> musics = new ArrayList<>();
-        ArrayList<Music> discs = new ArrayList<>();
+        HashSet<Music> musics = new HashSet<>();
+        HashSet<Music> discs = new HashSet<>();
         MUSIC_BY_NAMESPACE.put(ALL_MUSICS, musics);
         MUSIC_BY_NAMESPACE.put(ALL_MUSIC_DISCS, discs);
 
@@ -74,9 +74,11 @@ public class MusicCategories {
 
                     Identifier musicIdentifier = soundContainer.getSound(random).getIdentifier();
                     Music music = new Music(musicIdentifier);
+                    Optional<Music> optionalMusic = musics.stream()
+                            .filter(music1 -> music1.getIdentifier().equals(musicIdentifier)).findAny();
 
-                    if (musics.contains(music)) {
-                        music = musics.get(musics.indexOf(music));
+                    if (optionalMusic.isPresent()) {
+                        music = optionalMusic.get();
                         music.addEvent(eventIdentifier);
                         continue;
                     }
@@ -88,10 +90,9 @@ public class MusicCategories {
                     music.addEvent(eventIdentifier);
 
                     if (!namespace.equals("minecraft")) {
-                        ArrayList<Music> customMusics = MUSIC_BY_NAMESPACE.computeIfAbsent(namespace, k -> new ArrayList<>());
-                        if (!customMusics.contains(music)) {
-                            customMusics.add(music);
-                        }
+                        HashSet<Music> customMusics = MUSIC_BY_NAMESPACE.computeIfAbsent(namespace, k -> new HashSet<>());
+                        customMusics.add(music);
+
                         if (!CATEGORIES.contains(namespace)) {
                             CATEGORIES.add(namespace);
                             NAMESPACES.add(namespace);

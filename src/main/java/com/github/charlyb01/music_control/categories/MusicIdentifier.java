@@ -20,9 +20,9 @@ import static com.github.charlyb01.music_control.categories.Music.*;
 public class MusicIdentifier {
     private MusicIdentifier() {}
 
-    public static ArrayList<Music> getListFromEvent(final Identifier eventId, final PlayerEntity player,
+    public static HashSet<Music> getListFromEvent(final Identifier eventId, final PlayerEntity player,
                                                     final World world, final Random random) {
-        ArrayList<Music> musics = new ArrayList<>();
+        HashSet<Music> musics = new HashSet<>();
 
         if (ModConfig.get().general.event.miscEventChance.equals(MiscEventChance.HALF)
                 && random.nextBoolean()) {
@@ -49,11 +49,11 @@ public class MusicIdentifier {
         return musics;
     }
 
-    private static void addDimensionEvent(final ArrayList<Music> musics, final World world, final Random random) {
+    private static void addDimensionEvent(final HashSet<Music> musics, final World world, final Random random) {
         if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.FALLBACK)) return;
         if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.NEVER)) return;
 
-        ArrayList<Music> dimensionMusic = getListFromEvent(getDimension(world.getRegistryKey()));
+        HashSet<Music> dimensionMusic = getListFromEvent(getDimension(world.getRegistryKey()));
         if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.HALF)) {
             if (random.nextBoolean()) {
                 return;
@@ -65,8 +65,8 @@ public class MusicIdentifier {
         musics.addAll(dimensionMusic);
     }
 
-    public static ArrayList<Music> getListFromEvent(final Identifier eventId) {
-        ArrayList<Music> musics = new ArrayList<>();
+    public static HashSet<Music> getListFromEvent(final Identifier eventId) {
+        HashSet<Music> musics = new HashSet<>();
         HashSet<Identifier> checkedEvents = new HashSet<>();
         ArrayList<Identifier> eventsToCheck = new ArrayList<>();
         eventsToCheck.add(eventId);
@@ -84,7 +84,7 @@ public class MusicIdentifier {
         return musics;
     }
 
-    public static Identifier getFromList(final ArrayList<Music> musics, final Random random) {
+    public static Identifier getFromList(final HashSet<Music> musics, final Random random) {
         if (musics.isEmpty()) return null;
 
         Identifier music;
@@ -94,9 +94,10 @@ public class MusicIdentifier {
             MusicCategories.PLAYED_MUSICS.poll();
         }
 
+        ArrayList<Music> musicList = new ArrayList<>(musics);
         do {
-            music = musics.get(random.nextInt(size)).getIdentifier();
-        } while (MusicCategories.PLAYED_MUSICS.contains(music) && size > MusicCategories.PLAYED_MUSICS.size());
+            music = musicList.remove(random.nextInt(size--)).getIdentifier();
+        } while (MusicCategories.PLAYED_MUSICS.contains(music));
 
         MusicCategories.PLAYED_MUSICS.add(music);
         return music;
@@ -104,7 +105,7 @@ public class MusicIdentifier {
 
     public static Identifier getFromCategory(final Random random) {
         if (MUSIC_BY_NAMESPACE.containsKey(MusicControlClient.currentCategory)) {
-            ArrayList<Music> musics = MUSIC_BY_NAMESPACE.get(MusicControlClient.currentCategory);
+            HashSet<Music> musics = MUSIC_BY_NAMESPACE.get(MusicControlClient.currentCategory);
             return getFromList(musics, random);
         } else {
             return null;
@@ -124,7 +125,7 @@ public class MusicIdentifier {
     }
 
     public static Identifier getFallback(final RegistryKey<World> world, final boolean creative, final Random random) {
-        ArrayList<Music> musics = null;
+        HashSet<Music> musics = null;
         if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.FALLBACK)) {
             musics = getListFromEvent(getDimension(world));
         }
