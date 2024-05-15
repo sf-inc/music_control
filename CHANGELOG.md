@@ -4,6 +4,11 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.8.1
+* Add dimension event chance, replacing dimension fallback config
+* Use proper modded biome naming
+* Remove music duplicates in list of playable music
+
 ## v1.8
 ### Fixes
 * Fix potential crash (#54)
