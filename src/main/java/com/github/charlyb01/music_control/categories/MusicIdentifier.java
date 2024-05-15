@@ -71,7 +71,7 @@ public class MusicIdentifier {
         ArrayList<Identifier> eventsToCheck = new ArrayList<>();
         eventsToCheck.add(eventId);
         while (!eventsToCheck.isEmpty()) {
-            Identifier event = eventsToCheck.removeFirst();
+            Identifier event = eventsToCheck.remove(0);
             if (checkedEvents.contains(event)) continue;
 
             musics.addAll(MUSIC_BY_EVENT.get(event));

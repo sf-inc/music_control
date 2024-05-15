@@ -37,12 +37,12 @@ public class ResourcePackUtils {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static boolean exists() {
-        return MinecraftClient.getInstance().getResourcePackManager().getIds().stream().anyMatch(
+        return MinecraftClient.getInstance().getResourcePackManager().getNames().stream().anyMatch(
                 name -> name.startsWith(RESOURCEPACK_PROFILE_NAME));
     }
 
     public static boolean wasCreatedOrIsEnabled() {
-        return WAS_CREATED || MinecraftClient.getInstance().getResourcePackManager().getEnabledIds().stream().anyMatch(
+        return WAS_CREATED || MinecraftClient.getInstance().getResourcePackManager().getEnabledNames().stream().anyMatch(
                 name -> name.startsWith(RESOURCEPACK_PROFILE_NAME));
     }
 
@@ -154,7 +154,7 @@ public class ResourcePackUtils {
     }
 
     private static void setPaths() {
-        Optional<String> selectedResourcePack = MinecraftClient.getInstance().getResourcePackManager().getEnabledIds().stream()
+        Optional<String> selectedResourcePack = MinecraftClient.getInstance().getResourcePackManager().getEnabledNames().stream()
                 .filter(name -> name.startsWith(RESOURCEPACK_PROFILE_NAME)).findFirst();
         selectedResourcePack.ifPresent(name -> {
             RESOURCEPACK_PATH = MinecraftClient.getInstance().getResourcePackDir().resolve(name.substring(5));
