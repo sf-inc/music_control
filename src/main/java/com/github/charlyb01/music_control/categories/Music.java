@@ -17,9 +17,9 @@ public class Music implements Comparable<Music> {
     public final static Identifier EMPTY_MUSIC_ID = SoundManager.MISSING_SOUND.getIdentifier();
     public final static String EMPTY_MUSIC = EMPTY_MUSIC_ID.toString();
 
-    public final static HashMap<String, ArrayList<Music>> MUSIC_BY_NAMESPACE = new HashMap<>();
-    public final static ArrayList<Identifier> EVENTS = new ArrayList<>();
-    public final static ArrayList<Identifier> BLACK_LISTED_EVENTS = new ArrayList<>(List.of(new Identifier("music.overworld.old_growth_taiga")));
+    public final static HashMap<String, HashSet<Music>> MUSIC_BY_NAMESPACE = new HashMap<>();
+    public final static HashSet<Identifier> EVENTS = new HashSet<>();
+    public final static HashSet<Identifier> BLACK_LISTED_EVENTS = new HashSet<>(List.of(new Identifier("music.overworld.old_growth_taiga")));
     public final static HashMap<Identifier, HashSet<Music>> MUSIC_BY_EVENT = new HashMap<>();
     public final static HashMap<Identifier, HashSet<Identifier>> EVENTS_OF_EVENT = new HashMap<>();
     public final static Comparator<Identifier> TRANSLATED_ORDER = (Identifier a, Identifier b) ->
@@ -37,8 +37,9 @@ public class Music implements Comparable<Music> {
     }
 
     public static Music getMusicFromIdentifier(final Identifier identifier) {
-        int index = MUSIC_BY_NAMESPACE.get(ALL_MUSICS).indexOf(new Music(identifier));
-        return index < 0 ? null : MUSIC_BY_NAMESPACE.get(ALL_MUSICS).get(index);
+        Optional<Music> music = MUSIC_BY_NAMESPACE.get(ALL_MUSICS).stream()
+                .filter(music1 -> music1.getIdentifier().equals(identifier)).findAny();
+        return music.orElse(null);
     }
 
     public Identifier getIdentifier() {
@@ -92,7 +93,7 @@ public class Music implements Comparable<Music> {
         } else if (MusicIdentifier.isBiome(identifier)) {
             TRANSLATION_CACHE.put(identifier, Text.translatable(
                     "music.format.biome", Text.translatable(
-                            "biome.minecraft." + path.split("\\.", 3)[2])));
+                            "biome." + identifier.getNamespace() + "." + path.split("\\.", 3)[2])));
         } else if (MusicIdentifier.isDimension(identifier)) {
             TRANSLATION_CACHE.put(identifier, Text.translatable(
                     "music.format.dimension", Text.translatable(path)));

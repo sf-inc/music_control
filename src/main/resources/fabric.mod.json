@@ -28,7 +28,7 @@
   ],
   "accessWidener": "music_control.accesswidener",
   "depends": {
-    "fabricloader": ">=0.12.6",
+    "fabricloader": ">=0.15.11",
     "fabric-api": "*"
   },
   "custom": {

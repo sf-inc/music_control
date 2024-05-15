@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import static com.github.charlyb01.music_control.categories.Music.EMPTY_MUSIC;
 
@@ -94,7 +94,7 @@ public abstract class MusicTrackerMixin {
                 && Music.MUSIC_BY_EVENT.containsKey(eventId)) {
             // normal procedure
             boolean creative = this.client.player != null && this.client.player.isCreative();
-            final ArrayList<Music> musics = MusicIdentifier.getListFromEvent(
+            final HashSet<Music> musics = MusicIdentifier.getListFromEvent(
                     eventId, this.client.player, this.client.world, this.random);
 
             if (musics.isEmpty()) {

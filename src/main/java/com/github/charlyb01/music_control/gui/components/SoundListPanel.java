@@ -22,13 +22,14 @@ public class SoundListPanel extends WBox {
                           final int width, final boolean isEventList) {
         super(Axis.VERTICAL);
 
+        ArrayList<Identifier> events = new ArrayList<>(EVENTS);
         ArrayList<Identifier> musics = new ArrayList<>(MUSIC_BY_NAMESPACE.get(ALL_MUSICS).size());
         for (Music music : MUSIC_BY_NAMESPACE.get(ALL_MUSICS)) {
             musics.add(music.getIdentifier());
         }
 
         ButtonListPanel musicListPanel = new ButtonListPanel(musics, onMusicClicked, width, ModConfig.get().cosmetics.gui.height - 20);
-        ButtonListPanel eventListPanel = new ButtonListPanel(EVENTS, onEventClicked, width, ModConfig.get().cosmetics.gui.height - 20);
+        ButtonListPanel eventListPanel = new ButtonListPanel(events, onEventClicked, width, ModConfig.get().cosmetics.gui.height - 20);
         WCardPanel listPanel = new WCardPanel();
         listPanel.add(musicListPanel);
         listPanel.add(eventListPanel);

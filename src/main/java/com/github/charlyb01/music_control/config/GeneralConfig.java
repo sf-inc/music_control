@@ -18,13 +18,17 @@ public class GeneralConfig implements ConfigData {
     }
 
     @ConfigEntry.Gui.CollapsibleObject
-    public Fallback fallback = new Fallback();
+    public Event event = new Event();
 
-    public static class Fallback {
-        @ConfigEntry.Gui.Tooltip(count = 2)
-        public boolean dimension = true;
+    public static class Event {
         @ConfigEntry.Gui.Tooltip(count = 3)
-        public boolean creative = true;
+        public boolean creativeEventFallback = true;
+        @ConfigEntry.Gui.Tooltip(count = 4)
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public DimensionEventChance dimensionEventChance = DimensionEventChance.PROPORTIONAL;
+        @ConfigEntry.Gui.Tooltip(count = 3)
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public MiscEventChance miscEventChance = MiscEventChance.PROPORTIONAL;
     }
 
     @ConfigEntry.Gui.CollapsibleObject
@@ -37,9 +41,6 @@ public class GeneralConfig implements ConfigData {
         public int musicQueue = 10;
         @ConfigEntry.Gui.Tooltip(count = 5)
         public String musicCategoryStart = Music.DEFAULT_MUSICS;
-        @ConfigEntry.Gui.Tooltip(count = 3)
-        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-        public MiscEventChance miscEventChance = MiscEventChance.PROPORTIONAL;
         @ConfigEntry.Gui.Tooltip()
         @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
         public int volumeIncrement = 5;
