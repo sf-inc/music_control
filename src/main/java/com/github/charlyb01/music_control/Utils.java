@@ -5,6 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 
 public class Utils {
     private Utils() {}
@@ -26,5 +27,10 @@ public class Utils {
                 }
             }
         }
+    }
+
+    public static boolean isNight(final World world) {
+        long time = world.getTimeOfDay() % 24000L;
+        return time > 13000L && time < 23000L;
     }
 }

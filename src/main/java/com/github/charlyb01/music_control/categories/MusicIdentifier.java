@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import static com.github.charlyb01.music_control.Utils.isNight;
 import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class MusicIdentifier {
@@ -35,7 +36,7 @@ public class MusicIdentifier {
 
         if (playerNotNull && player.isFallFlying()) musics.addAll(getListFromEvent(SoundEventRegistry.PLAYER_FLYING));
         if (playerNotNull && player.hasVehicle()) musics.addAll(getListFromEvent(SoundEventRegistry.PLAYER_RIDING));
-        if (world.isNight()) musics.addAll(getListFromEvent(SoundEventRegistry.TIME_NIGHT));
+        if (isNight(world)) musics.addAll(getListFromEvent(SoundEventRegistry.TIME_NIGHT));
         if (world.isRaining()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_RAIN));
         if (world.isThundering()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_THUNDER));
 
