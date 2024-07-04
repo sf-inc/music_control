@@ -4,6 +4,9 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.8.2
+* Fix night music not triggered
+
 ## v1.8.1
 * Add dimension event chance, replacing dimension fallback config
 * Use proper modded biome naming
