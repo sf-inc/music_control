@@ -116,7 +116,7 @@ public class MusicIdentifier {
     private static Identifier getDimension(final RegistryKey<World> world) {
         Identifier eventId;
         if (world.equals(World.NETHER)) {
-            eventId = new Identifier("music.nether");
+            eventId = Identifier.ofVanilla("music.nether");
         } else if (world.equals(World.END)) {
             eventId = SoundEvents.MUSIC_END.value().getId();
         } else {

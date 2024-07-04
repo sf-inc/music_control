@@ -19,7 +19,7 @@ public class Music implements Comparable<Music> {
 
     public final static HashMap<String, HashSet<Music>> MUSIC_BY_NAMESPACE = new HashMap<>();
     public final static HashSet<Identifier> EVENTS = new HashSet<>();
-    public final static HashSet<Identifier> BLACK_LISTED_EVENTS = new HashSet<>(List.of(new Identifier("music.overworld.old_growth_taiga")));
+    public final static HashSet<Identifier> BLACK_LISTED_EVENTS = new HashSet<>(List.of(Identifier.ofVanilla("music.overworld.old_growth_taiga")));
     public final static HashMap<Identifier, HashSet<Music>> MUSIC_BY_EVENT = new HashMap<>();
     public final static HashMap<Identifier, HashSet<Identifier>> EVENTS_OF_EVENT = new HashMap<>();
     public final static Comparator<Identifier> TRANSLATED_ORDER = (Identifier a, Identifier b) ->

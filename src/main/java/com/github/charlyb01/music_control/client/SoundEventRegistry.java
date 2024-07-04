@@ -13,11 +13,11 @@ public class SoundEventRegistry {
     public static final HashMap<RegistryKey<Biome>, SoundEvent> BIOME_MUSIC_MAP = new HashMap<>();
     public static final HashMap<Identifier, RegistryKey<Biome>> NAME_BIOME_MAP = new HashMap<>();
 
-    public static final Identifier PLAYER_FLYING = new Identifier("music.misc.flying");
-    public static final Identifier PLAYER_RIDING = new Identifier("music.misc.riding");
-    public static final Identifier TIME_NIGHT = new Identifier("music.misc.night");
-    public static final Identifier WEATHER_RAIN = new Identifier("music.misc.rain");
-    public static final Identifier WEATHER_THUNDER = new Identifier("music.misc.thunder");
+    public static final Identifier PLAYER_FLYING = Identifier.ofVanilla("music.misc.flying");
+    public static final Identifier PLAYER_RIDING = Identifier.ofVanilla("music.misc.riding");
+    public static final Identifier TIME_NIGHT = Identifier.ofVanilla("music.misc.night");
+    public static final Identifier WEATHER_RAIN = Identifier.ofVanilla("music.misc.rain");
+    public static final Identifier WEATHER_THUNDER = Identifier.ofVanilla("music.misc.thunder");
 
     public static void init() {
         registerMissingBiomes();
@@ -86,8 +86,7 @@ public class SoundEventRegistry {
     }
 
     private static void registerReference(final String path) {
-        final Identifier id = new Identifier(path);
-        registerReference(id);
+        registerReference(Identifier.ofVanilla(path));
     }
 
     private static void registerReference(final Identifier id) {

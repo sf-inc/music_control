@@ -55,7 +55,7 @@ public class MusicCategories {
                 RegistryKey<Biome> biomeRegistryKey;
                 if (split.length > 0
                         && (biomeRegistryKey = SoundEventRegistry.NAME_BIOME_MAP.get(
-                                new Identifier(event.getNamespace(), split[split.length-1]))) != null) {
+                                Identifier.of(event.getNamespace(), split[split.length-1]))) != null) {
                     SoundEventRegistry.BIOME_MUSIC_MAP.put(biomeRegistryKey, soundEvent);
                 }
             }
