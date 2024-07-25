@@ -58,6 +58,7 @@ public class SoundEventRegistry {
         registerReference("music.overworld.frozen_river");
         registerReference("music.overworld.warm_ocean");
         registerReference("music.overworld.lukewarm_ocean");
+        registerReference("music.overworld.deep_lukewarm_ocean");
         registerReference("music.overworld.ocean");
         registerReference("music.overworld.deep_ocean");
         registerReference("music.overworld.cold_ocean");
