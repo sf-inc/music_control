@@ -4,6 +4,10 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.8.3
+* Add missing biome sound event (deep_lukewarm_ocean)
+* Add missing music disc event translation
+
 ## v1.8.2
 * Fix night music not triggered
 
