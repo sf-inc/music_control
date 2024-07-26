@@ -7,6 +7,8 @@ import com.github.charlyb01.music_control.config.MiscEventChance;
 import com.github.charlyb01.music_control.config.ModConfig;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
@@ -34,11 +36,21 @@ public class MusicIdentifier {
 
         boolean playerNotNull = player != null;
 
-        if (playerNotNull && player.isFallFlying()) musics.addAll(getListFromEvent(SoundEventRegistry.PLAYER_FLYING));
-        if (playerNotNull && player.hasVehicle()) musics.addAll(getListFromEvent(SoundEventRegistry.PLAYER_RIDING));
-        if (isNight(world)) musics.addAll(getListFromEvent(SoundEventRegistry.TIME_NIGHT));
-        if (world.isRaining()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_RAIN));
-        if (world.isThundering()) musics.addAll(getListFromEvent(SoundEventRegistry.WEATHER_THUNDER));
+        if (playerNotNull && player.isFallFlying()) {
+            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.PLAYER_FLYING)));
+        }
+        if (playerNotNull && player.hasVehicle()) {
+            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.PLAYER_RIDING)));
+        }
+        if (isNight(world)) {
+            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.TIME_NIGHT)));
+        }
+        if (world.isRaining()) {
+            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.WEATHER_RAIN)));
+        }
+        if (world.isThundering()) {
+            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.WEATHER_THUNDER)));
+        }
 
         if (!ModConfig.get().general.event.miscEventChance.equals(MiscEventChance.PROPORTIONAL)
                 && !musics.isEmpty()) {
@@ -116,11 +128,11 @@ public class MusicIdentifier {
     private static Identifier getDimension(final RegistryKey<World> world) {
         Identifier eventId;
         if (world.equals(World.NETHER)) {
-            eventId = Identifier.ofVanilla("music.nether");
+            eventId = getFromSoundEvent(SoundEventRegistry.NETHER);
         } else if (world.equals(World.END)) {
-            eventId = SoundEvents.MUSIC_END.value().getId();
+            eventId = getFromSoundEvent(SoundEvents.MUSIC_END);
         } else {
-            eventId = SoundEvents.MUSIC_GAME.value().getId();
+            eventId = getFromSoundEvent(SoundEvents.MUSIC_GAME);
         }
         return eventId;
     }
@@ -134,7 +146,7 @@ public class MusicIdentifier {
         if ((musics == null || musics.isEmpty())
                 && ModConfig.get().general.event.creativeEventFallback
                 && creative) {
-            musics = getListFromEvent(SoundEvents.MUSIC_CREATIVE.value().getId());
+            musics = getListFromEvent(getFromSoundEvent(SoundEvents.MUSIC_CREATIVE));
         }
 
         return musics == null || musics.isEmpty()
@@ -142,11 +154,14 @@ public class MusicIdentifier {
                 : MusicIdentifier.getFromList(musics, random);
     }
 
+    public static Identifier getFromSoundEvent(final RegistryEntry.Reference<SoundEvent> soundEvent) {
+        return soundEvent.value().getId();
+    }
+
     public static boolean isDimension(final Identifier identifier) {
-        String path = identifier.getPath();
-        return path.contentEquals("music.game")
-                || path.contentEquals("music.nether")
-                || path.contentEquals("music.end");
+        return identifier.equals(getFromSoundEvent(SoundEvents.MUSIC_GAME))
+                || identifier.equals(getFromSoundEvent(SoundEventRegistry.NETHER))
+                || identifier.equals(getFromSoundEvent(SoundEvents.MUSIC_END));
     }
 
     public static boolean isBiome(final Identifier identifier) {

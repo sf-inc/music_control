@@ -33,9 +33,9 @@ public class MusicControlClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        SoundEventRegistry.init();
         AutoConfig.register(ModConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));
         MusicKeyBinding.register();
-        SoundEventRegistry.init();
 
         currentCategory = ModConfig.get().general.misc.musicCategoryStart;
     }
