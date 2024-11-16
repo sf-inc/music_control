@@ -44,7 +44,7 @@ public class MusicCategories {
         MUSIC_BY_NAMESPACE.put(ALL_MUSIC_DISCS, discs);
 
         for (SoundEvent soundEvent : Registries.SOUND_EVENT) {
-            Identifier event = soundEvent.getId();
+            Identifier event = soundEvent.id();
             if (event.getPath().contains("music")) {
                 if (!EVENTS.contains(event) && !BLACK_LISTED_EVENTS.contains(event)) {
                     EVENTS.add(event);
@@ -63,7 +63,7 @@ public class MusicCategories {
 
         for (Identifier eventIdentifier : client.getSoundManager().getKeys()) {
             if (client.getSoundManager().get(eventIdentifier) != null) {
-                List<SoundContainer<Sound>> sounds = ((SoundSetAccessor) client.getSoundManager().get(eventIdentifier)).getSounds();
+                List<SoundContainer<Sound>> sounds = ((SoundSetAccessor) Objects.requireNonNull(client.getSoundManager().get(eventIdentifier))).getSounds();
                 String namespace = eventIdentifier.getNamespace();
                 String path = eventIdentifier.getPath();
 

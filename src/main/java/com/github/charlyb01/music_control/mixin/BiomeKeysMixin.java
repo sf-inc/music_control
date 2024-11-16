@@ -12,7 +12,7 @@ import static com.github.charlyb01.music_control.client.SoundEventRegistry.NAME_
 
 @Mixin(BiomeKeys.class)
 public class BiomeKeysMixin {
-    @Inject(method = "register", at = @At("RETURN"))
+    @Inject(method = "keyOf", at = @At("RETURN"))
     private static void getVanillaBiomeNames(String name, CallbackInfoReturnable<RegistryKey<Biome>> cir) {
         RegistryKey<Biome> biomeRegistryKey = cir.getReturnValue();
         NAME_BIOME_MAP.put(biomeRegistryKey.getValue(), biomeRegistryKey);
