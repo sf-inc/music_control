@@ -36,7 +36,7 @@ public class MusicIdentifier {
 
         boolean playerNotNull = player != null;
 
-        if (playerNotNull && player.isFallFlying()) {
+        if (playerNotNull && player.isGliding()) {
             musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.PLAYER_FLYING)));
         }
         if (playerNotNull && player.hasVehicle()) {
@@ -155,7 +155,7 @@ public class MusicIdentifier {
     }
 
     public static Identifier getFromSoundEvent(final RegistryEntry.Reference<SoundEvent> soundEvent) {
-        return soundEvent.value().getId();
+        return soundEvent.value().id();
     }
 
     public static boolean isDimension(final Identifier identifier) {

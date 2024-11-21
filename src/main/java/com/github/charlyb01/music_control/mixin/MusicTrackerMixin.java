@@ -51,7 +51,7 @@ public abstract class MusicTrackerMixin {
     @Inject(method = "play", at = @At("HEAD"), cancellable = true)
     private void playMusic(MusicSound type, CallbackInfo ci) {
 
-        final Identifier eventId = type != null ? type.getSound().value().getId() : null;
+        final Identifier eventId = type != null ? type.getSound().value().id() : null;
 
         MusicControlClient.inCustomTracking = false;
 
