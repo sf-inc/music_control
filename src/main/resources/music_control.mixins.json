@@ -13,7 +13,8 @@
     "SoundListMixin",
     "SoundManagerMixin",
     "SoundSetAccessor",
-    "SoundSystemMixin"
+    "SoundSystemMixin",
+    "WorldEventHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

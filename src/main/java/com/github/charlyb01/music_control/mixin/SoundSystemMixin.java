@@ -1,36 +1,28 @@
 package com.github.charlyb01.music_control.mixin;
 
-import com.github.charlyb01.music_control.categories.Music;
 import com.github.charlyb01.music_control.categories.MusicCategories;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
 import com.google.common.collect.Multimap;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.sound.*;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Map;
 
 @Mixin(SoundSystem.class)
 public abstract class SoundSystemMixin implements PauseResumeIMixin {
-    @Shadow @Final private GameOptions settings;
-
     @Shadow private boolean started;
-
+    @Shadow @Final private GameOptions settings;
     @Shadow @Final private Map<SoundInstance, Channel.SourceManager> sources;
-
     @Shadow @Final private Multimap<SoundCategory, SoundInstance> sounds;
 
     @Shadow protected abstract void tick();
@@ -52,20 +44,6 @@ public abstract class SoundSystemMixin implements PauseResumeIMixin {
     private void alwaysTick(boolean paused, CallbackInfo ci) {
         if (ModConfig.get().general.misc.musicDontPause && paused) {
             this.tick();
-        }
-    }
-
-    @Inject(method = "play(Lnet/minecraft/client/sound/SoundInstance;)V", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/sound/SoundInstance;getSound()Lnet/minecraft/client/sound/Sound;"), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void printRecord(SoundInstance soundInstance, CallbackInfo ci, @Local(ordinal = 0) Sound sound) {
-        Identifier record = sound.getIdentifier();
-        if (soundInstance.getId().getPath().contains("music_disc")) {
-            final MinecraftClient client = MinecraftClient.getInstance();
-            client.inGameHud.setRecordPlayingOverlay(Text.translatable(record.toString()));
-
-            if (MusicControlClient.currentCategory.equals(Music.ALL_MUSICS)
-                    || MusicControlClient.currentCategory.equals(Music.ALL_MUSIC_DISCS)) {
-                MusicCategories.PLAYED_MUSICS.add(record);
-            }
         }
     }
 
