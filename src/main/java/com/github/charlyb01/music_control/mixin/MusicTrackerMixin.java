@@ -8,10 +8,7 @@ import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.MusicTracker;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.client.sound.SoundManager;
+import net.minecraft.client.sound.*;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
@@ -46,12 +43,12 @@ public abstract class MusicTrackerMixin {
     private boolean displayPrompted = false;
 
     @Shadow
-    public abstract void play(MusicSound type);
+    public abstract void play(MusicInstance type);
 
     @Inject(method = "play", at = @At("HEAD"), cancellable = true)
-    private void playMusic(MusicSound type, CallbackInfo ci) {
-
-        final Identifier eventId = type != null ? type.getSound().value().id() : null;
+    private void playMusic(MusicInstance type, CallbackInfo ci) {
+        final var sound = type == null ? null : type.music().getSound().value();
+        final Identifier eventId = type != null ? sound.id() : null;
 
         MusicControlClient.inCustomTracking = false;
 
@@ -116,7 +113,7 @@ public abstract class MusicTrackerMixin {
             // music in no event and no/default namespace
             // should try play with default player
             this.current = PositionedSoundInstance.music(MusicControlClient.currentMusic == null
-                    ? type.getSound().value()
+                    ? sound
                     : SoundEvent.of(MusicControlClient.currentMusic));
         }
 
@@ -232,7 +229,7 @@ public abstract class MusicTrackerMixin {
                 printPaused();
             } else {
                 this.displayPrompted = ModConfig.get().cosmetics.display.atMusicStart;
-                this.play(this.client.getMusicType());
+                this.play(this.client.getMusicInstance());
             }
         }
     }
@@ -268,7 +265,7 @@ public abstract class MusicTrackerMixin {
             } else {
                 MusicControlClient.categoryChanged = true;
                 MusicCategories.changeCategory(MusicControlClient.nextCategory);
-                this.play(this.client.getMusicType());
+                this.play(this.client.getMusicInstance());
             }
 
             if (MusicControlClient.nextCategory) {
