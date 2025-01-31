@@ -41,10 +41,6 @@ public class MinecraftClientMixin {
         }
     }
 
-    /*
-    
-     */
-
     @ModifyReturnValue(method = "getMusicInstance", at = @At(value = "RETURN", ordinal = 1))
     private MusicInstance useEndMusic(MusicInstance original) {
         return ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.FALLBACK)
