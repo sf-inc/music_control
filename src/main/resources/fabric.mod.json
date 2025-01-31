@@ -3,7 +3,7 @@
   "id": "music_control",
   "version": "${version}",
   "name": "Music Control",
-  "description": "Take control of Minecraft musics!",
+  "description": "Take control of Minecraft music!",
   "authors": [
     "Pardys"
   ],
@@ -28,13 +28,14 @@
   ],
   "accessWidener": "music_control.accesswidener",
   "depends": {
-    "fabricloader": ">=0.15.11",
-    "fabric-api": "*"
+    "fabricloader": ">=0.16.10",
+    "fabric-api": ">=0.114.3"
   },
   "custom": {
-    "modupdater": {
-      "strategy": "curseforge",
-      "projectID": 436740
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/eNwkve8k7c"
+      }
     }
   }
 }

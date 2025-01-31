@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.HashSet;
 import java.util.Map;
 
-@Mixin(targets = "net/minecraft/client/sound/SoundManager$SoundList")
+@Mixin(SoundManager.SoundList.class)
 public class SoundListMixin {
     @Shadow @Final
     Map<Identifier, WeightedSoundSet> loadedSounds;
