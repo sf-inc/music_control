@@ -67,7 +67,9 @@ public class MinecraftClientMixin {
         RegistryKey<Biome> registryKey = registryEntry.getKey().orElse(null);
         if (registryKey == null || !SoundEventRegistry.BIOME_MUSIC_MAP.containsKey(registryKey)) return original;
 
+        float volume = registryEntry.value().getMusicVolume();
         return new MusicInstance(
-                MusicType.createIngameMusic(RegistryEntry.of(SoundEventRegistry.BIOME_MUSIC_MAP.get(registryKey))));
+                MusicType.createIngameMusic(RegistryEntry.of(SoundEventRegistry.BIOME_MUSIC_MAP.get(registryKey))),
+                volume);
     }
 }

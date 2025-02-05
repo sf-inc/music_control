@@ -38,6 +38,7 @@ public class SoundEventRegistry {
     public static RegistryEntry.Reference<SoundEvent> BIRCH_FOREST = registerReference("music.overworld.birch_forest");
     public static RegistryEntry.Reference<SoundEvent> OLD_GROWTH_BIRCH_FOREST = registerReference("music.overworld.old_growth_birch_forest");
     public static RegistryEntry.Reference<SoundEvent> DARK_FOREST = registerReference("music.overworld.dark_forest");
+    //public static RegistryEntry.Reference<SoundEvent> PALE_GARDEN = registerReference("music.overworld.pale_garden");
     public static RegistryEntry.Reference<SoundEvent> MANGROVE_SWAMP = registerReference("music.overworld.mangrove_swamp");
     public static RegistryEntry.Reference<SoundEvent> BEACH = registerReference("music.overworld.beach");
     public static RegistryEntry.Reference<SoundEvent> MUSHROOM_FIELDS = registerReference("music.overworld.mushroom_fields");

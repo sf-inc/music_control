@@ -65,6 +65,7 @@
     "music.play": "PLAY",
     "music.pause": "PAUSE",
     "music.paused": "PAUSED",
+    "music.silent_biome": "No music can play here",
     "music.no_playing": "No music playing",
     "music.no_playing_with_time": "No music playing (Next selection after %ss)",
     "music.loop.on": "Loop: ON",

@@ -65,6 +65,7 @@
     "music.play": "LECTURE",
     "music.pause": "PAUSE",
     "music.paused": "EN PAUSE",
+    "music.silent_biome": "Aucune musique ne peut être jouée ici",
     "music.no_playing": "Pas de musique en cours",
     "music.no_playing_with_time": "Pas de musique (Prochaine sélection dans %ss)",
     "music.loop.on": "Boucle: ON",

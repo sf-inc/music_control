@@ -7,6 +7,7 @@ import com.github.charlyb01.music_control.categories.MusicIdentifier;
 import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.*;
 import net.minecraft.sound.SoundEvent;
@@ -69,6 +70,12 @@ public abstract class MusicTrackerMixin {
         boolean wasPlaying = this.client.getSoundManager().isPlaying(this.current);
         this.client.getSoundManager().stop(this.current);
 
+        if (instance != null && instance.volume() <= 0.f) {
+            Utils.print(this.client, Text.translatable("music.silent_biome"));
+            ci.cancel();
+            return;
+        }
+
         if (MusicControlClient.musicSelected != null) {
             // a new music is selected from the menu
             MusicControlClient.currentMusic = MusicControlClient.musicSelected;
@@ -128,7 +135,7 @@ public abstract class MusicTrackerMixin {
         ci.cancel();
     }
 
-    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/MusicInstance;music()Lnet/minecraft/sound/MusicSound;"), cancellable = true)
     private void handleMusic(CallbackInfo ci) {
         handlePreviousMusicKey();
         handleNextMusicKey();
@@ -155,6 +162,11 @@ public abstract class MusicTrackerMixin {
                 || (this.client != null && !this.client.getSoundManager().isPlaying(this.current)))) {
             this.timeUntilNextSong++;
         }
+    }
+
+    @WrapWithCondition(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/MusicTracker;play(Lnet/minecraft/client/sound/MusicInstance;)V"))
+    private boolean cancelPlayIfZeroedVolume(MusicTracker instance, MusicInstance music) {
+        return music.volume() > 0.f;
     }
 
     @Unique
