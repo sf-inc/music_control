@@ -20,6 +20,8 @@
     "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[0]": "If off, delay will be fixed to maximum.",
     "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[1]": "Otherwise, it's picked in [max/2 ; max] range.",
     "text.autoconfig.music_control.option.general.timer.maxDelay": "Maximum delay between music [s]",
+    "text.autoconfig.music_control.option.general.timer.fadeDuration": "Fade duration when switching biome [s]",
+    "text.autoconfig.music_control.option.general.timer.fadeDuration.@Tooltip": "Do not fade if zero",
 
     "text.autoconfig.music_control.option.general.event": "Event",
     "text.autoconfig.music_control.option.general.event.creativeEventFallback": "Creative music is played on fallback",

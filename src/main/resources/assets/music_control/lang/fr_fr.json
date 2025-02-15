@@ -20,6 +20,8 @@
     "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[0]": "Si off, le délai est fixé au maximum.",
     "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[1]": "Sinon, il varie entre [max/2 ; max].",
     "text.autoconfig.music_control.option.general.timer.maxDelay": "Délai maximum entre les musiques [s]",
+    "text.autoconfig.music_control.option.general.timer.fadeDuration": "Durée du fondu en changeant de biome [s]",
+    "text.autoconfig.music_control.option.general.timer.fadeDuration.@Tooltip": "Pas de fondu si zéro",
 
     "text.autoconfig.music_control.option.general.event": "Evénement",
     "text.autoconfig.music_control.option.general.event.creativeEventFallback": "Retomber sur musique du créatif",

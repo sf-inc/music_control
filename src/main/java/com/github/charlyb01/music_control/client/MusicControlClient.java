@@ -20,7 +20,8 @@ public class MusicControlClient implements ClientModInitializer {
     public static boolean categoryChanged = false;
     public static Identifier musicSelected;
 
-    public static Identifier currentMusic = Identifier.ofVanilla("current");
+    public static Identifier currentMusic;
+    public static Identifier currentEvent;
     public static String currentCategory;
 
     public static boolean previousMusic = false;

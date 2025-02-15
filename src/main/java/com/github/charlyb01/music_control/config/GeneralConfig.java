@@ -15,6 +15,9 @@ public class GeneralConfig implements ConfigData {
         public boolean randomDelay = true;
         @ConfigEntry.BoundedDiscrete(min = 1, max = 1800)
         public int maxDelay = 300;
+        @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.BoundedDiscrete(min = 0, max = 10)
+        public int fadeDuration = 5;
     }
 
     @ConfigEntry.Gui.CollapsibleObject

@@ -8,6 +8,8 @@ import com.github.charlyb01.music_control.client.MusicControlClient;
 import com.github.charlyb01.music_control.config.ModConfig;
 import com.github.charlyb01.music_control.imixin.PauseResumeIMixin;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.*;
 import net.minecraft.sound.SoundEvent;
@@ -38,6 +40,8 @@ public abstract class MusicTrackerMixin {
     private int timeUntilNextSong;
     @Shadow
     private SoundInstance current;
+    @Shadow
+    private float volume;
 
     @Shadow public abstract void play(MusicInstance music);
 
@@ -47,7 +51,7 @@ public abstract class MusicTrackerMixin {
     @Inject(method = "play", at = @At("HEAD"), cancellable = true)
     private void playMusic(MusicInstance instance, CallbackInfo ci) {
 
-        final Identifier eventId = instance != null && instance.music() != null
+        MusicControlClient.currentEvent = instance != null && instance.music() != null
                 ? instance.music().getSound().value().id()
                 : null;
 
@@ -93,13 +97,13 @@ public abstract class MusicTrackerMixin {
         } else if (MusicControlClient.loopMusic) {
             // loop mode is on
             // do nothing, use the same music
-        } else if (eventId != null
+        } else if (MusicControlClient.currentEvent != null
                 && MusicControlClient.currentCategory.equals(Music.DEFAULT_MUSICS)
-                && Music.MUSIC_BY_EVENT.containsKey(eventId)) {
+                && Music.MUSIC_BY_EVENT.containsKey(MusicControlClient.currentEvent)) {
             // normal procedure
             boolean creative = this.client.player != null && this.client.player.isCreative();
             final HashSet<Music> musics = MusicIdentifier.getListFromEvent(
-                    eventId, this.client.player, this.client.world, this.random);
+                    MusicControlClient.currentEvent, this.client.player, this.client.world, this.random);
 
             if (musics.isEmpty()) {
                 // this means the current event corresponds to
@@ -167,6 +171,39 @@ public abstract class MusicTrackerMixin {
     @WrapWithCondition(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/MusicTracker;play(Lnet/minecraft/client/sound/MusicInstance;)V"))
     private boolean cancelPlayIfZeroedVolume(MusicTracker instance, MusicInstance music) {
         return music.volume() > 0.f;
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void fadeNextMusic(CallbackInfo ci) {
+        if (this.current == null) return;
+        if (ModConfig.get().general.timer.fadeDuration <= 0) return;
+
+        MusicInstance instance = this.client.getMusicInstance();
+        if (instance.music() == null) return;
+
+        float delta = 1.f / (ModConfig.get().general.timer.fadeDuration * 20);
+
+        if (instance.music().getSound().value().id().equals(MusicControlClient.currentEvent)) {
+            if (this.volume < 1.f) {
+                this.volume = Math.min(1.f, this.volume + delta);
+                this.client.getSoundManager().setVolume(this.current, this.volume);
+            }
+        } else {
+            this.volume = Math.max(0.f, this.volume - delta);
+            this.client.getSoundManager().setVolume(this.current, this.volume);
+
+            if (this.volume == 0.f) {
+                this.client.getSoundManager().stop(this.current);
+                if (instance.volume() > 0.f) {
+                    this.play(instance);
+                }
+            }
+        }
+    }
+
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/MusicTracker;canFadeTowardsVolume(F)Z"))
+    private boolean useOnlyOneFadeMethod(MusicTracker instance, float volume, Operation<Boolean> original) {
+        return ModConfig.get().general.timer.fadeDuration <= 0 && original.call(instance, volume);
     }
 
     @Unique
