@@ -182,8 +182,9 @@ public abstract class MusicTrackerMixin {
         if (instance.music() == null) return;
 
         float delta = 1.f / (ModConfig.get().general.timer.fadeDuration * 20);
+        Identifier nextEvent = instance.music().getSound().value().id();
 
-        if (instance.music().getSound().value().id().equals(MusicControlClient.currentEvent)) {
+        if (MusicIdentifier.shouldNotChangeMusic(nextEvent)) {
             if (this.volume < 1.f) {
                 this.volume = Math.min(1.f, this.volume + delta);
                 this.client.getSoundManager().setVolume(this.current, this.volume);

@@ -21,15 +21,21 @@ import static com.github.charlyb01.music_control.Utils.isNight;
 import static com.github.charlyb01.music_control.categories.Music.*;
 
 public class MusicIdentifier {
+    // Cache list to avoid its recomputation each tick
+    private static HashSet<Music> nextEventList = new HashSet<>();
+    private static Identifier nextEventId = null;
+
     private MusicIdentifier() {}
 
     public static HashSet<Music> getListFromEvent(final Identifier eventId, final PlayerEntity player,
                                                     final World world, final Random random) {
         HashSet<Music> musics = new HashSet<>();
+        HashSet<Music> eventMusic = getListFromEvent(eventId);
+        MusicControlClient.isCurrentEventEmpty = eventMusic.isEmpty();
 
         if (ModConfig.get().general.event.miscEventChance.equals(MiscEventChance.HALF)
                 && random.nextBoolean()) {
-            musics.addAll(getListFromEvent(eventId));
+            musics.addAll(eventMusic);
             addDimensionEvent(musics, world, random);
             return musics;
         }
@@ -57,7 +63,7 @@ public class MusicIdentifier {
             return musics;
         }
 
-        musics.addAll(getListFromEvent(eventId));
+        musics.addAll(eventMusic);
         addDimensionEvent(musics, world, random);
         return musics;
     }
@@ -156,6 +162,23 @@ public class MusicIdentifier {
 
     public static Identifier getFromSoundEvent(final RegistryEntry.Reference<SoundEvent> soundEvent) {
         return soundEvent.value().id();
+    }
+
+    public static boolean shouldNotChangeMusic(final Identifier eventId) {
+        if (eventId.equals(MusicControlClient.currentEvent)) return true;
+
+        if (!eventId.equals(nextEventId)) {
+            nextEventId = eventId;
+            nextEventList = getListFromEvent(nextEventId);
+        }
+
+        // If both events are empty, we want to keep the fallback/misc music
+        if (nextEventList.isEmpty() && MusicControlClient.isCurrentEventEmpty)
+            return true;
+
+        // If next event contains current music, we don't want to change it
+        Music currentMusic = Music.getMusicFromIdentifier(MusicControlClient.currentMusic);
+        return nextEventList.contains(currentMusic);
     }
 
     public static boolean isDimension(final Identifier identifier) {
