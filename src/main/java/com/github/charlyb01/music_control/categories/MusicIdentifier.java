@@ -144,18 +144,16 @@ public class MusicIdentifier {
     }
 
     public static Identifier getFallback(final RegistryKey<World> world, final boolean creative, final Random random) {
-        HashSet<Music> musics = null;
+        HashSet<Music> musics = new HashSet<>();
+        if (ModConfig.get().general.event.creativeEventFallback && creative) {
+            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEvents.MUSIC_CREATIVE)));
+        }
+
         if (ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.FALLBACK)) {
-            musics = getListFromEvent(getDimension(world));
+            musics.addAll(getListFromEvent(getDimension(world)));
         }
 
-        if ((musics == null || musics.isEmpty())
-                && ModConfig.get().general.event.creativeEventFallback
-                && creative) {
-            musics = getListFromEvent(getFromSoundEvent(SoundEvents.MUSIC_CREATIVE));
-        }
-
-        return musics == null || musics.isEmpty()
+        return musics.isEmpty()
                 ? EMPTY_MUSIC_ID
                 : MusicIdentifier.getFromList(musics, random);
     }
