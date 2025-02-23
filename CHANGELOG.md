@@ -4,6 +4,17 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.9
+* When detecting a new sound event to be played (for example changing biomes),
+  fades out current music, then fades in next music.
+  * The fade duration is configurable. Setting it to 0 removes this behavior
+  * If the current sound event and the next one are both empty, don't change music
+    (if playing dimension on fallback or a misc event for example)
+  * If the next sound event contains current music, don't change music
+* Creative music on fallback is added in the pool of music, even when dimension
+  events are also on fallback. This fixes creative music never been played on this
+  case.
+
 ## v1.8.4
 * Music can't play in biomes with zeroed volume (Pale Garden).
   In these biomes, a message is displayed when trying to play music
