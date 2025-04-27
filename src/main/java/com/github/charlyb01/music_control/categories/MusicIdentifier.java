@@ -48,14 +48,16 @@ public class MusicIdentifier {
         if (playerNotNull && player.hasVehicle()) {
             musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.PLAYER_RIDING)));
         }
-        if (isNight(world)) {
-            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.TIME_NIGHT)));
-        }
-        if (world.isRaining()) {
-            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.WEATHER_RAIN)));
-        }
-        if (world.isThundering()) {
-            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.WEATHER_THUNDER)));
+        if (world.getRegistryKey() == World.OVERWORLD) {
+            if (isNight(world)) {
+                musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.TIME_NIGHT)));
+            }
+            if (world.isRaining()) {
+                musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.WEATHER_RAIN)));
+            }
+            if (world.isThundering()) {
+                musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.WEATHER_THUNDER)));
+            }
         }
 
         if (!ModConfig.get().general.event.miscEventChance.equals(MiscEventChance.PROPORTIONAL)
