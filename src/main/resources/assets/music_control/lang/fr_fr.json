@@ -113,8 +113,9 @@
     "music.nether": "Le Nether",
     "music.end": "L'End",
 
-    "music.misc.flying": "Joueur volant",
-    "music.misc.riding": "Joueur chevauchant",
+    "music.misc.flying": "Joueur en train de voler",
+    "music.misc.driving": "Joueur en train de conduire",
+    "music.misc.riding": "Joueur en train de chevaucher",
     "music.misc.night": "La nuit",
     "music.misc.rain": "La pluie",
     "music.misc.thunder": "L'orage",

@@ -5,6 +5,7 @@ import com.github.charlyb01.music_control.client.SoundEventRegistry;
 import com.github.charlyb01.music_control.config.DimensionEventChance;
 import com.github.charlyb01.music_control.config.MiscEventChance;
 import com.github.charlyb01.music_control.config.ModConfig;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -46,7 +47,12 @@ public class MusicIdentifier {
             musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.PLAYER_FLYING)));
         }
         if (playerNotNull && player.hasVehicle()) {
-            musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.PLAYER_RIDING)));
+            if (player.getVehicle() instanceof LivingEntity) {
+                musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.PLAYER_RIDING)));
+            } else {
+                musics.addAll(getListFromEvent(getFromSoundEvent(SoundEventRegistry.PLAYER_DRIVING)));
+            }
+
         }
         if (world.getRegistryKey() == World.OVERWORLD) {
             if (isNight(world)) {

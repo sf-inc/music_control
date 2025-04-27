@@ -15,6 +15,7 @@ public class SoundEventRegistry {
     public static final HashMap<Identifier, RegistryKey<Biome>> NAME_BIOME_MAP = new HashMap<>();
 
     public static RegistryEntry.Reference<SoundEvent> PLAYER_FLYING = registerReference("music.misc.flying");
+    public static RegistryEntry.Reference<SoundEvent> PLAYER_DRIVING = registerReference("music.misc.driving");
     public static RegistryEntry.Reference<SoundEvent> PLAYER_RIDING = registerReference("music.misc.riding");
     public static RegistryEntry.Reference<SoundEvent> TIME_NIGHT = registerReference("music.misc.night");
     public static RegistryEntry.Reference<SoundEvent> WEATHER_RAIN = registerReference("music.misc.rain");
