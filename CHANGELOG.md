@@ -4,6 +4,12 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.9.1
+* Fix time and weather (misc) events so they can be triggered only in the overworld
+* Split the riding (misc) event in two to differentiate living and non-living mounts
+  * Riding event: for any living entity
+  * Driving event: for other entities, such as boats
+
 ## v1.9
 * When detecting a new sound event to be played (for example changing biomes),
   fades out current music, then fades in next music.
