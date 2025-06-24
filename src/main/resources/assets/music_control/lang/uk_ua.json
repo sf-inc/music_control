@@ -39,7 +39,7 @@
     "text.autoconfig.music_control.option.general.event.miscEventChance.@Tooltip[2]": "ПРОПОРЦІЙНИЙ: відтворювати різні події пропорційно до числа різної музики.",
 
     "text.autoconfig.music_control.option.general.misc": "Різне",
-    "text.autoconfig.music_control.option.general.misc.musicDontPause": "Не зупиняти музику в ыгровому меню",
+    "text.autoconfig.music_control.option.general.misc.musicDontPause": "Не зупиняти музику в ігровому меню",
     "text.autoconfig.music_control.option.general.misc.musicQueue": "Кількість музики, яку потрібно зберегти в історії",
     "text.autoconfig.music_control.option.general.misc.musicQueue.@Tooltip[0]": "Музика в історії не буде випадковою",
     "text.autoconfig.music_control.option.general.misc.musicQueue.@Tooltip[1]": "піднімати знову.",
