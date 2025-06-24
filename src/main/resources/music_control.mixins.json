@@ -1,6 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
+  "mixinextras": {
+    "minVersion": "0.5.0-rc.2"
+  },
   "package": "com.github.charlyb01.music_control.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [

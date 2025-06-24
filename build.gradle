@@ -10,6 +10,7 @@ repositories {
     maven { url "https://maven.terraformersmc.com/releases/" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://server.bbkr.space/artifactory/libs-release" }
+    mavenCentral()
 }
 
 dependencies {
@@ -26,6 +27,10 @@ dependencies {
     }
 
     modImplementation include("io.github.cottonmc:LibGui:${project.libgui_version}")
+
+    // Temporary till the beta makes it to the fabric loader
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixinextras_version}"))
+    include("io.github.llamalad7:mixinextras-fabric:${project.mixinextras_version}:slim")
 }
 
 base {

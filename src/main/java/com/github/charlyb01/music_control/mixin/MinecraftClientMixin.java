@@ -3,14 +3,17 @@ package com.github.charlyb01.music_control.mixin;
 import com.github.charlyb01.music_control.client.SoundEventRegistry;
 import com.github.charlyb01.music_control.config.DimensionEventChance;
 import com.github.charlyb01.music_control.config.ModConfig;
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.sound.MusicInstance;
 import net.minecraft.client.sound.MusicTracker;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.MusicType;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -21,7 +24,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(MinecraftClient.class)
+import java.util.Optional;
+
+@Mixin(value = MinecraftClient.class, priority = 100)
 public class MinecraftClientMixin {
     @Shadow private volatile boolean paused;
 
@@ -36,40 +41,43 @@ public class MinecraftClientMixin {
         }
     }
 
-    // TODO: Stop using ordinals
-    @ModifyReturnValue(method = "getMusicInstance", at = @At(value = "RETURN", ordinal = 2))
-    private MusicInstance useEndMusic(MusicInstance original) {
+    @ModifyExpressionValue(method = "getMusicInstance", at = @At(value = "FIELD", target = "Lnet/minecraft/sound/MusicType;END:Lnet/minecraft/sound/MusicSound;"))
+    private MusicSound updateEndMusic(MusicSound original) {
         return ModConfig.get().general.event.dimensionEventChance.equals(DimensionEventChance.FALLBACK)
                 ? getMusicFromMap(original)
                 : original;
     }
 
-    @ModifyReturnValue(method = "getMusicInstance", at = @At(value = "RETURN", ordinal = 4))
-    private MusicInstance cancelCreativeBeforeBiome(MusicInstance original) {
+    @ModifyExpressionValue(method = "getMusicInstance", at = @At(value = "FIELD", target = "Lnet/minecraft/sound/MusicType;CREATIVE:Lnet/minecraft/sound/MusicSound;"))
+    private MusicSound updateCreativeMusic(MusicSound original) {
         return ModConfig.get().general.event.creativeEventFallback
                 ? getMusicFromMap(original)
                 : original;
     }
 
-    @ModifyReturnValue(method = "getMusicInstance", at = @At(value = "RETURN", ordinal = 5))
-    private MusicInstance useMapInsteadOfOptionalMusic(MusicInstance original) {
-        return getMusicFromMap(original);
-    }
-
-    @ModifyReturnValue(method = "getMusicInstance", at = @At(value = "RETURN", ordinal = 6))
-    private MusicInstance useMapInsteadOfGameMusic(MusicInstance original) {
-        return getMusicFromMap(original);
-    }
-
-    @Unique
-    private MusicInstance getMusicFromMap(final MusicInstance original) {
+    @Definition(id = "getMusic", method = "Lnet/minecraft/world/biome/Biome;getMusic()Ljava/util/Optional;")
+    @Expression("?.getMusic()")
+    @ModifyExpressionValue(method = "getMusicInstance", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private Optional<Pool<MusicSound>> updateBiomeMusic(Optional<Pool<MusicSound>> original) {
         RegistryEntry<Biome> registryEntry = this.player.getWorld().getBiome(this.player.getBlockPos());
         RegistryKey<Biome> registryKey = registryEntry.getKey().orElse(null);
         if (registryKey == null || !SoundEventRegistry.BIOME_MUSIC_MAP.containsKey(registryKey)) return original;
 
-        float volume = registryEntry.value().getMusicVolume();
-        return new MusicInstance(
-                MusicType.createIngameMusic(RegistryEntry.of(SoundEventRegistry.BIOME_MUSIC_MAP.get(registryKey))),
-                volume);
+        MusicSound musicSound = MusicType.createIngameMusic(RegistryEntry.of(SoundEventRegistry.BIOME_MUSIC_MAP.get(registryKey)));
+        return Optional.of(Pool.of(musicSound));
+    }
+
+    @ModifyExpressionValue(method = "getMusicInstance", at = @At(value = "FIELD", target = "Lnet/minecraft/sound/MusicType;GAME:Lnet/minecraft/sound/MusicSound;"))
+    private MusicSound updateGameMusic(MusicSound original) {
+        return getMusicFromMap(original);
+    }
+
+    @Unique
+    private MusicSound getMusicFromMap(final MusicSound original) {
+        RegistryEntry<Biome> registryEntry = this.player.getWorld().getBiome(this.player.getBlockPos());
+        RegistryKey<Biome> registryKey = registryEntry.getKey().orElse(null);
+        if (registryKey == null || !SoundEventRegistry.BIOME_MUSIC_MAP.containsKey(registryKey)) return original;
+
+        return MusicType.createIngameMusic(RegistryEntry.of(SoundEventRegistry.BIOME_MUSIC_MAP.get(registryKey)));
     }
 }
