@@ -195,6 +195,7 @@
     "minecraft:records/5": "Samuel Åberg - 5",
     "minecraft:records/relic": "Aaron Cherof - Relic",
     "minecraft:records/tears": "Amos Roddy - Tears",
+    "minecraft:records/lava_chicken": "Hyper Potions - Lava Chicken",
 
     "minecraft:music.creative": "Creative",
     "minecraft:music.credits": "Credits",
@@ -219,6 +220,7 @@
     "music_disc.creator": "Creator",
     "music_disc.creator_music_box": "Creator (Music Box Version)",
     "music_disc.far": "Far",
+    "music_disc.lava_chicken": "Lava Chicken",
     "music_disc.mall": "Mall",
     "music_disc.mellohi": "Mellohi",
     "music_disc.otherside": "Otherside",
