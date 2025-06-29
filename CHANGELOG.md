@@ -4,6 +4,13 @@
 * **x.X versions** are either updates that add content or major bug fixes
 * **x.x.X versions** are either small content update (language translation, keybind change, ...) or bug fixes
 
+## v1.9.2
+* Remove "musicDontPause" option as it's now vanilla since 1.21.6
+* Remove "randomDelay" option as frequency is now manageable since 1.21.6
+  * If frequency is set to constant, the random delay is disabled
+  * Otherwise, it is random (between maxDelay/2 and maxDelay still)
+* Use better mixins for better mod compatibility
+
 ## v1.9.1
 * Fix time and weather (misc) events so they can be triggered only in the overworld
 * Split the riding (misc) event in two to differentiate living and non-living mounts
