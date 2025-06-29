@@ -14,17 +14,15 @@
     "text.autoconfig.music_control.title": "Music Control 設定",
     "text.autoconfig.music_control.category.general": "一般",
 
-    "text.autoconfig.music_control.option.general.timer.randomDelay": "ランダムな遅延を有効にする",
-    "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[0]": "オフの場合、遅延は最大まで固定されます。",
-    "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[1]": "それ以外の場合、[max/2 ; max]の範囲で選択されます。",
     "text.autoconfig.music_control.option.general.timer.maxDelay": "曲間の最大遅延 [s]",
+    "text.autoconfig.music_control.option.general.timer.maxDelay.@Tooltip[0]": "オフの場合、遅延は最大まで固定されます。",
+    "text.autoconfig.music_control.option.general.timer.maxDelay.@Tooltip[1]": "それ以外の場合、[max/2 ; max]の範囲で選択されます。",
 
     "text.autoconfig.music_control.option.general.event.creativeEventFallback": "フォールバックでクリエイティブ音楽を再生",
     "text.autoconfig.music_control.option.general.event.creativeEventFallback.@Tooltip[0]": "空のイベントを再生しようとする際、",
     "text.autoconfig.music_control.option.general.event.creativeEventFallback.@Tooltip[1]": "「クリエイティブ」音楽を再生しようとします。",
     "text.autoconfig.music_control.option.general.event.creativeEventFallback.@Tooltip[2]": "常にクリエイティブ音楽を再生する代わりに。",
 
-    "text.autoconfig.music_control.option.general.misc.musicDontPause": "一時停止メニューで音楽を一時停止しない",
     "text.autoconfig.music_control.option.general.misc.musicQueue": "履歴に保持する曲の数",
     "text.autoconfig.music_control.option.general.misc.musicQueue.@Tooltip[0]": "履歴の音楽はランダムに選択されません。",
     "text.autoconfig.music_control.option.general.misc.musicQueue.@Tooltip[1]": "再び選択される可能性があります。",

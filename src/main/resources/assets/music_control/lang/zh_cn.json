@@ -14,17 +14,15 @@
     "text.autoconfig.music_control.title": "音乐控制配置",
     "text.autoconfig.music_control.category.general": "通用",
 
-    "text.autoconfig.music_control.option.general.timer.randomDelay": "启用随机延迟",
-    "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[0]": "如果关闭，延迟将固定为最大值。",
-    "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[1]": "否则，在最大值的 50%~100% 范围内随机选择。",
     "text.autoconfig.music_control.option.general.timer.maxDelay": "音乐之间的最大延迟 [秒]",
+    "text.autoconfig.music_control.option.general.timer.maxDelay.@Tooltip[0]": "如果关闭，延迟将固定为最大值。",
+    "text.autoconfig.music_control.option.general.timer.maxDelay.@Tooltip[1]": "否则，在最大值的 50%~100% 范围内随机选择。",
 
     "text.autoconfig.music_control.option.general.event.creativeEventFallback": "创造模式音乐在替代时播放",
     "text.autoconfig.music_control.option.general.event.creativeEventFallback.@Tooltip[0]": "当尝试在创造模式中播放空事件时，",
     "text.autoconfig.music_control.option.general.event.creativeEventFallback.@Tooltip[1]": "是否尝试播放创造模式音乐，",
     "text.autoconfig.music_control.option.general.event.creativeEventFallback.@Tooltip[2]": "而不是始终播放创造模式音乐",
 
-    "text.autoconfig.music_control.option.general.misc.musicDontPause": "在暂停菜单中不要暂停音乐",
     "text.autoconfig.music_control.option.general.misc.musicQueue": "保留在历史记录中的音乐数量",
     "text.autoconfig.music_control.option.general.misc.musicQueue.@Tooltip[0]": "历史中的音乐不会",
     "text.autoconfig.music_control.option.general.misc.musicQueue.@Tooltip[1]": "再次被随机选择。",

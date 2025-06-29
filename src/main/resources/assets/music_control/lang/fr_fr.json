@@ -16,10 +16,9 @@
     "text.autoconfig.music_control.category.cosmetics": "Cosmétique",
 
     "text.autoconfig.music_control.option.general.timer": "Délai de la musique",
-    "text.autoconfig.music_control.option.general.timer.randomDelay": "Activer le délai aléatoire",
-    "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[0]": "Si off, le délai est fixé au maximum.",
-    "text.autoconfig.music_control.option.general.timer.randomDelay.@Tooltip[1]": "Sinon, il varie entre [max/2 ; max].",
     "text.autoconfig.music_control.option.general.timer.maxDelay": "Délai maximum entre les musiques [s]",
+    "text.autoconfig.music_control.option.general.timer.maxDelay.@Tooltip[0]": "Si fréquence constante, le délai est fixé au maximum.",
+    "text.autoconfig.music_control.option.general.timer.maxDelay.@Tooltip[1]": "Sinon, il varie entre [max/2 ; max].",
     "text.autoconfig.music_control.option.general.timer.fadeDuration": "Durée du fondu en changeant de biome [s]",
     "text.autoconfig.music_control.option.general.timer.fadeDuration.@Tooltip": "Pas de fondu si zéro",
 
@@ -39,7 +38,6 @@
     "text.autoconfig.music_control.option.general.event.miscEventChance.@Tooltip[2]": "PROPORTIONAL: jouer les events divers proportionnellement au nombre de leurs musiques",
 
     "text.autoconfig.music_control.option.general.misc": "Divers",
-    "text.autoconfig.music_control.option.general.misc.musicDontPause": "Ne pas arrêter la musique dans le menu pause",
     "text.autoconfig.music_control.option.general.misc.musicQueue": "Nombre de musiques conservées dans l'historique",
     "text.autoconfig.music_control.option.general.misc.musicQueue.@Tooltip[0]": "Les musiques dans l'historique ne seront",
     "text.autoconfig.music_control.option.general.misc.musicQueue.@Tooltip[1]": "pas retirées aléatoirement.",

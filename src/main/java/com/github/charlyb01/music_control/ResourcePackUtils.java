@@ -170,7 +170,7 @@ public class ResourcePackUtils {
 
                 JsonObject data = new JsonObject();
                 JsonObject pack = new JsonObject();
-                pack.addProperty("pack_format", SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES));
+                pack.addProperty("pack_format", SharedConstants.getGameVersion().packVersion(ResourceType.CLIENT_RESOURCES));
                 pack.addProperty("description", Text.translatable("music_control.metadata.description").getString());
                 data.add("pack", pack);
 

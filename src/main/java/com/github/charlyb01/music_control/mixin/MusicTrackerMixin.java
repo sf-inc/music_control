@@ -52,7 +52,7 @@ public abstract class MusicTrackerMixin {
     private void playMusic(MusicInstance instance, CallbackInfo ci) {
 
         MusicControlClient.currentEvent = instance != null && instance.music() != null
-                ? instance.music().getSound().value().id()
+                ? instance.music().sound().value().id()
                 : null;
 
         MusicControlClient.inCustomTracking = false;
@@ -65,7 +65,7 @@ public abstract class MusicTrackerMixin {
         // reset the pending time if it should not play
         if (!MusicControlClient.shouldPlay) {
             MusicControlClient.shouldPlay = true;
-            this.timeUntilNextSong = Utils.getTimer(this.random);
+            this.timeUntilNextSong = Integer.MAX_VALUE;
             ci.cancel();
             return;
         }
@@ -124,8 +124,8 @@ public abstract class MusicTrackerMixin {
             // music in no event and no/default namespace
             // should try play with default player
             this.current = PositionedSoundInstance.music(MusicControlClient.currentMusic == null
-                    ? instance.music().getSound().value()
-                    : SoundEvent.of(MusicControlClient.currentMusic));
+                    ? instance.music().sound().value()
+                    : SoundEvent.of(MusicControlClient.currentMusic), 1.f);
         }
 
         if (this.current.getSound() != SoundManager.MISSING_SOUND) {
@@ -135,7 +135,7 @@ public abstract class MusicTrackerMixin {
 
         displayMusic();
 
-        this.timeUntilNextSong = Utils.getTimer(this.random);
+        this.timeUntilNextSong = Integer.MAX_VALUE;
         ci.cancel();
     }
 
@@ -182,7 +182,7 @@ public abstract class MusicTrackerMixin {
         if (instance.music() == null) return;
 
         float delta = 1.f / (ModConfig.get().general.timer.fadeDuration * 20);
-        Identifier nextEvent = instance.music().getSound().value().id();
+        Identifier nextEvent = instance.music().sound().value().id();
 
         if (MusicIdentifier.shouldNotChangeMusic(nextEvent)) {
             if (this.volume < 1.f) {

@@ -12,7 +12,6 @@ public class GeneralConfig implements ConfigData {
 
     public static class Timer {
         @ConfigEntry.Gui.Tooltip(count = 2)
-        public boolean randomDelay = true;
         @ConfigEntry.BoundedDiscrete(min = 1, max = 1800)
         public int maxDelay = 300;
         @ConfigEntry.Gui.Tooltip
@@ -38,7 +37,6 @@ public class GeneralConfig implements ConfigData {
     public Misc misc = new Misc();
 
     public static class Misc {
-        public boolean musicDontPause = true;
         @ConfigEntry.Gui.Tooltip(count = 2)
         @ConfigEntry.BoundedDiscrete(min = 1, max = 25)
         public int musicQueue = 10;
