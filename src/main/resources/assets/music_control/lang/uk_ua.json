@@ -31,12 +31,12 @@
     "text.autoconfig.music_control.option.general.event.dimensionEventChance": "Шанс подій вимірів",
     "text.autoconfig.music_control.option.general.event.dimensionEventChance.@Tooltip[0]": "ВІДСТУП: під час відтворювання подій вимірів інша музика не грає.",
     "text.autoconfig.music_control.option.general.event.dimensionEventChance.@Tooltip[1]": "ПОЛОВИНА: 50% шанс відтворювання подій вимірів.",
-    "text.autoconfig.music_control.option.general.event.dimensionEventChance.@Tooltip[2]": "ПРОПОРЦІЙНИЙ: відтворювати події вимірів пропорційно кількості музики.",
+    "text.autoconfig.music_control.option.general.event.dimensionEventChance.@Tooltip[2]": "ПРОПОРЦІЙНИЙ: відтворювати події вимірів відносно кількости музики.",
     "text.autoconfig.music_control.option.general.event.dimensionEventChance.@Tooltip[3]": "НІКОЛИ: ніколи не відтворювати події вимірів.",
     "text.autoconfig.music_control.option.general.event.miscEventChance": "Різні шанси подій",
     "text.autoconfig.music_control.option.general.event.miscEventChance.@Tooltip[0]": "ПОВНИЙ: завжди відтворювати різні події.",
     "text.autoconfig.music_control.option.general.event.miscEventChance.@Tooltip[1]": "ПОЛОВИНА: 50% відтворювати різні події.",
-    "text.autoconfig.music_control.option.general.event.miscEventChance.@Tooltip[2]": "ПРОПОРЦІЙНИЙ: відтворювати різні події пропорційно до числа різної музики.",
+    "text.autoconfig.music_control.option.general.event.miscEventChance.@Tooltip[2]": "ПРОПОРЦІЙНИЙ: відтворювати різні події відносно до числа різної музики.",
 
     "text.autoconfig.music_control.option.general.misc": "Різне",
     "text.autoconfig.music_control.option.general.misc.musicDontPause": "Не зупиняти музику в ігровому меню",
@@ -75,7 +75,7 @@
     "music.volume": "Гучність: %s%%",
     "music.none": "Нічого",
 
-    "music.category.all": "Всі",
+    "music.category.all": "Усі",
     "music.category.default": "Усталені",
     "music.category.disc": "Платівки",
 
@@ -96,7 +96,7 @@
     "gui.music_control.label.selected": "Вибрано: %s",
     "gui.music_control.label.add": "Додати ",
     "gui.music_control.label.remove": "Видалити ",
-    "gui.music_control.label.music": "музикe",
+    "gui.music_control.label.music": "музику",
     "gui.music_control.label.event": "подію",
     "gui.music_control.toggle.removeAdd": "Видалити/додати",
     "gui.music_control.toggle.musicEvent": "Музика/події",
