@@ -1,5 +1,5 @@
 {
-    "category.music_control.title": "Music Control",
+    "key.category.music_control.main": "Music Control",
     "key.music_control.previousMusic":  "Previous music",
     "key.music_control.nextMusic":  "Next music",
     "key.music_control.pause":  "Pause/Resume music",

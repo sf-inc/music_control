@@ -41,4 +41,8 @@ public class MusicControlClient implements ClientModInitializer {
 
         currentCategory = ModConfig.get().general.misc.musicCategoryStart;
     }
+
+    public static Identifier id(final String path) {
+        return Identifier.of(MOD_ID, path);
+    }
 }

@@ -14,6 +14,8 @@ import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 public class MusicKeyBinding {
+    private static final KeyBinding.Category mainCategory = KeyBinding.Category.create(MusicControlClient.id("main"));
+
     private static KeyBinding previousMusic;
     private static KeyBinding nextMusic;
     private static KeyBinding pauseResume;
@@ -35,70 +37,70 @@ public class MusicKeyBinding {
                 "key.music_control.previousMusic",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_LEFT,
-                "category.music_control.title"
+                mainCategory
         ));
 
         nextMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.nextMusic",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT,
-                "category.music_control.title"
+                mainCategory
         ));
 
         pauseResume = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.pause",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
-                "category.music_control.title"
+                mainCategory
         ));
 
         loopMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.loop",
                 InputUtil.Type.KEYSYM,
                 InputUtil.UNKNOWN_KEY.getCode(),
-                "category.music_control.title"
+                mainCategory
         ));
 
         previousCategory = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.previousCategory",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_PAGE_UP,
-                "category.music_control.title"
+                mainCategory
         ));
 
         nextCategory = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.nextCategory",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_PAGE_DOWN,
-                "category.music_control.title"
+                mainCategory
         ));
 
         printMusic = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.print",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_CONTROL,
-                "category.music_control.title"
+                mainCategory
         ));
 
         volumeUp = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.volumeUp",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_UP,
-                "category.music_control.title"
+                mainCategory
         ));
 
         volumeDown = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.volumeDown",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_DOWN,
-                "category.music_control.title"
+                mainCategory
         ));
 
         openMenu = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.music_control.openMenu",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_M,
-                "category.music_control.title"
+                mainCategory
         ));
     }
 

@@ -1,5 +1,5 @@
 {
-    "category.music_control.title": "音乐控制",
+    "key.category.music_control.main": "音乐控制",
     "key.music_control.previousMusic": "上一首音乐",
     "key.music_control.nextMusic": "下一首音乐",
     "key.music_control.pause": "暂停/恢复音乐",

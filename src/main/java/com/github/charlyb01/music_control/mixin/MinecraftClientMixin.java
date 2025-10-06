@@ -44,7 +44,7 @@ public class MinecraftClientMixin {
     @Expression("?.getMusic()")
     @ModifyExpressionValue(method = "getMusicInstance", at = @At("MIXINEXTRAS:EXPRESSION"))
     private Optional<Pool<MusicSound>> updateBiomeMusic(Optional<Pool<MusicSound>> original) {
-        RegistryEntry<Biome> registryEntry = this.player.getWorld().getBiome(this.player.getBlockPos());
+        RegistryEntry<Biome> registryEntry = this.player.getEntityWorld().getBiome(this.player.getBlockPos());
         RegistryKey<Biome> registryKey = registryEntry.getKey().orElse(null);
         if (registryKey == null || !SoundEventRegistry.BIOME_MUSIC_MAP.containsKey(registryKey)) return original;
 
@@ -59,7 +59,7 @@ public class MinecraftClientMixin {
 
     @Unique
     private MusicSound getMusicFromMap(final MusicSound original) {
-        RegistryEntry<Biome> registryEntry = this.player.getWorld().getBiome(this.player.getBlockPos());
+        RegistryEntry<Biome> registryEntry = this.player.getEntityWorld().getBiome(this.player.getBlockPos());
         RegistryKey<Biome> registryKey = registryEntry.getKey().orElse(null);
         if (registryKey == null || !SoundEventRegistry.BIOME_MUSIC_MAP.containsKey(registryKey)) return original;
 
